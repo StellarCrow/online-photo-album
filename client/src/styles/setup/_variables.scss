@@ -1,7 +1,27 @@
-//FONT-WEIGHT
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,600,700|Poiret+One&display=swap&subset=cyrillic');
 
+//FONT-FAMILY
+$ff-primary: 'Poiret One', cursive;
+$ff-secondary: 'Comfortaa', cursive;
+
+//FONT-WEIGHT
+$extra-light: 200;
+$light: 300;
+$regular: 400;
+$medium: 500;
+$semi-bold: 600;
+$bold: 700;
+$extra-bold: 800;
 
 //FONT-SIZE
 
 
 //COLORS
+$primary-color: #5e6e4a;
+$primary-color--lighter: #a0bb7f;
+$secondary-color: #adafac;
+$secondary-color--lighter: #dddfdb;
+$tertiary-color: #956050;
+$tertiary-color--lighter: #d48a73;
+
+$menu-text-color: rgb(255, 255, 255);
