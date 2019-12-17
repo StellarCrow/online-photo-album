@@ -1,12 +1,32 @@
+$padding-dropdown: 0.5em;
+
+#navigation_icon,
+.navigation__icon {
+    display: none;
+}
+
+.navigation {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    background-color: rgb(2, 34, 12);
+    padding: 1em;
+    align-items: center;
+
+    &__icon {
+        color: #fff;
+        font-size: 1.5em;
+    }
+}
+
 .menu {
     display: flex;
     justify-content: space-between;
-    background-color: rgb(2, 34, 12);
     color: $menu-text-color;
     font-family: $ff-primary;
     font-weight: $semi-bold;
-    font-size: 1.2em;
-    padding: 1em;
+    font-size: 1.1em;
+    width: 100%;
 
     &__item {
         flex: 1 1 auto;
@@ -14,12 +34,11 @@
         text-decoration: none;
         color: $secondary-color--lighter;
         border-left: 1px solid $secondary-color--lighter;
-        padding: 0.5em 0;
+        padding: $padding-dropdown 0;
     }
 
     &__item:first-child {
         border-left: 0;
-        text-align: left;
     }
 
     &__item:nth-child(odd):hover {
@@ -44,15 +63,19 @@
         display: block;
     }
 
+    &__icon {
+        margin-left: 0.5em;
+    }
+
 
     &__content {
         display: none;
         position: absolute;
-        margin-top: 0.5em;
+        margin-top: $padding-dropdown;
         width: 100%;
         text-align: left;
         background-color: #fff;
-        box-shadow: 0 8px 8px rgb(226, 226, 226);
+        box-shadow: 0 8px 6px rgb(226, 226, 226);
     }
 
     &__content a {
@@ -66,5 +89,44 @@
         &:hover {
             background-color: $secondary-color--lighter;
         }
+    }
+}
+
+@media (max-width: 720px) {
+    .navigation {
+        // flex-flow: row-reverse nowrap;
+        align-items: flex-start;
+
+        &__menu {
+            display: none;
+        }
+    }
+
+    .navigation__icon {
+        display: block;
+    }
+
+    #navigation_icon:checked ~ .menu {
+        display: flex;
+    }
+
+    #navigation_icon:checked ~ .navigation__search {
+        display: none;
+    }
+
+    .menu {
+        flex-flow: column-reverse nowrap;
+        font-size: 0.8em;
+        align-items: center;
+
+        &__item {
+            border-left: none;
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .navigation {
+        font-size: 0.8em;
     }
 }
