@@ -92,7 +92,9 @@ $padding-dropdown: 0.5em;
     }
 }
 
-@media (max-width: 720px) {
+// --------------MOBILE-----------------------
+
+@media (max-width: $mobile-max-width) {
     .navigation {
         // flex-flow: row-reverse nowrap;
         align-items: flex-start;
@@ -125,7 +127,9 @@ $padding-dropdown: 0.5em;
     }
 }
 
-@media (max-width: 1200px) {
+// --------------TABLET------------------
+
+@media (max-width: $tablet-max-width) {
     .navigation {
         font-size: 0.8em;
     }

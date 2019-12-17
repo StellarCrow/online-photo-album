@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,600,700|Poiret+One&display=swap&subset=cyrillic');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&display=swap&subset=cyrillic');
 
-//FONT-FAMILY
+//----------BREAKPOINTS-------------
+$mobile-max-width: 768px;
+$tablet-max-width: 1024px;
+
+//----------FONT-FAMILY-------------
 $ff-primary: 'Poiret One', cursive;
 $ff-secondary: 'Comfortaa', cursive;
+$ff-tertiary: 'Roboto Condensed', sans-serif;
 
-//FONT-WEIGHT
+//----------FONT-WEIGHT-------------
 $extra-light: 200;
 $light: 300;
 $regular: 400;
@@ -13,15 +19,18 @@ $semi-bold: 600;
 $bold: 700;
 $extra-bold: 800;
 
-//FONT-SIZE
+//-------------FONT-SIZE----------------
 
 
-//COLORS
+//-------------COLORS------------------
 $primary-color: #5e6e4a;
 $primary-color--lighter: #a0bb7f;
 $secondary-color: #adafac;
 $secondary-color--lighter: #dddfdb;
 $tertiary-color: #956050;
 $tertiary-color--lighter: #d48a73;
+
+// ----------FOOTER COLORS-------------
+$footer-heading-color: rgb(226, 200, 166);
 
 $menu-text-color: rgb(255, 255, 255);

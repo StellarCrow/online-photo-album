@@ -1,13 +1,22 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <router-view />
+    <div class="content">
+      <router-view />
+    </div>
+    <TheFooter></TheFooter>
   </div>
 </template>
 
+<script>
+import TheFooter from "../src/components/TheFooter";
+
+export default {
+  components: {
+    TheFooter
+  }
+};
+</script>
+
 <style lang="scss">
-@import 'styles/global.scss'
+@import "styles/global.scss";
 </style>
