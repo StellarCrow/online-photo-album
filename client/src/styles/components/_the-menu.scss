@@ -10,6 +10,7 @@ $padding-dropdown: 0.5em;
     flex-flow: row nowrap;
     justify-content: space-between;
     background-color: rgb(2, 34, 12);
+    // background-color:$secondary-color;
     padding: 1em;
     align-items: center;
 
@@ -25,7 +26,6 @@ $padding-dropdown: 0.5em;
     color: $menu-text-color;
     font-family: $ff-primary;
     font-weight: $semi-bold;
-    font-size: 1.1em;
     width: 100%;
 
     &__item {
@@ -94,7 +94,7 @@ $padding-dropdown: 0.5em;
 
 // --------------MOBILE-----------------------
 
-@media (max-width: $mobile-max-width) {
+@media (max-width: $bp-small) {
     .navigation {
         // flex-flow: row-reverse nowrap;
         align-items: flex-start;
@@ -118,7 +118,6 @@ $padding-dropdown: 0.5em;
 
     .menu {
         flex-flow: column-reverse nowrap;
-        font-size: 0.8em;
         align-items: center;
 
         &__item {
@@ -128,9 +127,3 @@ $padding-dropdown: 0.5em;
 }
 
 // --------------TABLET------------------
-
-@media (max-width: $tablet-max-width) {
-    .navigation {
-        font-size: 0.8em;
-    }
-}
