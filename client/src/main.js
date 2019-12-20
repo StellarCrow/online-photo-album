@@ -5,7 +5,13 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCaretDown, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faCaretRight,
+  faBars,
+  faChevronRight,
+  faChevronLeft
+} from "@fortawesome/free-solid-svg-icons";
 import {
   faTwitter,
   faFacebookF,
@@ -14,7 +20,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 // -----------------------------------------------------
-library.add(faCaretDown, faBars, faTwitter, faFacebookF, faInstagram);
+library.add(
+  faCaretDown,
+  faCaretRight,
+  faChevronRight,
+  faChevronLeft,
+  faBars,
+  faTwitter,
+  faFacebookF,
+  faInstagram
+);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;

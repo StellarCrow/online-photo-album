@@ -1,0 +1,62 @@
+.carousel {
+  position: relative;
+  height: 80vh;
+
+  &__indicators {
+    @extend %clear-horizontal-list;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1%;
+    left: 45%;
+  }
+
+  &__indicator {
+    margin-right: 0.5em;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    opacity: 0.6;
+    background-color: rgb(216, 216, 216);
+    border: 2px solid rgb(173, 173, 173);
+    
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &--selected {
+      background-color: $primary-color--lighter;
+      border-color: $primary-color;
+    }
+  }
+
+  &__arrow {
+    @extend %button-reset;
+    cursor: pointer;
+    color: $primary-color;
+    position: absolute;
+    top: 40%;
+    z-index: 1;
+    font-size: 2em;
+
+    &:hover {
+      color: $primary-color--lighter;
+    }
+
+    &:disabled {
+      color: $disabled-color;
+      cursor: default;
+    }
+  }
+
+  &__arrow--left {
+    left: 0
+  }
+
+  &__arrow--right {
+    right: 0;
+  }
+}

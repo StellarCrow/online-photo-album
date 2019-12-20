@@ -1,3 +1,5 @@
+@import './buttons';
+
 body {
     font-size: $base-font-size;
 
@@ -45,4 +47,12 @@ body {
 %container {
     max-width: 80%;
     margin: 0 auto;
+}
+
+%clear-horizontal-list {
+  list-style-type: none;
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 0;
+  padding: 0;
 }
