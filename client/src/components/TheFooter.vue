@@ -24,10 +24,12 @@
                 >
               </li>
               <li class="footer__link">
-                <router-link class="menu__item" to="#">Контакты</router-link>
+                <router-link class="menu__item" to="/contacts"
+                  >Контакты</router-link
+                >
               </li>
               <li class="footer__link">
-                <router-link class="menu__item" to="#">О нас</router-link>
+                <router-link class="menu__item" to="/about">О нас</router-link>
               </li>
             </ul>
           </div>

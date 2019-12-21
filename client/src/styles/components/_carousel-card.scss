@@ -6,15 +6,31 @@
   top: 0;
   left: 0;
   width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
 
-  &__container {
-    @extend %container;
+  &__header {
+    font-family: $ff-primary;
+    font-size: 1.5em;
+    flex: 1 1 60%;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
   }
 
   &__content {
-      background-color: $tertiary-color;
-      height: inherit;
+    background-color: #fff;
+    flex: 2 0 40%;
+}
+
+  &__heading {
+      font-weight: $semi-bold;
   }
+
+  &__subheading {
+      font-weight: $light;
+  }
+
+  
 }

@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <header>
+      <TheMenu></TheMenu>
+    </header>
     <div class="content">
       <router-view />
     </div>
@@ -8,11 +11,13 @@
 </template>
 
 <script>
+import TheMenu from "../src/components/TheMenu";
 import TheFooter from "../src/components/TheFooter";
 
 export default {
   components: {
-    TheFooter
+    TheFooter,
+    TheMenu
   }
 };
 </script>

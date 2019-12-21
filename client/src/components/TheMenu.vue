@@ -1,6 +1,8 @@
 <template>
   <nav class="navigation">
-    <div navigation__logo>Logo</div>
+    <div class="navigation__logo">
+      <router-link to="/">Logo</router-link>
+    </div>
 
     <input type="checkbox" id="navigation_icon" />
 
@@ -36,7 +38,7 @@
         </div>
       </div>
       <router-link class="menu__item" to="#">Случайное фото</router-link>
-      <router-link class="menu__item" to="#">Контакты</router-link>
+      <router-link class="menu__item" to="/contacts">Контакты</router-link>
       <router-link class="menu__item" to="/about">О нас</router-link>
     </div>
 
