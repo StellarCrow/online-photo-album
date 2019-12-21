@@ -3,6 +3,7 @@
   padding-top: 5%;
   font-family: $ff-tertiary;
   position: relative;
+  display: block;
 
   &::before {
     content: "";
