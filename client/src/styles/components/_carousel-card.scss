@@ -1,0 +1,20 @@
+.card {
+  @include clip-path-wipe;
+  background-color: white;
+  height: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  &__container {
+    @extend %container;
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
+  &__content {
+      background-color: $tertiary-color;
+      height: inherit;
+  }
+}

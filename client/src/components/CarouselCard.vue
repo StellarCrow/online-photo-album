@@ -1,11 +1,31 @@
 <template>
-  <div></div>
+  <div
+    class="card"
+    :style="{ backgroundImage: `url('../assets/images/${object.imgName}')` }"
+  >
+    <div class="card__container">
+      <div class="card__header">
+        <div class="card__heading">
+          <h2 v-if="index !== 0">{{ object.heading }}</h2>
+          <h1 v-else>{{ object.heading }}</h1>
+        </div>
+        <div class="card__subheading">{{ object.subheading }}</div>
+      </div>
+      <div class="card__content"></div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "CarouselCard"
+  name: "CarouselCard",
+  props: {
+    object: Object,
+    index: Number
+  }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "../styles/components/_carousel-card.scss";
+</style>

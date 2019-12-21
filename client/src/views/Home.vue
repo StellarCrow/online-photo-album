@@ -17,7 +17,28 @@ export default {
   },
   data() {
     return {
-      cards: [1, 2, 3, 4, 6]
+      cards: [
+        {
+          imgName: "bg-footer3.jpg",
+          heading: "Online Photo Album",
+          subheading: "Тот, кто хранит твои воспоминания..."
+        },
+        {
+          imgName: "../assets/images/bg-footer3.jpg",
+          heading: "Регистрируйся",
+          subheading: "Заполни одну небольшую форму"
+        },
+        {
+          imgName: "@/assets/images/bg-footer3.jpg",
+          heading: "Загружай свои фото",
+          subheading: "Заполни одну небольшую форму"
+        },
+        {
+          imgName: "../assets/images/bg-footer3.jpg",
+          heading: "Мобильно",
+          subheading: "Заполни одну небольшую форму"
+        }
+      ]
     };
   }
 };

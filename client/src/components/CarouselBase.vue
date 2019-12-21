@@ -5,7 +5,20 @@
       arrowType="left"
       @click.native="showPrevElement"
     />
-    <CarouselCard />
+
+    <transition-group
+      tag="div"
+      class="carousel__slider"
+      name="card"
+      mode="out-in"
+    >
+      <CarouselCard
+        :object="currentElement"
+        :index="currentElementIndex"
+        :key="currentElementIndex"
+      />
+    </transition-group>
+
     <ArrowButton
       class="carousel__arrow carousel__arrow--right"
       arrowType="right"
@@ -48,17 +61,17 @@ export default {
   },
   methods: {
     showNextElement() {
-        if(this.reachedMaxRight) {
-            this.currentElementIndex = 0;
-            return;
-        }
+      if (this.reachedMaxRight) {
+        this.currentElementIndex = 0;
+        return;
+      }
       this.currentElementIndex++;
     },
     showPrevElement() {
-        if(this.reachedMaxLeft) {
-            this.currentElementIndex = this.cards.length - 1;
-            return;
-        }
+      if (this.reachedMaxLeft) {
+        this.currentElementIndex = this.cards.length - 1;
+        return;
+      }
       this.currentElementIndex--;
     },
     showElement(elementIndex) {
