@@ -1,0 +1,24 @@
+@import "../basics/base";
+
+.section {
+  padding: 5% 0;
+
+  &--gray-gradient {
+    background: linear-gradient(#fff, $gray--light);
+  }
+
+  &__header {
+    text-align: center;
+    font-family: $ff-tertiary;
+  }
+
+  &__heading {
+    font-weight: $bold;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+  }
+
+  &__subheading {
+      font-weight: $light;
+  }
+}

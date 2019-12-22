@@ -1,7 +1,7 @@
 <template>
   <section class="contacts">
     <div class="contacts__map">
-      <Map />
+      <!-- <Map /> -->
       <div class="contacts__addresses">
         <address>
           Украина, Киев<br />
@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import Map from "../components/MapGoogle";
+// import Map from "../components/MapGoogle";
 
 export default {
   name: "Contacts",
   components: {
-    Map
+    // Map
   }
 };
 </script>

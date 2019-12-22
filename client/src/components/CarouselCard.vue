@@ -7,8 +7,7 @@
       }"
     >
       <div class="card__heading">
-        <h2 v-if="index !== 0">{{ object.heading }}</h2>
-        <h1 v-else>{{ object.heading }}</h1>
+        <h2>{{ object.heading }}</h2>
       </div>
       <div class="card__subheading">{{ object.subheading }}</div>
     </div>

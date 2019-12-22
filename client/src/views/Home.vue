@@ -1,6 +1,16 @@
 <template>
-  <div class="home">
+  <div>
     <Carousel :cards="cards" />
+    <section class="section section--gray-gradient">
+      <div class="container">
+        <div class="section__header">
+          <h1 class="section__heading">Online Photo Album</h1>
+          <p class="section__subheading">
+            Твой помощник в хранении и поиске фотографий
+          </p>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -40,3 +50,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../styles/pages/_home.scss";
+</style>

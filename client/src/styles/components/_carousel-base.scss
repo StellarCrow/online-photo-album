@@ -43,16 +43,19 @@
   &__arrow {
     @extend %button-reset;
     cursor: pointer;
-    color: $primary-color;
     position: absolute;
-    top: 40%;
+    top: 0;
     z-index: 1;
+    padding: 1em 0.5em;
     font-size: 2em;
+    height: 100%;
     opacity: 0.5;
+    color: $primary-color;
 
     &:hover {
       color: $primary-color--lighter;
       opacity: 1;
+      transition: all 0.3s ease;
     }
 
     &:disabled {
@@ -62,10 +65,17 @@
   }
 
   &__arrow--left {
-    left: 0
+    left: 0;
+    &:hover {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0));
+    }
+    
   }
 
   &__arrow--right {
     right: 0;
+    &:hover {
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0));
+    }  
   }
 }
