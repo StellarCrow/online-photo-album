@@ -3,9 +3,9 @@
     <header>
       <TheMenu></TheMenu>
     </header>
-    <div class="content">
+    <main class="content">
       <router-view />
-    </div>
+    </main>
     <TheFooter></TheFooter>
   </div>
 </template>

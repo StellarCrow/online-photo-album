@@ -29,8 +29,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.map {
-  height: 50vh;
-  width: 50vw;
-}
+// .map {
+//   width: 100%;
+//   height: 100%;
+// }
 </style>

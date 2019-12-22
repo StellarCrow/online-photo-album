@@ -1,5 +1,19 @@
 @import './buttons';
 
+%container {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+%clear-horizontal-list {
+list-style-type: none;
+display: flex;
+flex-flow: row nowrap;
+margin: 0;
+padding: 0;
+}
+
+
 body {
     font-size: $base-font-size;
 
@@ -24,6 +38,10 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
+.container {
+  @extend %container;
+}
+
 // ----------STICKY FOOTER-----------------
 html,
 body {
@@ -46,16 +64,3 @@ body {
 }
 
 // ---------------------------------
-
-%container {
-    max-width: 80%;
-    margin: 0 auto;
-}
-
-%clear-horizontal-list {
-  list-style-type: none;
-  display: flex;
-  flex-flow: row nowrap;
-  margin: 0;
-  padding: 0;
-}
