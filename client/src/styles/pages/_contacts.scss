@@ -25,5 +25,20 @@
         justify-content: space-between;
         flex-flow: row nowrap;
         height: auto;
+        font-family: $ff-primary;
+    }
+}
+
+@media (max-width: $bp-small) {
+    .contacts {
+        flex-flow: column-reverse nowrap;
+
+        &__map {
+            width: 100%;
+        }
+
+        &__addresses {
+            flex-flow: row wrap;
+        }
     }
 }
