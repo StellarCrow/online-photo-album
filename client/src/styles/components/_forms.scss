@@ -1,0 +1,42 @@
+// -------------INPUTS-------------------
+
+%input-basic {
+    border: none;
+    border-bottom: 1px solid $gray;
+    font-weight: $light;
+    font-family: $ff-tertiary;
+    padding: 0.2em 0;
+    color: $text-color--dark;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        border-bottom: 1px solid $primary-color;
+    }
+
+    &::placeholder {
+        color: $gray;
+    }
+}
+
+%label-basic {
+    font-size: 0.8em;
+    color: $gray--dark;;
+    font-weight: $bold;
+}
+
+input {
+    @extend %input-basic;
+}
+
+label {
+    @extend %label-basic;
+}
+
+.form-group > label,
+.form-group > input {
+    display: block;
+}
+
+// ----------FORMS-------------

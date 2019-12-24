@@ -20,16 +20,20 @@
         </address>
       </div>
     </div>
-    <div class="contacts__form"></div>
+    <div class="contacts__form">
+      <FormContactUs />
+    </div>
   </section>
 </template>
 
 <script>
 // import Map from "../components/MapGoogle";
+import FormContactUs from "../components/form/FormContactUs";
 
 export default {
   name: "Contacts",
   components: {
+    FormContactUs
     // Map
   }
 };
