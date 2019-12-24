@@ -2,31 +2,37 @@
   <form action="#" method="post" class="form form-contacts">
     <div class="form__field">
       <InputText
-        :fieldName="'Name'"
+        :fieldName="'Имя'"
         :required="true"
         :placeholder="'Ваше имя'"
       />
     </div>
     <div class="form__field">
-      Email
+      <InputEmail :required="true" />
     </div>
     <div class="form__field">
-      Phone
+      <InputPhone :required="true" />
     </div>
     <div class="form__field">
-      Message
+      <InputTextArea :required="false" :fieldName="'Сообщение'" />
     </div>
-    <button type="submit" class="button-submit">Отправить</button>
+    <button type="submit" class="button-submit form__submit">Отправить</button>
   </form>
 </template>
 
 <script>
 import InputText from "../form/InputText";
+import InputEmail from "../form/InputEmail";
+import InputPhone from "../form/InputPhone";
+import InputTextArea from "../form/InputTextArea";
 
 export default {
   name: "FormContactUs",
   components: {
-    InputText
+    InputText,
+    InputEmail,
+    InputPhone,
+    InputTextArea
   },
   data() {
     return {};

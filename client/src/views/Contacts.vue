@@ -21,6 +21,7 @@
       </div>
     </div>
     <div class="contacts__form">
+      <h3 class="contacts__heading">Свяжитесь с нами</h3>
       <FormContactUs />
     </div>
   </section>
@@ -33,8 +34,8 @@ import FormContactUs from "../components/form/FormContactUs";
 export default {
   name: "Contacts",
   components: {
+    // Map,
     FormContactUs
-    // Map
   }
 };
 </script>
