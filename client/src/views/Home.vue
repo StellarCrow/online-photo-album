@@ -9,6 +9,9 @@
             Твой помощник в хранении и поиске фотографий
           </p>
         </div>
+        <div class="section__form">
+          <FormRegistration />
+        </div>
       </div>
     </section>
   </div>
@@ -16,11 +19,13 @@
 
 <script>
 import Carousel from "../components/CarouselBase";
+import FormRegistration from '../components/form/FormRegistration';
 
 export default {
   name: "home",
   components: {
-    Carousel
+    Carousel,
+    FormRegistration
   },
   data() {
     return {
