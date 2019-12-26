@@ -9,7 +9,7 @@
             Твой помощник в хранении и поиске фотографий
           </p>
         </div>
-        <div class="section__form">
+        <div class="section__form" id="registration">
           <FormRegistration />
         </div>
       </div>
@@ -19,7 +19,8 @@
 
 <script>
 import Carousel from "../components/CarouselBase";
-import FormRegistration from '../components/form/FormRegistration';
+import FormRegistration from "../components/form/FormRegistration";
+import FormLogin from "../components/form/FormLogin";
 
 export default {
   name: "home",
@@ -33,7 +34,8 @@ export default {
         {
           imgName: "bg-footer.jpg",
           heading: "Online Photo Album",
-          subheading: "Тот, кто хранит твои воспоминания..."
+          subheading: "Тот, кто хранит твои воспоминания...",
+          content: FormLogin
         },
         {
           imgName: "bg-footer.jpg",

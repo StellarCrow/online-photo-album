@@ -11,7 +11,9 @@
       </div>
       <div class="card__subheading">{{ object.subheading }}</div>
     </div>
-    <div class="card__content"></div>
+    <div class="card__content">
+      <div :is="object.content"></div>
+    </div>
   </div>
 </template>
 

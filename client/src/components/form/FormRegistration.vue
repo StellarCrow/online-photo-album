@@ -28,7 +28,9 @@
         :fieldName="'Повторите пароль'"
       />
     </div>
-    <button class="button-submit form__submit">Регистрация</button>
+    <button class="button-submit form__submit" type="submit">
+      Регистрация
+    </button>
   </form>
 </template>
 
