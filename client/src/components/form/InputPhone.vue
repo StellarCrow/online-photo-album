@@ -1,11 +1,11 @@
 <template>
   <div class="form-group">
-    <label for="input_phone">Номер телефона</label>
+    <label :for="inputId">Номер телефона</label>
     <input
       v-model="phone"
       type="tel"
       class="input-phone"
-      id="input_phone"
+      :id="inputId"
       :required="required"
       placeholder="+38(xxx)xxx-xx-xx"
       maxlength="17"
@@ -17,7 +17,8 @@
 export default {
   name: "InputPhone",
   props: {
-    required: Boolean
+    required: Boolean,
+    inputId: String
   },
   data() {
     return {

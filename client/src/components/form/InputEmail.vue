@@ -1,11 +1,11 @@
 <template>
   <div class="form-group">
-    <label for="input_email">Email</label>
+    <label :for="inputId">Email</label>
     <input
       v-model="email"
       type="text"
       class="input-email"
-      id="input_email"
+      :id="inputId"
       :required="required"
       placeholder="myemail@example.com"
       maxlength="50"
@@ -17,7 +17,8 @@
 export default {
   name: "InputEmail",
   props: {
-    required: Boolean
+    required: Boolean,
+    inputId: String
   },
   data() {
     return {

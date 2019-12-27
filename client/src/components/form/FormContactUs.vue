@@ -5,16 +5,21 @@
         :fieldName="'Имя'"
         :required="true"
         :placeholder="'Ваше имя'"
+        :inputId="'contacts__name'"
       />
     </div>
     <div class="form__field">
-      <InputEmail :required="true" />
+      <InputEmail :required="true" :inputId="'contacts__email'" />
     </div>
     <div class="form__field">
-      <InputPhone :required="true" />
+      <InputPhone :required="true" :inputId="'contacts__phone'" />
     </div>
     <div class="form__field">
-      <InputTextArea :required="false" :fieldName="'Сообщение'" />
+      <InputTextArea
+        :required="false"
+        :fieldName="'Сообщение'"
+        :inputId="'contacts__textarea'"
+      />
     </div>
     <button type="submit" class="button-submit form__submit">Отправить</button>
   </form>

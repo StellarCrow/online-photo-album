@@ -1,11 +1,11 @@
 <template>
   <div class="form-group">
-    <label for="textarea">{{ fieldName }}</label>
+    <label :for="inputId">{{ fieldName }}</label>
     <textarea
       v-model="textarea"
       type="tel"
       class="input-phone"
-      id="textarea"
+      :id="inputId"
       :required="required"
       placeholder="Вопросы/Пожелания..."
       maxlength="500"
@@ -20,7 +20,8 @@ export default {
   name: "InputTextArea",
   props: {
     required: Boolean,
-    fieldName: String
+    fieldName: String,
+    inputId: String
   },
   data() {
     return {

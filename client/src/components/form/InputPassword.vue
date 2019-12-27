@@ -1,11 +1,11 @@
 <template>
   <div class="form-group">
-    <label for="input_password">{{ fieldName }}</label>
+    <label :for="inputId">{{ fieldName }}</label>
     <input
       v-model="password"
       type="password"
       class="input-text"
-      id="input_password"
+      :id="inputId"
       :required="required"
       :placeholder="placeholder"
       maxlength="50"
@@ -19,7 +19,8 @@ export default {
   props: {
     fieldName: String,
     required: Boolean,
-    placeholder: String
+    placeholder: String,
+    inputId: String
   },
   data() {
     return {

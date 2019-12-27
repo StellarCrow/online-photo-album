@@ -5,10 +5,16 @@
         :required="true"
         :placeholder="'Username'"
         :fieldName="'Username'"
+        :inputId="'login_username'"
       />
     </div>
     <div class="form__field">
-      <Password :required="true" :placeholder="'*****'" :fieldName="'Пароль'" />
+      <Password
+        :required="true"
+        :placeholder="'*****'"
+        :fieldName="'Пароль'"
+        :inputId="'login_password'"
+      />
     </div>
     <button class="button-submit" type="submit">Войти</button>
     <div class="form__field">

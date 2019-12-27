@@ -6,14 +6,15 @@
         :required="false"
         :placeholder="'Ваше полное имя'"
         :fieldName="'Имя'"
+        :inputId="'register_fullname'"
       />
     </div>
-    {{ formData.fullName }}
     <div class="form__field">
       <Username
         :required="true"
         :placeholder="'Уникальное имя-идентификатор'"
         :fieldName="'Username'"
+        :inputId="'register_username'"
       />
     </div>
     <div class="form__field">
@@ -21,6 +22,7 @@
         :required="true"
         :placeholder="'password'"
         :fieldName="'Пароль'"
+        :inputId="'register_password'"
       />
     </div>
     <div class="form__field">
@@ -28,6 +30,7 @@
         :required="true"
         :placeholder="'password'"
         :fieldName="'Повторите пароль'"
+        :inputId="'register_reppassword'"
       />
     </div>
     <button
