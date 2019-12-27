@@ -1,11 +1,11 @@
 <template>
   <div class="form-group">
-    <label for="input_login">{{ fieldName }}</label>
+    <label for="input_password">{{ fieldName }}</label>
     <input
       v-model="password"
       type="password"
       class="input-text"
-      id="input_login"
+      id="input_password"
       :required="required"
       :placeholder="placeholder"
       maxlength="50"

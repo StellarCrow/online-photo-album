@@ -1,12 +1,14 @@
 <template>
-  <form class="form">
+  <form class="form" enctype="application/x-www-form-urlencoded" method="POST">
     <div class="form__field">
       <FullName
+        :inputData.sync="formData.fullName"
         :required="false"
         :placeholder="'Ваше полное имя'"
         :fieldName="'Имя'"
       />
     </div>
+    {{ formData.fullName }}
     <div class="form__field">
       <Username
         :required="true"
@@ -28,9 +30,14 @@
         :fieldName="'Повторите пароль'"
       />
     </div>
-    <button class="button-submit form__submit" type="submit">
+    <button
+      @submit="sendFormData"
+      class="button-submit form__submit"
+      type="submit"
+    >
       Регистрация
     </button>
+    {{ error }}
   </form>
 </template>
 
@@ -38,6 +45,8 @@
 import FullName from "../form/InputText";
 import Username from "../form/InputLogin";
 import Password from "../form/InputPassword";
+import AuthenticationService from "../../services/AuthenticationService";
+
 export default {
   name: "FormRegistration",
   components: {
@@ -47,11 +56,24 @@ export default {
   },
   data() {
     return {
-      fullName: "",
-      username: "",
-      password: "",
-      repeatPassword: ""
+      formData: {
+        fullName: "",
+        username: "",
+        password: "",
+        repeatPassword: ""
+      },
+      error: null
     };
+  },
+  methods: {
+    async sendFormData() {
+      try {
+        let res = await AuthenticationService.register(this.formData);
+        console.log(res);
+      } catch (error) {
+        this.error = error.response.data.error;
+      }
+    }
   }
 };
 </script>

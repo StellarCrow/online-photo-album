@@ -9,6 +9,7 @@
       :required="required"
       :placeholder="placeholder"
       maxlength="50"
+      @keyup="validation"
     />
   </div>
 </template>
@@ -25,6 +26,15 @@ export default {
     return {
       text: ""
     };
+  },
+  methods: {
+    validation() {
+      //Validation
+      this.sendResult(this.text);
+    },
+    sendResult(str) {
+      this.$emit("update:inputData", str);
+    }
   }
 };
 </script>
