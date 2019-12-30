@@ -1,5 +1,5 @@
 <template>
-  <form class="form" enctype="application/x-www-form-urlencoded" method="POST">
+  <form class="form" @submit="sendFormData">
     <div class="form__field">
       <FullName
         :inputData.sync="formData.fullName"
@@ -11,6 +11,7 @@
     </div>
     <div class="form__field">
       <Username
+        :inputData.sync="formData.username"
         :required="true"
         :placeholder="'Уникальное имя-идентификатор'"
         :fieldName="'Username'"
@@ -19,25 +20,24 @@
     </div>
     <div class="form__field">
       <Password
+        :inputData.sync="formData.password"
         :required="true"
-        :placeholder="'password'"
+        :placeholder="'******'"
         :fieldName="'Пароль'"
         :inputId="'register_password'"
       />
     </div>
     <div class="form__field">
       <Password
+        :inputData.sync="formData.repeatPassword"
         :required="true"
-        :placeholder="'password'"
+        :placeholder="'******'"
         :fieldName="'Повторите пароль'"
         :inputId="'register_reppassword'"
+        :passwordCompare="formData.password"
       />
     </div>
-    <button
-      @submit="sendFormData"
-      class="button-submit form__submit"
-      type="submit"
-    >
+    <button class="button-submit form__submit" type="submit">
       Регистрация
     </button>
     {{ error }}
@@ -70,12 +70,20 @@ export default {
   },
   methods: {
     async sendFormData() {
-      try {
-        let res = await AuthenticationService.register(this.formData);
-        console.log(res);
-      } catch (error) {
-        this.error = error.response.data.error;
+      if (this.checkFormData()) {
+        try {
+          let res = await AuthenticationService.register(this.formData);
+          console.log(res);
+        } catch (error) {
+          this.error = error.response.data.error;
+        }
       }
+    },
+    checkFormData() {
+      for (let prop in this.formData) {
+        if (this.formData[prop] === "") return false;
+      }
+      return true;
     }
   }
 };

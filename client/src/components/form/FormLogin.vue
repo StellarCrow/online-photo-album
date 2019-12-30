@@ -16,7 +16,9 @@
         :inputId="'login_password'"
       />
     </div>
-    <button class="button-submit" type="submit">Войти</button>
+    <button class="button-submit" type="submit" @submit="sendForm">
+      Войти
+    </button>
     <div class="form__field">
       <span>Нет аккаунта? <a href="#registration">Зарегистрироваться</a></span>
     </div>
@@ -34,7 +36,17 @@ export default {
     Password
   },
   data() {
-    return {};
+    return {
+      formData: {
+        username: "",
+        password: ""
+      }
+    };
+  },
+  methods: {
+    sendForm() {
+      console.log("Will be sent to the server");
+    }
   }
 };
 </script>

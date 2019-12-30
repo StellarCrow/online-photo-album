@@ -58,6 +58,14 @@ textarea {
     @extend %textarea-basic;
 }
 
+.input-warning {
+    padding: 1em 0;
+    font-size: 0.8em;
+    color: $danger-color;
+    font-family: $ff-tertiary;
+    font-weight: $light;
+}
+
 .form-group > label,
 .form-group > input {
     display: block;
