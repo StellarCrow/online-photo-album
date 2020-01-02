@@ -16,7 +16,7 @@ let User = require("../models/User");
 
 // User registration
 
-router.post("/registration", function(req, res, next) {
+router.post("/registration", async function(req, res, next) {
   let { fullName, username, password, passwordRepeat } = req.body;
 
   if (password !== passwordRepeat) {
@@ -26,13 +26,13 @@ router.post("/registration", function(req, res, next) {
   }
 
   //Check unique username
-  User.findOne({ username: username }).then(user => {
-    if (user) {
-      return res.status(400).json({
-        msg: "Username is already taken."
-      });
-    }
-  })
+  let user = await User.findOne({ username: username });
+  console.log(user);
+  if (user) {
+    return res.status(400).json({
+      msg: "Username is already taken."
+    });
+  }
 
   let newUser = new User({
     name: fullName,
