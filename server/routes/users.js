@@ -1,21 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const keys = require("../config/keys");
 
-const MONGO_URI = keys.mongoURI;
 const SECRET_KEY = keys.secret;
-
-mongoose.connect(MONGO_URI, { useNewUrlParser: true });
-console.log(mongoose.connection.readyState);
 
 let User = require("../models/User");
 
 // User registration
-
 router.post("/registration", async function(req, res, next) {
   let { fullName, username, password, passwordRepeat } = req.body;
 
@@ -55,8 +49,7 @@ router.post("/registration", async function(req, res, next) {
   });
 });
 
-//user login
-
+// User login
 router.post("/login", function(req, res) {
   User.findOne({ username: req.body.username }).then(user => {
     if (!user) {
@@ -93,5 +86,16 @@ router.post("/login", function(req, res) {
     });
   });
 });
+
+//test get profile
+router.get(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  function(req, res) {
+    return res.json({
+      user: req.user
+    });
+  }
+);
 
 module.exports = router;
