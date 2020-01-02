@@ -5,7 +5,7 @@ const morgan = require('morgan');
 
 const app = express();
 
-let indexRouter = require('../routes/index');
+let usersRouter = require('../routes/users');
 
 
 app.use(morgan('combined'));
@@ -14,6 +14,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
 
-app.use('/', indexRouter);
+app.use('/users/', usersRouter);
 
 app.listen(process.env.PORT || 8081);
