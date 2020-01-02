@@ -9,12 +9,25 @@
     <div class="navigation__menu menu">
       <DropdownMenu
         class="menu__item"
+        :links="profile"
+        :menuTitle="'Мой профиль'"
+        v-if="isLoggedIn"
+      ></DropdownMenu>
+      <DropdownMenu
+        class="menu__item"
         :links="links"
         :menuTitle="'Категории фотографий'"
       ></DropdownMenu>
       <router-link class="menu__item" to="#">Случайное фото</router-link>
-      <router-link class="menu__item" to="/contacts">Контакты</router-link>
-      <router-link class="menu__item" to="/about">О нас</router-link>
+      <router-link v-if="!isLoggedIn" class="menu__item" to="/contacts"
+        >Контакты</router-link
+      >
+      <router-link v-if="!isLoggedIn" class="menu__item" to="/about"
+        >О нас</router-link
+      >
+      <router-link v-if="isLoggedIn" class="menu__item" to="/about"
+        >Logout</router-link
+      >
     </div>
 
     <div class="navigation__search">Search</div>
@@ -27,6 +40,7 @@
 
 <script>
 import DropdownMenu from "../components/MenuDropdown";
+import { mapGetters } from "vuex";
 
 export default {
   name: "TheMenu",
@@ -35,6 +49,20 @@ export default {
   },
   data() {
     return {
+      profile: [
+        {
+          name: "Lalala",
+          address: "/#"
+        },
+        {
+          name: "Lalala",
+          address: "/#"
+        },
+        {
+          name: "Lalala",
+          address: "/#"
+        }
+      ],
       links: [
         {
           name: "Популярные фото",
@@ -82,6 +110,9 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    ...mapGetters(["isLoggedIn"])
   }
 };
 </script>

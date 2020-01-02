@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Contacts from "../views/Contacts.vue";
+import UserProfile from "../views/UserProfile.vue";
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,11 @@ const routes = [
     path: "/contacts",
     name: "contacts",
     component: Contacts
+  },
+  {
+    path: "/users/profile",
+    name: "profile",
+    component: UserProfile
   }
 ];
 

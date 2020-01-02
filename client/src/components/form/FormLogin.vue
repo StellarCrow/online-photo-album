@@ -1,22 +1,26 @@
 <template>
-  <form class="form">
+  <form class="form" @submit="loginUser">
     <div class="form__field">
-      <Username
-        :required="true"
-        :placeholder="'Username'"
-        :fieldName="'Username'"
-        :inputId="'login_username'"
+      <label for="login_username">Username</label>
+      <input
+        type="text"
+        v-model="formData.username"
+        placeholder="Username"
+        id="login_username"
+        required
       />
     </div>
     <div class="form__field">
-      <Password
-        :required="true"
-        :placeholder="'*****'"
-        :fieldName="'Пароль'"
-        :inputId="'login_password'"
+      <label for="login_password">Password</label>
+      <input
+        type="password"
+        v-model="formData.password"
+        placeholder="*****"
+        id="login_password"
+        required
       />
     </div>
-    <button class="button-submit" type="submit" @submit="sendForm">
+    <button class="button-submit" type="submit">
       Войти
     </button>
     <div class="form__field">
@@ -26,15 +30,10 @@
 </template>
 
 <script>
-import Username from "../form/InputLogin";
-import Password from "../form/InputPassword";
+import { mapActions } from "vuex";
 
 export default {
   name: "FormLogin",
-  components: {
-    Username,
-    Password
-  },
   data() {
     return {
       formData: {
@@ -44,8 +43,21 @@ export default {
     };
   },
   methods: {
-    sendForm() {
-      console.log("Will be sent to the server");
+    ...mapActions(["login"]),
+    loginUser() {
+      let user = {
+        username: this.formData.username,
+        password: this.formData.password
+      };
+      this.login(user)
+        .then(res => {
+          if (res.data.success) {
+            this.$router.push("/users/profile");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
