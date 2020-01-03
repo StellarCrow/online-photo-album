@@ -25,8 +25,8 @@
       <router-link v-if="!isLoggedIn" class="menu__item" to="/about"
         >О нас</router-link
       >
-      <router-link v-if="isLoggedIn" class="menu__item" to="/about"
-        >Logout</router-link
+      <a v-if="isLoggedIn" @click.prevent="logoutUser" class="menu__item" to="/"
+        >Logout</a
       >
     </div>
 
@@ -40,7 +40,7 @@
 
 <script>
 import DropdownMenu from "../components/MenuDropdown";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TheMenu",
@@ -51,8 +51,8 @@ export default {
     return {
       profile: [
         {
-          name: "Lalala",
-          address: "/#"
+          name: "Мой профиль",
+          address: "/users/profile"
         },
         {
           name: "Lalala",
@@ -113,6 +113,12 @@ export default {
   },
   computed: {
     ...mapGetters(["isLoggedIn"])
+  },
+  methods: {
+    ...mapActions(["logout"]),
+    logoutUser() {
+      this.logout();
+    }
   }
 };
 </script>

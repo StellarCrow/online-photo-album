@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Contacts from "../views/Contacts.vue";
 import UserProfile from "../views/UserProfile.vue";
+import store from "../store/index";
 
 Vue.use(VueRouter);
 
@@ -10,7 +11,10 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: Home,
+    meta: {
+      requiresGuest: true
+    }
   },
   {
     path: "/about",
@@ -18,8 +22,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    component: () => import("../views/About.vue")
   },
   {
     path: "/contacts",
@@ -29,12 +32,29 @@ const routes = [
   {
     path: "/users/profile",
     name: "profile",
-    component: UserProfile
+    component: UserProfile,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 
 const router = new VueRouter({
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.isLoggedIn) {
+      //Redirect to the Homepage
+      next("/");
+    } else next();
+  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+    if (store.getters.isLoggedIn) {
+      //Redirect to the profile page
+      next("/users/profile");
+    } else next();
+  } else next();
 });
 
 export default router;
