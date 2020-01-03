@@ -26,6 +26,21 @@ const actions = {
       commit("auth_success", token, user);
     }
     return res;
+  },
+  //Registration
+  async register({ commit }, userData) {
+    commit("register_request");
+    let res = await AuthenticationService.register(userData);
+    if (res.data.success !== undefined) {
+      const token = res.data.token;
+      const user = res.data.user;
+      localStorage.setItem("token", token);
+      //Set axios defaults
+      axios.defaults.headers.common["Authorization"] = token;
+
+      commit("register_success", token, user);
+    }
+    return res;
   }
 };
 
@@ -34,6 +49,14 @@ const mutations = {
     state.status = "loading";
   },
   auth_success(state, token, user) {
+    state.token = token;
+    state.user = user;
+    state.status = "success";
+  },
+  register_request(state) {
+    state.status = "loading";
+  },
+  register_success(state, token, user) {
     state.token = token;
     state.user = user;
     state.status = "success";

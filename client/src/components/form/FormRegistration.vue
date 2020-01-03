@@ -29,7 +29,7 @@
     </div>
     <div class="form__field">
       <Password
-        :inputData.sync="formData.repeatPassword"
+        :inputData.sync="formData.passwordRepeat"
         :required="true"
         :placeholder="'******'"
         :fieldName="'Повторите пароль'"
@@ -48,7 +48,7 @@
 import FullName from "../form/InputText";
 import Username from "../form/InputLogin";
 import Password from "../form/InputPassword";
-import AuthenticationService from "../../services/AuthenticationService";
+import { mapActions } from "vuex";
 
 export default {
   name: "FormRegistration",
@@ -63,17 +63,21 @@ export default {
         fullName: "",
         username: "",
         password: "",
-        repeatPassword: ""
+        passwordRepeat: ""
       },
       error: null
     };
   },
   methods: {
+    ...mapActions(["register"]),
     async sendFormData() {
       if (this.checkFormData()) {
         try {
-          let res = await AuthenticationService.register(this.formData);
-          console.log(res);
+          this.register(this.formData).then(res => {
+            if (res.data.success) {
+              this.$router.push("/users/profile");
+            }
+          });
         } catch (error) {
           this.error = error.response.data.error;
         }

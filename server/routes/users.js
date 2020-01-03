@@ -40,10 +40,24 @@ router.post("/registration", async function(req, res, next) {
       if (err) return next(err);
       newUser.password = hash;
       newUser.save().then(user => {
-        return res.status(201).json({
-          success: true,
-          msg: "New user is now registered."
-        });
+        const payload = {
+          _id: user._id,
+          name: user.name,
+          username: user.username
+        };
+        jwt.sign(
+          payload,
+          SECRET_KEY,
+          { expiresIn: 60 * 60 * 24 * 7 },
+          (err, token) => {
+            res.status(200).json({
+              success: true,
+              user: user,
+              token: `Bearer ${token}`,
+              msg: "You are registered and loggen in."
+            });
+          }
+        );
       });
     });
   });

@@ -1,8 +1,12 @@
 // ------------------IMPORTS-----------------------
-
+import Es6Promise from "es6-promise";
+import "@babel/polyfill";
+Es6Promise.polyfill();
+require("es6-promise").polyfill();
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+// import "es6-promise/auto";
 import store from "./store";
 import axios from "axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -44,7 +48,7 @@ if (token) {
 }
 
 new Vue({
-  router,
-  store,
+  router: router,
+  store: store,
   render: h => h(App)
 }).$mount("#app");
