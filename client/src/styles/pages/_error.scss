@@ -1,0 +1,19 @@
+.error {
+    text-align: center;
+    padding: 3% 0;
+
+    &__header {
+        font-family: $ff-tertiary;
+        font-size: 2em;
+        margin-bottom: 1.3em;
+
+        @media (max-width: $bp-small) {
+            font-size: 1.3em;
+        }
+    }
+
+    &__image {
+        max-width: 100%;
+        height: auto;
+    }
+}

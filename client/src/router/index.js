@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Contacts from "../views/Contacts.vue";
 import UserProfile from "../views/UserProfile.vue";
+import PageNotFound from "../views/PageNotFound.vue";
 import store from "../store/index";
 
 Vue.use(VueRouter);
@@ -36,10 +37,16 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: "*",
+    name: "pageNotFound",
+    component: PageNotFound
   }
 ];
 
 const router = new VueRouter({
+  mode: "history",
   routes
 });
 
