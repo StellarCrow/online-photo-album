@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Contacts from "../views/Contacts.vue";
 import UserProfile from "../views/UserProfile.vue";
 import PageNotFound from "../views/PageNotFound.vue";
-// import store from "../store/index";
+import store from "../store/index";
 
 Vue.use(VueRouter);
 
@@ -12,10 +12,10 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
-    // meta: {
-    //   requiresGuest: true
-    // }
+    component: Home,
+    meta: {
+      requiresGuest: true
+    }
   },
   {
     path: "/about",
@@ -33,10 +33,10 @@ const routes = [
   {
     path: "/users/:id",
     name: "profile",
-    component: UserProfile
-    // meta: {
-    //   requiresAuth: true
-    // }
+    component: UserProfile,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "*",
@@ -49,18 +49,18 @@ const router = new VueRouter({
   routes
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (!store.getters.isLoggedIn) {
-//       //Redirect to the Homepage
-//       next("/");
-//     } else next();
-//   } else if (to.matched.some(record => record.meta.requiresGuest)) {
-//     if (store.getters.isLoggedIn) {
-//       //Redirect to the profile page
-//       next(`/users/${store.getters.user._id}`);
-//     } else next();
-//   } else next();
-// });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.isLoggedIn) {
+      //Redirect to the Homepage
+      next("/");
+    } else next();
+  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+    if (store.getters.isLoggedIn) {
+      //Redirect to the profile page
+      next(`/users/${store.getters.user._id}`);
+    } else next();
+  } else next();
+});
 
 export default router;

@@ -1,4 +1,3 @@
-// import Vue from "vue";
 import AuthenticationService from "../services/AuthenticationService";
 import axios from "axios";
 import router from "../router/index";
@@ -22,7 +21,6 @@ const actions = {
     if (res.data.success) {
       const token = res.data.token;
       let user = res.data.user;
-      console.log(user);
       localStorage.setItem("token", token);
       //Set axios defaults
       axios.defaults.headers.common["Authorization"] = token;

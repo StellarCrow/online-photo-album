@@ -55,7 +55,7 @@ export default {
       this.login(formUser)
         .then(res => {
           if (res.data.success) {
-            // this.$router.push(`/users/${this.user._id}`);
+            this.$router.push(`/users/${this.user._id}`);
           }
         })
         .catch(err => {
