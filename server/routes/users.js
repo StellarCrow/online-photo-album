@@ -104,12 +104,18 @@ router.post("/login", function(req, res) {
 
 //test get profile
 router.get(
-  "/profile",
+  "/profile/:id",
   passport.authenticate("jwt", { session: false }),
-  function(req, res) {
-    return res.json({
-      user: req.user
-    });
+  function(req, res, next) {
+    let id = req.params.id;
+    User.findOne({_id: id}, function(err, user) {
+      if(err) return next(err);
+      if(user) {
+        return res.status(200).json({
+          user: user
+        })
+      }
+    })
   }
 );
 
