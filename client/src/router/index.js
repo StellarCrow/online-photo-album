@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Contacts from "../views/Contacts.vue";
 import UserProfile from "../views/UserProfile.vue";
 import PageNotFound from "../views/PageNotFound.vue";
+import UploadImage from "../views/UploadImage.vue";
 import store from "../store/index";
 
 Vue.use(VueRouter);
@@ -29,6 +30,14 @@ const routes = [
     path: "/contacts",
     name: "contacts",
     component: Contacts
+  },
+  {
+    path: "/uploadImage",
+    name: "uploadImage",
+    component: UploadImage,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/users/:id",

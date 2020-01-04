@@ -1,0 +1,10 @@
+.upload {
+  padding: 5% 0;
+
+  &__form {
+    padding: 5% 3%;
+    border: 10px solid $tertiary-color--lighter;
+    box-shadow: 10px 10px 0px $primary-color--lighter,
+      -10px -10px 0px $primary-color--lighter;
+  }
+}
