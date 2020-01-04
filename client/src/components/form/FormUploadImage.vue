@@ -1,8 +1,13 @@
 <template>
-  <form enctype="multipart/form-data" class="form-upload form">
+  <form
+    autocomplete="off"
+    enctype="multipart/form-data"
+    @submit.prevent="sendForm()"
+    class="form-upload form"
+  >
     <div class="form__group">
       <div class="form__field">
-        <label for="file"></label>
+        <label for="file" class="form__file-label">Выберите файл</label>
         <input
           type="file"
           id="file"
@@ -21,12 +26,25 @@
     <div class="form__group">
       <div class="form__field">
         <label for="desc">Описание фото</label>
-        <input type="text" id="desc" placeholder="Описание фото" />
+        <input
+          type="text"
+          id="desc"
+          placeholder="Описание фото"
+          v-model="formData.description"
+        />
       </div>
       <div class="form__field">
-        <label for="album">Добавить фотографию в альбом: </label>
-        <select name="album" id="album">
-          <option value="">Список альбомов</option>
+        <label for="album">Альбом: </label>
+        <select name="album" v-model="formData.album" id="album">
+          <div v-if="isAlbumsExist">
+            <option
+              v-for="(album, index) in albums"
+              :key="index"
+              :value="album._id"
+              >{{ album.name }}</option
+            >
+          </div>
+
           <option value="default" selected>Без альбома</option>
         </select>
       </div>
@@ -39,10 +57,11 @@
         />
         <label for="add_album">Добавить альбом...</label>
         <div v-show="isAddAlbumChecked">
-          <label for="new_album">Добавить альбом:</label>
+          <!-- <label for="new_album">Добавить альбом:</label> -->
           <input
             type="text"
             maxlength="30"
+            v-model="newAlbum"
             id="new_album"
             placeholder="Название нового альбома..."
           />
@@ -50,14 +69,30 @@
       </div>
       <div class="form__field">
         <label for="tags">Добавить теги:</label>
-        <input type="text" name="tags" id="tags" required />
+        <input
+          type="text"
+          name="tags"
+          id="tags"
+          v-model="tagInput"
+          required
+          @keydown.enter.prevent="updateList()"
+        />
       </div>
       <div class="form__tags">
         <ul class="taglist">
-          list
+          <li
+            class="taglist__item"
+            v-for="(tag, index) in formData.tags"
+            :key="index"
+          >
+            {{ tag }}
+            <i class="taglist__icon" @click="deleteTag(index)"
+              ><font-awesome-icon :icon="['fa', 'times']"></font-awesome-icon
+            ></i>
+          </li>
         </ul>
       </div>
-      <button class="button-submit">Загрузить фото</button>
+      <button type="submit" class="button-submit">Загрузить фото</button>
     </div>
   </form>
 </template>
@@ -67,19 +102,26 @@ export default {
   name: "FormUploadImage",
   data() {
     return {
+      albums: [],
+      tagInput: "",
+      isAlbumsExist: false,
       isAddAlbumChecked: false,
       errorText: "",
       errorDialog: null,
       image: null,
       maxSize: 5120,
+      newAlbum: "",
       formData: {
         imageFile: null,
         description: "",
-        album: "",
+        album: "default",
         tags: [],
         userId: this.$store.getters.userId
       }
     };
+  },
+  async mounted() {
+    if (this.$store.getters.user.albums === 0) return;
   },
   methods: {
     onFileChange(file) {
@@ -102,6 +144,21 @@ export default {
           this.image = imageURL;
         }
       }
+    },
+    updateList() {
+      let str = this.tagInput
+        .trim()
+        .split(" ")
+        .join("")
+        .toLowerCase();
+      this.formData.tags.push(str);
+      this.tagInput = "";
+    },
+    deleteTag(index) {
+      this.formData.tags.splice(index, 1);
+    },
+    sendForm() {
+      console.log("In sending");
     }
   }
 };

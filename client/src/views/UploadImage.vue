@@ -1,7 +1,7 @@
 <template>
   <section class="upload">
     <div class="container">
-      <h2>Upload Image</h2>
+      <h2>Загрузить изображение</h2>
       <div class="upload__form">
         <FormUpload></FormUpload>
       </div>
