@@ -3,7 +3,6 @@
     <label :for="inputId">{{ fieldName }}</label>
     <textarea
       v-model="textarea"
-      type="tel"
       class="input-phone"
       :id="inputId"
       :required="required"

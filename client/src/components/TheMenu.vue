@@ -55,8 +55,8 @@ export default {
           address: `/users/${this.$store.getters.user._id}`
         },
         {
-          name: "Lalala",
-          address: "/#"
+          name: "Добавить фото",
+          address: "/uploadImage"
         },
         {
           name: "Lalala",

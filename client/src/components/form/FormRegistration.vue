@@ -89,7 +89,8 @@ export default {
         if (this.formData[prop] === "") return false;
       }
       return true;
-    }
+    },
+    validation() {}
   }
 };
 </script>

@@ -1,24 +1,37 @@
 <template>
   <form action="#" method="post" class="form form-contacts">
     <div class="form__field">
-      <InputText
-        :fieldName="'Имя'"
-        :required="true"
-        :placeholder="'Ваше имя'"
-        :inputId="'contacts__name'"
+      <label for="contacts__name">Имя</label>
+      <input type="text" id="contacts__name" placeholder="Ваше имя" required />
+    </div>
+    <div class="form__field">
+      <label for="contacts__email">Email</label>
+      <input
+        type="text"
+        id="contacts__email"
+        placeholder="email@example.com"
+        required
       />
     </div>
     <div class="form__field">
-      <InputEmail :required="true" :inputId="'contacts__email'" />
+      <label for="contacts__phone">Номер телефона</label>
+      <input
+        type="tel"
+        id="contacts__phone"
+        placeholder="+38(xxx)xxx-xx-xx"
+        maxlength="17"
+        required
+      />
     </div>
     <div class="form__field">
-      <InputPhone :required="true" :inputId="'contacts__phone'" />
-    </div>
-    <div class="form__field">
-      <InputTextArea
-        :required="false"
-        :fieldName="'Сообщение'"
-        :inputId="'contacts__textarea'"
+      <label for="contacts__textarea">Сообщение</label>
+      <textarea
+        class="input-phone"
+        id="contacts__textarea"
+        placeholder="Вопросы/Пожелания..."
+        maxlength="500"
+        rows="8"
+        cols="10"
       />
     </div>
     <button type="submit" class="button-submit form__submit">Отправить</button>
@@ -26,19 +39,8 @@
 </template>
 
 <script>
-import InputText from "../form/InputText";
-import InputEmail from "../form/InputEmail";
-import InputPhone from "../form/InputPhone";
-import InputTextArea from "../form/InputTextArea";
-
 export default {
   name: "FormContactUs",
-  components: {
-    InputText,
-    InputEmail,
-    InputPhone,
-    InputTextArea
-  },
   data() {
     return {};
   }
