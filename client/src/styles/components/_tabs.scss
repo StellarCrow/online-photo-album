@@ -1,0 +1,44 @@
+@import "../basics/base";
+
+.tabs {
+  &__list {
+    @extend %clear-horizontal-list;
+    justify-content: center;
+  }
+
+  &__list-item {
+      margin-right: 0.2em;
+      padding: 0.5em 1.3em;
+      border-top-left-radius: 0.5em;
+      border-top-right-radius: 0.5em;
+      width: 20%;
+      text-align: center;
+      background-color: $primary-color--lighter;
+
+      &:hover {
+          cursor: pointer;
+      }
+
+      &.is-active {
+          border-bottom: none;
+          background-color: $gray--light;
+      }
+
+      &:last-child {
+        margin-right: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        font-weight: $light;
+    }
+  }
+
+  &__details {
+    background-color: $gray--light;
+    padding: 3% 2%;
+    max-width: 100%;
+}
+
+}

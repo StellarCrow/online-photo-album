@@ -16,6 +16,15 @@ padding: 0;
 
 body {
     font-size: $base-font-size;
+    font-family: $ff-tertiary;
+
+    @media #{$mq-xsmall} {
+      font-size: $base-font-size/1.2;
+    }
+
+    @media #{$mq-small} {
+      font-size: $base-font-size;
+    }
 
     @media #{$mq-medium} {
         font-size: $base-font-size*1.2;

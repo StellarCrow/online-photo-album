@@ -1,11 +1,14 @@
 <template>
-  <div>
+  <div class="userpage">
     <section class="profile">
       <div class="container profile-container">
-        <div class="profile__avatar">Avatar</div>
+        <div class="profile__avatar"></div>
         <div class="profile__about">
           <div class="profile__username">Username: {{ username }}</div>
           <div class="profile__name">Fullname: {{ name }}</div>
+          <button v-if="isMyPage" @click="uploadImage" class="button-submit">
+            Добавить фото
+          </button>
         </div>
       </div>
     </section>
@@ -38,15 +41,19 @@ export default {
   data() {
     return {
       name: "",
-      username: ""
+      username: "",
+      isMyPage: false
     };
   },
+  methods: {
+    uploadImage() {
+      this.$router.push(`/uploadImage`);
+    }
+  },
   async mounted() {
-    // if (this.$route.params.id === this.$store.getters.userId) {
-    //   this.user = this.$store.state.user;
-    // } else {
-
-    // }
+    if (this.$route.params.id === this.$store.getters.userId) {
+      this.isMyPage = true;
+    }
     let res = await UsersService.getUser(this.$route.params.id);
     this.username = res.data.user.username;
     this.name = res.data.user.name;

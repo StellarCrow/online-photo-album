@@ -1,12 +1,13 @@
 <template>
   <div class="tabs">
-    <ul>
+    <ul class="tabs__list">
       <li
+        class="tabs__list-item"
         v-for="(tab, index) in tabs"
         :key="index"
         :class="{ 'is-active': tab.isActive }"
       >
-        <a href="#" @click="selectTab(tab)">{{ tab.name }}</a>
+        <a @click="selectTab(tab)">{{ tab.name }}</a>
       </li>
     </ul>
     <div class="tabs__details">
@@ -36,4 +37,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "../styles/components/_tabs.scss";
+</style>
