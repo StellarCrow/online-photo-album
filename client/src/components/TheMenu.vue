@@ -51,8 +51,8 @@ export default {
     return {
       profile: [
         {
-          name: "Мой профиль",
-          address: "/users/profile"
+          name: "Мой профиль"
+          // address: `/users/${this.user._id}`
         },
         {
           name: "Lalala",
@@ -112,7 +112,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(["isLoggedIn", "user"])
   },
   methods: {
     ...mapActions(["logout"]),

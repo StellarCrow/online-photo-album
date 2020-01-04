@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "FormLogin",
@@ -42,17 +42,20 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters(["user"])
+  },
   methods: {
     ...mapActions(["login"]),
     loginUser() {
-      let user = {
+      let formUser = {
         username: this.formData.username,
         password: this.formData.password
       };
-      this.login(user)
+      this.login(formUser)
         .then(res => {
           if (res.data.success) {
-            this.$router.push("/users/profile");
+            // this.$router.push(`/users/${this.user._id}`);
           }
         })
         .catch(err => {

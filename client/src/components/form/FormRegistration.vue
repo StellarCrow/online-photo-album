@@ -75,6 +75,7 @@ export default {
         try {
           this.register(this.formData).then(res => {
             if (res.data.success) {
+              debugger;
               this.$router.push("/users/profile");
             }
           });
