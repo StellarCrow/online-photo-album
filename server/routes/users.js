@@ -9,6 +9,7 @@ const SECRET_KEY = keys.secret;
 
 let User = require("../models/User");
 let Album = require("../models/Album");
+let Photo = require("../models/Photo");
 
 // User registration
 router.post("/registration", async function(req, res, next) {
@@ -104,36 +105,52 @@ router.post("/login", function(req, res) {
 });
 
 //get profile
-router.get(
-  "/:id",
-  passport.authenticate("jwt", { session: false }),
-  function(req, res, next) {
-    let id = req.params.id;
-    User.findOne({_id: id}, function(err, user) {
-      if(err) return next(err);
-      if(user) {
-        return res.status(200).json({
-          success: true,
-          user: user
-        })
-      }
-    })
-  }
-);
+router.get("/:id", passport.authenticate("jwt", { session: false }), function(
+  req,
+  res,
+  next
+) {
+  let id = req.params.id;
+  User.findOne({ _id: id }, function(err, user) {
+    if (err) return next(err);
+    if (user) {
+      return res.status(200).json({
+        success: true,
+        user: user
+      });
+    }
+  });
+});
 
 //Get user's albums
-router.get('/:id/albums', function(req, res, next) {
+router.get("/:id/albums", function(req, res, next) {
   let id = req.params.id;
-  Album.find({user: id}, function(err, albums) {
-    if(err) return next(err);
-    if(albums) {
+  Album.find({ user: id }, function(err, albums) {
+    if (err) return next(err);
+    if (albums) {
       return res.status(200).json({
         success: true,
         msg: "Successfully got user's albums",
         albums: albums
-      })
+      });
     }
-  })
-})
+  });
+});
+
+//Get user's photos
+router.get("/:id/photos", function(req, res, next) {
+  let id = req.params.id;
+  console.log("MY ID " + id);
+  Photo.find({ user: id }, function(err, photos) {
+    if (err) return next(err);
+    if (photos) {
+      return res.status(200).json({
+        success: true,
+        msg: "Successfully got user's photos",
+        photos: photos 
+      });
+    }
+  });
+});
 
 module.exports = router;

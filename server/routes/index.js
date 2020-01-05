@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const multer = require("multer");
+const path = require("../config/keys").storagePath;
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, path);
   },
   filename: function(req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
@@ -41,7 +42,7 @@ router.post(
       description: req.body.description,
       user: user,
       tags: req.body.tags.split(','),
-      link: req.file.path,
+      link: req.file.filename,
       album: albumId
     });
 

@@ -15,7 +15,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true });
 console.log(mongoose.connection.readyState);
 
 
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

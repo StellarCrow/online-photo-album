@@ -3,6 +3,7 @@ node_modules
 /dist
 src/assets
 public/images
+public/uploads
 src/config
 
 # local env files

@@ -13,16 +13,14 @@
       </div>
     </section>
     <section>
-      <div class="container">
-        <tabs>
-          <tab name="Все фото" :selected="true">
-            Все фото
-          </tab>
-          <tab name="Альбомы">
-            Альбомы
-          </tab>
-        </tabs>
-      </div>
+      <tabs>
+        <tab name="Все фото" :selected="true">
+          <PhotoGallery :userId="this.$route.params.id"></PhotoGallery>
+        </tab>
+        <tab name="Альбомы">
+          Альбомы
+        </tab>
+      </tabs>
     </section>
   </div>
 </template>
@@ -31,18 +29,21 @@
 import UsersService from "../services/UsersService";
 import Tabs from "../components/TabsBase";
 import Tab from "../components/TabsTab";
+import PhotoGallery from "../components/ImageGallery";
 
 export default {
   name: "UserProfile",
   components: {
     Tabs,
-    Tab
+    Tab,
+    PhotoGallery
   },
   data() {
     return {
       name: "",
       username: "",
-      isMyPage: false
+      isMyPage: false,
+      userId: ""
     };
   },
   methods: {
