@@ -8,6 +8,7 @@ const keys = require("../config/keys");
 const SECRET_KEY = keys.secret;
 
 let User = require("../models/User");
+let Album = require("../models/Album");
 
 // User registration
 router.post("/registration", async function(req, res, next) {
@@ -102,9 +103,9 @@ router.post("/login", function(req, res) {
   });
 });
 
-//test get profile
+//get profile
 router.get(
-  "/profile/:id",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
   function(req, res, next) {
     let id = req.params.id;
@@ -119,5 +120,20 @@ router.get(
     })
   }
 );
+
+//Get user's albums
+router.get('/:id/albums', function(req, res, next) {
+  let id = req.params.id;
+  Album.find({user: id}, function(err, albums) {
+    if(err) return next(err);
+    if(albums) {
+      return res.status(200).json({
+        success: true,
+        msg: "Successfully got user's albums",
+        albums: albums
+      })
+    }
+  })
+})
 
 module.exports = router;

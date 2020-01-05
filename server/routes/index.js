@@ -17,6 +17,7 @@ const User = require("../models/User");
 const Album = require("../models/Album");
 const Photo = require("../models/Photo");
 
+//Upload image
 router.post(
   "/uploadImage",
   upload.single("imageFile"),
@@ -39,7 +40,7 @@ router.post(
     let newPhoto = await Photo.create({
       description: req.body.description,
       user: user,
-      tags: req.body.tags,
+      tags: req.body.tags.split(','),
       link: req.file.path,
       album: albumId
     });

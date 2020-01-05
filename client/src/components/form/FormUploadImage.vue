@@ -2,7 +2,7 @@
   <form
     autocomplete="off"
     enctype="multipart/form-data"
-    @submit.prevent="sendForm()"
+    @submit="sendForm()"
     class="form-upload form"
   >
     <div class="form__group">
@@ -36,14 +36,12 @@
       <div class="form__field">
         <label for="album">Альбом: </label>
         <select name="album" v-model="formData.album" id="album">
-          <div v-if="isAlbumsExist">
-            <option
-              v-for="(album, index) in albums"
-              :key="index"
-              :value="album._id"
-              >{{ album.name }}</option
-            >
-          </div>
+          <option
+            v-for="(album, index) in albums"
+            :key="index"
+            :value="album._id"
+            >{{ album.name }}</option
+          >
         </select>
       </div>
       <div class="form__field">
@@ -95,14 +93,13 @@
 </template>
 
 <script>
-import ImagesService from "../../services/ImagesService";
+import PhotosService from "../../services/PhotosService";
 export default {
   name: "FormUploadImage",
   data() {
     return {
       albums: [],
       tagInput: "",
-      isAlbumsExist: false,
       isAddAlbumChecked: false,
       errorText: "",
       errorDialog: null,
@@ -119,8 +116,11 @@ export default {
     };
   },
   async mounted() {
-    if (this.$store.getters.user.albums === 0) return;
-    this.albums = this.$store.getters.user.albums;
+    let res = await PhotosService.getUserAlbums(this.$store.getters.userId);
+    if (res.data.success) {
+      this.albums = res.data.albums;
+      this.formData.album = this.albums[0]._id;
+    }
   },
   methods: {
     onFileChange(file) {
@@ -164,8 +164,10 @@ export default {
       for (let key in this.formData) {
         data.append(key, this.formData[key]);
       }
-      let res = await ImagesService.uploadImage(data);
-      console.log(res);
+      let res = await PhotosService.uploadImage(data);
+      if (res.data.success) {
+        this.$router.push(`/users/${this.formData.userId}`);
+      }
     }
   }
 };

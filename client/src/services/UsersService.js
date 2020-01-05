@@ -2,6 +2,6 @@ import Api from "./Api";
 
 export default {
   getUser(id) {
-    return Api().get(`/users/profile/${id}`);
+    return Api().get(`/users/${id}`);
   }
 };
