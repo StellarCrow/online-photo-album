@@ -8,7 +8,7 @@ let AlbumSchema = new Schema({
     required: true
   },
   photos: [{ type: Schema.Types.ObjectId, ref: "Photo" }],
-  user: { type: Schema.Types.ObjectId, ref: "User" }
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true }
 });
 
 module.exports = mongoose.model('Album', AlbumSchema);

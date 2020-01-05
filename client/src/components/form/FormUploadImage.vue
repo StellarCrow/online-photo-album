@@ -44,8 +44,6 @@
               >{{ album.name }}</option
             >
           </div>
-
-          <option value="default" selected>Без альбома</option>
         </select>
       </div>
       <div class="form__field">
@@ -61,7 +59,7 @@
           <input
             type="text"
             maxlength="30"
-            v-model="newAlbum"
+            v-model="formData.newAlbum"
             id="new_album"
             placeholder="Название нового альбома..."
           />
@@ -110,11 +108,11 @@ export default {
       errorDialog: null,
       image: null,
       maxSize: 5120,
-      newAlbum: "",
       formData: {
         imageFile: null,
         description: "",
-        album: "default",
+        album: "",
+        newAlbum: "",
         tags: [],
         userId: this.$store.getters.userId
       }
@@ -122,6 +120,7 @@ export default {
   },
   async mounted() {
     if (this.$store.getters.user.albums === 0) return;
+    this.albums = this.$store.getters.user.albums;
   },
   methods: {
     onFileChange(file) {

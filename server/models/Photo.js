@@ -14,7 +14,7 @@ let PhotoSchema = new Schema({
       type: String,
       required: true
   },
-  tags: [{String}]
+  tags: [{type: String}]
 });
 
 module.exports = mongoose.model('Photo', PhotoSchema);
