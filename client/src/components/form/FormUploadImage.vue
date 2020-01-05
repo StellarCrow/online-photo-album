@@ -74,7 +74,6 @@
           name="tags"
           id="tags"
           v-model="tagInput"
-          required
           @keydown.enter.prevent="updateList()"
         />
       </div>
@@ -98,6 +97,7 @@
 </template>
 
 <script>
+import ImagesService from "../../services/ImagesService";
 export default {
   name: "FormUploadImage",
   data() {
@@ -138,7 +138,6 @@ export default {
             "Your file is too big! Please select an image under 5MB";
         } else {
           // turn file into image URL
-          console.log(imageFile);
           let imageURL = URL.createObjectURL(imageFile);
           this.formData.imageFile = imageFile;
           this.image = imageURL;
@@ -157,8 +156,17 @@ export default {
     deleteTag(index) {
       this.formData.tags.splice(index, 1);
     },
-    sendForm() {
-      console.log("In sending");
+    async sendForm() {
+      if (this.isAlbumsExist && this.newAlbum !== "") {
+        this.formData.album = this.newAlbum;
+      }
+      let data = new FormData();
+
+      for (let key in this.formData) {
+        data.append(key, this.formData[key]);
+      }
+      let res = await ImagesService.uploadImage(data);
+      console.log(res);
     }
   }
 };

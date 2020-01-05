@@ -55,8 +55,10 @@ export default {
       this.isMyPage = true;
     }
     let res = await UsersService.getUser(this.$route.params.id);
-    this.username = res.data.user.username;
-    this.name = res.data.user.name;
+    if (res.data.success) {
+      this.username = res.data.user.username;
+      this.name = res.data.user.name;
+    }
   }
 };
 </script>

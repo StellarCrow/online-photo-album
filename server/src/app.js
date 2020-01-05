@@ -9,11 +9,13 @@ const MONGO_URI = require("../config/keys").mongoURI;
 const app = express();
 
 let usersRouter = require('../routes/users');
+let indexRouter = require('../routes/index');
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true });
 console.log(mongoose.connection.readyState);
 
 
+app.use('/uploads', express.static('uploads'));
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -23,6 +25,7 @@ app.use(passport.initialize());
 require('../config/passport')(passport);
 
 
+app.use('/', indexRouter);
 app.use('/users/', usersRouter);
 
 app.listen(process.env.PORT || 8081);

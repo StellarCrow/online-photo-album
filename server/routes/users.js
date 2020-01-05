@@ -112,6 +112,7 @@ router.get(
       if(err) return next(err);
       if(user) {
         return res.status(200).json({
+          success: true,
           user: user
         })
       }
