@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="image-wrapper">
     <ImageComponent :imageId="photoId" :userId="userId"></ImageComponent>
   </section>
 </template>
@@ -22,4 +22,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.image-wrapper {
+  padding: 5% 4%;
+  background: rgba($primary-color, 0.7);
+}
+</style>

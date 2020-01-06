@@ -3,8 +3,12 @@
     <div class="photo__image">
       <img :src="`${publicPath}uploads/${photo.link}`" alt="Photo" />
     </div>
+
     <div class="photo__details details">
       <div class="details__header">
+        <span class="details__icon"
+          ><font-awesome-icon :icon="['fa', 'user']"></font-awesome-icon
+        ></span>
         <router-link class="details__link" :to="`/users/${user._id}`">{{
           user.username
         }}</router-link>
@@ -13,7 +17,7 @@
         <p class="details__description" v-if="photo.description">
           {{ photo.description }}
         </p>
-        <div class="details__tags" v-if="photo.tags.length !== 0">
+        <div class="details__tags" v-if="photo.tags && photo.tags.length > 0">
           <ul class="taglist">
             <li
               class="taglist__item"
@@ -24,6 +28,7 @@
             </li>
           </ul>
         </div>
+        <div class="details__likes"></div>
       </div>
     </div>
   </div>

@@ -26,6 +26,8 @@ router.post(
   async function(req, res) {
     let albumId;
     let user = req.body.userId;
+    let tags = req.body.tags === "" ? [] : req.body.tags;
+    
     if (req.body.newAlbum !== "") {
       let newAlbum = await Album.create({
         name: req.body.newAlbum,
@@ -41,7 +43,7 @@ router.post(
     let newPhoto = await Photo.create({
       description: req.body.description,
       user: user,
-      tags: req.body.tags.split(",") || [],
+      tags: tags,
       link: req.file.filename,
       album: albumId
     });

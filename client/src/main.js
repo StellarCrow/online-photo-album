@@ -17,7 +17,8 @@ import {
   faChevronRight,
   faChevronLeft,
   faTimes,
-  faHeart
+  faHeart,
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faTwitter,
@@ -37,7 +38,8 @@ library.add(
   faFacebookF,
   faInstagram,
   faTimes,
-  faHeart
+  faHeart,
+  faUser
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

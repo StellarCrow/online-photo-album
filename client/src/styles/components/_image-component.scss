@@ -2,25 +2,61 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
-    align-items: stretch;
+    background-color: #fff;
+    box-shadow: 0 0 10px $gray--dark;
+    max-width: 100%;
 
     &__image {
         flex: 1 0 65%;
-        align-self: center;
+
+        img {
+            display: block;
+            margin: 0 auto;
+        }
     }
 
     &__details {
         flex: 1 0 35%;
-        border: 1px solid $gray;
+        border-left: 1px solid $gray;
     }
 }
 
+
 .details {
+
+    &__content, &__header {
+        padding: 1em 0.5em;
+    }
 
     &__header {
         font-size: 1.3em;
         border-bottom: 1px solid $gray;
-        padding: 1em 0.5em;
+    }
+
+    &__icon {
+        margin-right: 0.5em;
+        color: $primary-color;
+    }
+
+    &__link {
+        text-decoration: none;
+        font-weight: $bold;
+        color: $text-color--dark;
+
+        &:hover {
+            color: $primary-color--lighter
+        }
     }
     
+}
+
+
+
+//---------MOBILE--------------
+
+@media (max-width: $bp-small) {
+    .photo {
+        flex-flow: column nowrap;
+    }
+
 }
