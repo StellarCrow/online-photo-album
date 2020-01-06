@@ -2,7 +2,7 @@
   <form
     autocomplete="off"
     enctype="multipart/form-data"
-    @submit="sendForm()"
+    @submit.prevent="sendForm()"
     class="form-upload form"
   >
     <div class="form__group">
@@ -70,6 +70,7 @@
           name="tags"
           id="tags"
           v-model="tagInput"
+          minlength="1"
           @keydown.enter.prevent="updateList()"
         />
       </div>

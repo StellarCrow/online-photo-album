@@ -41,7 +41,7 @@ router.post(
     let newPhoto = await Photo.create({
       description: req.body.description,
       user: user,
-      tags: req.body.tags.split(','),
+      tags: req.body.tags.split(",") || [],
       link: req.file.filename,
       album: albumId
     });
@@ -57,5 +57,22 @@ router.post(
     });
   }
 );
+
+//Get Photo
+router.get("/image/:id", function(req, res, next) {
+  let id = req.params.id;
+  Photo.findById(id)
+    .populate("user")
+    .exec(function(err, photo) {
+      if (err) return next(err);
+      if (photo) {
+        return res.status(200).json({
+          success: true,
+          msg: "Returned photo with user data",
+          photo: photo
+        });
+      }
+    });
+});
 
 module.exports = router;

@@ -1,7 +1,9 @@
 <template>
   <nav class="navigation">
     <div class="navigation__logo">
-      <router-link to="/">Logo</router-link>
+      <router-link to="/"
+        ><img src="@/assets/logo/logo-text.svg" alt="Logo"
+      /></router-link>
     </div>
 
     <input type="checkbox" id="navigation_icon" />

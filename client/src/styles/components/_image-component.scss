@@ -1,0 +1,26 @@
+.photo {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: stretch;
+
+    &__image {
+        flex: 1 0 65%;
+        align-self: center;
+    }
+
+    &__details {
+        flex: 1 0 35%;
+        border: 1px solid $gray;
+    }
+}
+
+.details {
+
+    &__header {
+        font-size: 1.3em;
+        border-bottom: 1px solid $gray;
+        padding: 1em 0.5em;
+    }
+    
+}

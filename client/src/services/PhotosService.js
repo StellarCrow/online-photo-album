@@ -9,5 +9,8 @@ export default {
   },
   getUserPhotos(id) {
     return Api().get(`/users/${id}/photos`);
+  },
+  getPhoto(id) {
+    return Api().get(`/image/${id}`);
   }
 };

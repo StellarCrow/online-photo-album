@@ -5,6 +5,7 @@ import Contacts from "../views/Contacts.vue";
 import UserProfile from "../views/UserProfile.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 import UploadImage from "../views/UploadImage.vue";
+import ImagePage from "../views/ImagePage.vue";
 import store from "../store/index";
 
 Vue.use(VueRouter);
@@ -46,6 +47,11 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: "/users/:id/photos/:pid",
+    name: "image",
+    component: ImagePage
   },
   {
     path: "*",
