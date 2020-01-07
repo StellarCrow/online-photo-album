@@ -1,13 +1,9 @@
 <template>
-  <div class="like">
-    <input type="checkbox" id="like" v-model="isLiked" />
-    <label for="like" class="like__label" @click="changeLike"
-      ><i
-        ><font-awesome-icon
-          :icon="[`${iconLike}`, 'heart']"
-        ></font-awesome-icon></i
-    ></label>
-  </div>
+  <span class="like">
+    <i
+      ><font-awesome-icon :icon="[`${iconLike}`, 'heart']"></font-awesome-icon
+    ></i>
+  </span>
 </template>
 
 <script>
@@ -18,7 +14,6 @@ export default {
   props: ["userId", "photoId"],
   data() {
     return {
-      isLiked: false,
       payload: {
         imageId: this.photoId,
         userId: this.userId
@@ -26,28 +21,26 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["likeStatus", "totalLikesCount"]),
+    ...mapGetters(["likeStatus", "totalLikesCount", "isLoggedIn"]),
     iconLike() {
-      return this.isLiked ? "fa" : "far";
+      return this.likeStatus ? "fa" : "far";
     }
   },
   methods: {
     ...mapActions(["getPhotoLikeStatus", "setLike", "deleteLike"]),
     changeLike() {
-      if (this.isLiked) {
+      if (!this.isLoggedIn) return;
+      if (this.likeStatus) {
         this.deleteLike(this.payload);
       } else this.setLike(this.payload);
     },
     getStatus() {
       this.getPhotoLikeStatus(this.payload);
-      this.isLiked = this.likeStatus;
     }
   },
   mounted() {
     console.log("In mounted");
     this.getStatus();
-    // this.$store.dispatch("getPhotoLikeStatus", this.photoId, this.userId);
-    // this.getPhotoLikeStatus(this.photoId, this.userId);
   }
 };
 </script>
