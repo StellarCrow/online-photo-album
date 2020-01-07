@@ -1,0 +1,11 @@
+.like {
+    font-size: 2em;
+
+    #like {
+        display: none;
+    }
+
+    &__label:hover {
+        cursor: pointer;
+    }
+}

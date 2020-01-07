@@ -28,7 +28,9 @@
             </li>
           </ul>
         </div>
-        <div class="details__likes"></div>
+        <div class="details__likes">
+          <LikeButton></LikeButton>
+        </div>
       </div>
     </div>
   </div>
@@ -36,10 +38,12 @@
 
 <script>
 import PhotosService from "../services/PhotosService";
+import LikeButton from "../components/LikeButton";
 
 export default {
   name: "ImageComponent",
   props: ["imageId", "userId"],
+  components: { LikeButton },
   data() {
     return {
       photo: {},

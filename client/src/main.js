@@ -25,6 +25,7 @@ import {
   faFacebookF,
   faInstagram
 } from "@fortawesome/free-brands-svg-icons";
+import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 // -----------------------------------------------------
@@ -39,7 +40,8 @@ library.add(
   faInstagram,
   faTimes,
   faHeart,
-  faUser
+  faUser,
+  farHeart
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
