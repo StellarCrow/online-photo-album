@@ -29,8 +29,11 @@
           </ul>
         </div>
         <div class="details__likes">
-          <LikeButton :photoId="imageId" :userId="userId"></LikeButton>
-          {{ likesCount }}
+          <LikeButton
+            :photoId="imageId"
+            :userId="this.$store.getters.userId"
+          ></LikeButton>
+          {{ totalLikesCount }}
         </div>
       </div>
     </div>
@@ -40,6 +43,7 @@
 <script>
 import PhotosService from "../services/PhotosService";
 import LikeButton from "../components/LikeButton";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ImageComponent",
@@ -49,16 +53,18 @@ export default {
     return {
       photo: {},
       user: {},
-      likesCount: 0,
       publicPath: process.env.BASE_URL
     };
+  },
+  computed: {
+    ...mapGetters(["totalLikesCount"])
   },
   async mounted() {
     let res = await PhotosService.getPhoto(this.imageId);
     if (res.data.success) {
       this.photo = res.data.photo;
       this.user = res.data.photo.user;
-      this.likesCount = res.data.likesCount;
+      // this.likesCount = res.data.likesCount;
     }
   }
 };

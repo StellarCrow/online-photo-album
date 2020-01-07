@@ -1,5 +1,5 @@
 <template>
-  <span class="like">
+  <span class="like" @click="changeLike">
     <i
       ><font-awesome-icon :icon="[`${iconLike}`, 'heart']"></font-awesome-icon
     ></i>
@@ -32,7 +32,9 @@ export default {
       if (!this.isLoggedIn) return;
       if (this.likeStatus) {
         this.deleteLike(this.payload);
-      } else this.setLike(this.payload);
+      } else {
+        this.setLike(this.payload);
+      }
     },
     getStatus() {
       this.getPhotoLikeStatus(this.payload);

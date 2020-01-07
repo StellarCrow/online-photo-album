@@ -25,28 +25,27 @@ router.get("/:id", async function(req, res, next) {
 });
 
 //Get photo's Like status
-router.get("/:id/:uid/like/status", function(req, res, next) {
+router.get("/:id/:uid/like/status", async function(req, res, next) {
   let image = req.params.id;
   let user = req.params.uid;
-  console.log(`IM HERE`);
+
+  let likes = await Like.findOne({photo: image});
   
-  Like.findOne({ photo: image, users: user }, function(err, like) {
+  await Like.findOne({ photo: image, users: user }, function(err, like) {
     if (err) return next(err);
     if (like) {
-      console.log(like);
-      
       return res.status(200).json({
         success: true,
         msg: "User was found in image's likes",
         isLiked: true,
-        totalCount: like.users.length
+        totalCount: likes.users.length
       });
     } else {
       return res.status(200).json({
         success: true,
         msg: "User was not found in image's likes",
         isLiked: false,
-        totalCount: 0
+        totalCount: likes.users.length
       });
     }
   });
@@ -63,9 +62,6 @@ router.post("/:id/like/set", function(req, res, next) {
   ) {
     if (err) return next(err);
     if (like) {
-      console.log(like.users);
-      console.log(like.users.length);
-      
       return res.status(200).json({
           success: true, 
           msg: "Like was successfully setted",
