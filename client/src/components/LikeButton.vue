@@ -1,6 +1,6 @@
 <template>
   <div class="like">
-    <input type="checkbox" id="like" v-model="likeStatus" />
+    <input type="checkbox" id="like" v-model="isLiked" />
     <label for="like" class="like__label" @click="changeLike"
       ><i
         ><font-awesome-icon
@@ -17,7 +17,13 @@ export default {
   name: "LikeButton",
   props: ["userId", "photoId"],
   data() {
-    return {};
+    return {
+      isLiked: false,
+      payload: {
+        imageId: this.photoId,
+        userId: this.userId
+      }
+    };
   },
   computed: {
     ...mapGetters(["likeStatus", "totalLikesCount"]),
@@ -28,12 +34,21 @@ export default {
   methods: {
     ...mapActions(["getPhotoLikeStatus", "setLike", "deleteLike"]),
     changeLike() {
-      if (this.likeStatus) {
-        this.deleteLike(this.photoId, this.userId);
-      } else this.setLike(this.photoId, this.userId);
+      if (this.isLiked) {
+        this.deleteLike(this.payload);
+      } else this.setLike(this.payload);
+    },
+    getStatus() {
+      this.getPhotoLikeStatus(this.payload);
+      this.isLiked = this.likeStatus;
     }
   },
-  mounted() {}
+  mounted() {
+    console.log("In mounted");
+    this.getStatus();
+    // this.$store.dispatch("getPhotoLikeStatus", this.photoId, this.userId);
+    // this.getPhotoLikeStatus(this.photoId, this.userId);
+  }
 };
 </script>
 

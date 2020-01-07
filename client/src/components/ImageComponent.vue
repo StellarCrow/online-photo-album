@@ -29,7 +29,8 @@
           </ul>
         </div>
         <div class="details__likes">
-          <LikeButton></LikeButton>
+          <LikeButton :photoId="imageId" :userId="userId"></LikeButton>
+          {{ likesCount }}
         </div>
       </div>
     </div>
@@ -48,6 +49,7 @@ export default {
     return {
       photo: {},
       user: {},
+      likesCount: 0,
       publicPath: process.env.BASE_URL
     };
   },
@@ -56,6 +58,7 @@ export default {
     if (res.data.success) {
       this.photo = res.data.photo;
       this.user = res.data.photo.user;
+      this.likesCount = res.data.likesCount;
     }
   }
 };

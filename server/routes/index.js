@@ -17,6 +17,7 @@ const upload = multer({ storage: storage });
 const User = require("../models/User");
 const Album = require("../models/Album");
 const Photo = require("../models/Photo");
+const Like = require("../models/Like");
 
 //Upload image
 router.post(
@@ -26,7 +27,7 @@ router.post(
   async function(req, res) {
     let albumId;
     let user = req.body.userId;
-    let tags = req.body.tags === "" ? [] : req.body.tags;
+    let tags = req.body.tags === "" ? [] : req.body.tags.split(',');
     
     if (req.body.newAlbum !== "") {
       let newAlbum = await Album.create({
@@ -48,6 +49,14 @@ router.post(
       album: albumId
     });
 
+    let like = await Like.create({
+      photo: newPhoto._id,
+      users: []
+    });
+
+    newPhoto.like = like._id;
+    newPhoto.save();
+
     await Album.findOneAndUpdate(
       { _id: albumId },
       { $push: { photos: newPhoto._id } }
@@ -59,22 +68,5 @@ router.post(
     });
   }
 );
-
-//Get Photo
-router.get("/image/:id", function(req, res, next) {
-  let id = req.params.id;
-  Photo.findById(id)
-    .populate("user")
-    .exec(function(err, photo) {
-      if (err) return next(err);
-      if (photo) {
-        return res.status(200).json({
-          success: true,
-          msg: "Returned photo with user data",
-          photo: photo
-        });
-      }
-    });
-});
 
 module.exports = router;

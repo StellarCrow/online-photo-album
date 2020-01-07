@@ -8,7 +8,7 @@
         @click="openImage(image)"
       >
         <div class="image__hover">
-          <span class="image__likes">{{ image.likes.length }}</span>
+          <span class="image__likes"> likes </span>
           <i><font-awesome-icon :icon="['fa', 'heart']"></font-awesome-icon></i>
         </div>
         <img

@@ -12,7 +12,7 @@ const getters = {
 };
 
 const actions = {
-  async getPhotoLikeStatus({ commit }, imageId, userId) {
+  async getPhotoLikeStatus({ commit }, { imageId, userId }) {
     commit("getLikeStatus__request");
     let res = await PhotosService.getPhotoLikeStatus(imageId, userId);
     if (res.data.success) {
@@ -21,14 +21,14 @@ const actions = {
       commit("getLikeStatus__success", { status, count });
     }
   },
-  async setLike({ commit }, imageId, userId) {
+  async setLike({ commit }, { imageId, userId }) {
     commit("setLike__request");
     let res = await PhotosService.setLike(imageId, userId);
     if (res.data.success) {
       commit("setLike__success", res.data.totalCount);
     }
   },
-  async deleteLike({ commit }, imageId, userId) {
+  async deleteLike({ commit }, { imageId, userId }) {
     commit("deleteLike__request");
     let res = await PhotosService.deleteLike(imageId, userId);
     if (res.data.success) {
@@ -41,8 +41,8 @@ const mutations = {
   getLikeStatus__request(state) {
     state.status = "loading";
   },
-  getLikeStatus__success(state, { isLiked, count }) {
-    state.isLiked = isLiked;
+  getLikeStatus__success(state, { status, count }) {
+    state.isLiked = status;
     state.status = "got photo liked status";
     state.totalCount = count;
   },
