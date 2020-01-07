@@ -30,11 +30,18 @@ router.post("/registration", async function(req, res, next) {
     });
   }
 
-  let newUser = new User({
+  let newUser = await User.create({
     name: fullName,
-    username,
-    password
+    username: username,
+    password: password
   });
+
+  let album = await Album.create({
+    name: "Default",
+    user: newUser._id
+  });
+
+  await User.findByIdAndUpdate(newUser._id, { $push: { albums: album._id } });
 
   //Hash the password
   bcrypt.genSalt(10, (err, salt) => {
@@ -147,7 +154,7 @@ router.get("/:id/photos", function(req, res, next) {
       return res.status(200).json({
         success: true,
         msg: "Successfully got user's photos",
-        photos: photos 
+        photos: photos
       });
     }
   });
