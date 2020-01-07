@@ -9,7 +9,6 @@ let PhotoSchema = new Schema({
   },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   album: { type: Schema.Types.ObjectId, ref: "Album", required: true },
-  likes:[{ type: Schema.Types.ObjectId, ref: "User" }],
   link: {
       type: String,
       required: true
