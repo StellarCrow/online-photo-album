@@ -112,19 +112,32 @@ router.post("/login", function(req, res) {
 });
 
 //get profile
-router.get("/:id", passport.authenticate("jwt", { session: false }), function(
+router.get("/:id", passport.authenticate("jwt", { session: false }), async function(
   req,
   res,
   next
 ) {
   let id = req.params.id;
-  User.findOne({ _id: id }, function(err, user) {
+
+  let user = await User.findOne({ _id: id }, function(err, user) {
     if (err) return next(err);
-    if (user) {
+    if (!user) {
+      return res.status(204).json({
+        success: false,
+        msg: "User was not found."
+      });
+    }
+  });
+
+  await Photo.find({user: id}, function(err, photos) {
+    if(err) return err;
+    if(photos) {
       return res.status(200).json({
         success: true,
-        user: user
-      });
+        msg: "User and his photos were found.",
+        user: user,
+        photos: photos
+      })
     }
   });
 });

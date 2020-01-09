@@ -8,7 +8,7 @@
       <Tabs>
         <Tab name="Фотографии" :selected="true">
           Фотографии
-          <!-- <PhotoGallery :userId="this.$route.params.id"></PhotoGallery> -->
+          <PhotoGallery :images="photos"></PhotoGallery>
         </Tab>
         <Tab name="Пользователи">
           Пользователи
@@ -24,7 +24,7 @@
 <script>
 import Tabs from "../components/TabsBase";
 import Tab from "../components/TabsTab";
-// import PhotoGallery from "../components/ImageGallery";
+import PhotoGallery from "../components/ImageGallery";
 import SearchService from "../services/SearchService";
 
 export default {
@@ -37,8 +37,8 @@ export default {
   },
   components: {
     Tabs,
-    Tab
-    // PhotoGallery
+    Tab,
+    PhotoGallery
   },
   data() {
     return {
@@ -53,10 +53,6 @@ export default {
       this.photos = res.data.photos;
       this.albums = res.data.albums;
       this.users = res.data.users;
-      console.log(this.photos);
-      console.log(this.albums);
-      console.log(this.users);
-      
     }
   }
 };

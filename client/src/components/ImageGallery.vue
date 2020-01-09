@@ -22,22 +22,18 @@
 </template>
 
 <script>
-import PhotosService from "../services/PhotosService";
-
 export default {
   name: "ImageGallery",
-  props: ["userId"],
+  props: {
+    images: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
-      images: [],
       publicPath: process.env.BASE_URL
     };
-  },
-  async mounted() {
-    let res = await PhotosService.getUserPhotos(this.userId);
-    if (res.data.success) {
-      this.images = res.data.photos;
-    }
   },
   methods: {
     openImage(image) {

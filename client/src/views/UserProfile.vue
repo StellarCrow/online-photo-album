@@ -15,7 +15,7 @@
     <section>
       <tabs>
         <tab name="Все фото" :selected="true">
-          <PhotoGallery :userId="this.$route.params.id"></PhotoGallery>
+          <PhotoGallery :images="images"></PhotoGallery>
         </tab>
         <tab name="Альбомы">
           Альбомы
@@ -43,7 +43,8 @@ export default {
       name: "",
       username: "",
       isMyPage: false,
-      userId: ""
+      userPageId: this.$route.params.id,
+      images: []
     };
   },
   methods: {
@@ -52,13 +53,14 @@ export default {
     }
   },
   async mounted() {
-    if (this.$route.params.id === this.$store.getters.userId) {
+    if (this.userPageId === this.$store.getters.userId) {
       this.isMyPage = true;
     }
-    let res = await UsersService.getUser(this.$route.params.id);
+    let res = await UsersService.getUser(this.userPageId);
     if (res.data.success) {
       this.username = res.data.user.username;
       this.name = res.data.user.name;
+      this.images = res.data.photos;
     }
   }
 };
