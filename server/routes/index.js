@@ -27,8 +27,8 @@ router.post(
   async function(req, res) {
     let albumId;
     let user = req.body.userId;
-    let tags = req.body.tags === "" ? [] : req.body.tags.split(',');
-    
+    let tags = req.body.tags === "" ? [] : req.body.tags.split(",");
+
     if (req.body.newAlbum !== "") {
       let newAlbum = await Album.create({
         name: req.body.newAlbum,
@@ -62,11 +62,47 @@ router.post(
       { $push: { photos: newPhoto._id } }
     );
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
       msg: "A new photo was successfully uploaded"
     });
   }
 );
+
+//Search all photos, albums, users by query
+router.get("/search/:query", async function(req, res, next) {
+  let query = req.params.query;
+
+  let photos = new Promise(resolve => {
+    Photo.find({ tags: { $regex: query } }, function(err, photos) {
+      if(err) return next(err);
+      if(photos) resolve(photos);
+    });
+  })
+
+  let users = new Promise(resolve => {
+    User.find({ username: { $regex: query } }, function(err, users) {
+      if(err) return next(err);
+      if(users) resolve(users);
+    });
+  })
+
+  let albums = new Promise(resolve => {
+    Album.find({ name: { $regex: query } }, function(err, albums) {
+      if(err) return next(err);
+      if(albums) resolve(albums);
+    });
+  })
+
+  return Promise.all([photos, users, albums]).then(array => {
+    return res.status(200).json({
+      success: true,
+      msg: "returned searched results",
+      photos: array[0],
+      users: array[1],
+      albums: array[2]
+    });
+  })
+});
 
 module.exports = router;

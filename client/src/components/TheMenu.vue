@@ -20,7 +20,9 @@
         :links="links"
         :menuTitle="'Категории фотографий'"
       ></DropdownMenu>
-      <router-link class="menu__item" to="#">Случайное фото</router-link>
+      <router-link class="menu__item" to="/photos/explore/ "
+        >Исследовать</router-link
+      >
       <router-link v-if="!isLoggedIn" class="menu__item" to="/contacts"
         >Контакты</router-link
       >
@@ -32,7 +34,9 @@
       >
     </div>
 
-    <div class="navigation__search">Search</div>
+    <div class="navigation__search">
+      <Search :inputClassName="'input-search-menu'"></Search>
+    </div>
 
     <label for="navigation_icon" class="navigation__icon"
       ><font-awesome-icon :icon="['fas', 'bars']"></font-awesome-icon
@@ -42,12 +46,15 @@
 
 <script>
 import DropdownMenu from "../components/MenuDropdown";
+import Search from "../components/SearchPhoto";
+
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TheMenu",
   components: {
-    DropdownMenu
+    DropdownMenu,
+    Search
   },
   data() {
     return {

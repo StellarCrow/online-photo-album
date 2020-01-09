@@ -25,6 +25,7 @@
 import Tabs from "../components/TabsBase";
 import Tab from "../components/TabsTab";
 // import PhotoGallery from "../components/ImageGallery";
+import SearchService from "../services/SearchService";
 
 export default {
   name: "ExplorePhotos",
@@ -40,7 +41,23 @@ export default {
     // PhotoGallery
   },
   data() {
-    return {};
+    return {
+      photos: [],
+      albums: [],
+      users: []
+    };
+  },
+  async mounted() {
+    let res = await SearchService.searchAllByQuery(this.query);
+    if (res.data.success) {
+      this.photos = res.data.photos;
+      this.albums = res.data.albums;
+      this.users = res.data.users;
+      console.log(this.photos);
+      console.log(this.albums);
+      console.log(this.users);
+      
+    }
   }
 };
 </script>
