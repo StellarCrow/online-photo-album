@@ -61,14 +61,14 @@ export default {
           address: "/uploadImage"
         },
         {
-          name: "Lalala",
+          name: "Мои альбомы",
           address: "/#"
         }
       ],
       links: [
         {
           name: "Популярные фото",
-          address: "/#"
+          address: `/photos/explore/${"popular"}`
         },
         {
           name: "Новые фото",
@@ -76,7 +76,7 @@ export default {
         },
         {
           name: "Животные",
-          address: "/#",
+          address: `/#`,
           links: [
             {
               name: "Коты",

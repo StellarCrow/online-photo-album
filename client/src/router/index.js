@@ -6,6 +6,7 @@ import UserProfile from "../views/UserProfile.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 import UploadImage from "../views/UploadImage.vue";
 import ImagePage from "../views/ImagePage.vue";
+import ExplorePhotos from "../views/ExplorePhotos.vue";
 import store from "../store/index";
 
 Vue.use(VueRouter);
@@ -52,6 +53,12 @@ const routes = [
     path: "/users/:id/photos/:pid",
     name: "image",
     component: ImagePage
+  },
+  {
+    path: "/photos/explore/:query",
+    name: "find",
+    component: ExplorePhotos,
+    props: true
   },
   {
     path: "*",
