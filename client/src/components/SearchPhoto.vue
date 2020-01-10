@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     async searchQuery() {
-      this.$router.push(`/photos/explore/${this.inputQuery}`);
+      this.$router.push(`/photos/s/${this.inputQuery}`);
       this.inputQuery = "";
     }
   }

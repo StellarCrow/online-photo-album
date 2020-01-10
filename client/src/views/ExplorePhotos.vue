@@ -6,14 +6,13 @@
     </div>
     <section>
       <Tabs>
-        <Tab name="Фотографии" :selected="true">
-          Фотографии
+        <Tab :name="`Фотографии (${photos.length})`" :selected="true">
           <PhotoGallery :images="photos"></PhotoGallery>
         </Tab>
-        <Tab name="Пользователи">
+        <Tab :name="`Пользователи (${users.length})`">
           Пользователи
         </Tab>
-        <Tab name="Альбомы">
+        <Tab :name="`Альбомы (${albums.length})`">
           Альбомы
         </Tab>
       </Tabs>

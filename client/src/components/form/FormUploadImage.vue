@@ -167,8 +167,7 @@ export default {
       }
       let res = await PhotosService.uploadImage(data);
       if (res.data.success) {
-        debugger;
-        this.$router.push(`/users/${this.formData.userId}`);
+        await this.$router.push(`/users/${this.formData.userId}`);
       }
     }
   }

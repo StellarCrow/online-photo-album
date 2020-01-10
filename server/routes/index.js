@@ -70,29 +70,56 @@ router.post(
 );
 
 //Search all photos, albums, users by query
-router.get("/search/:query", async function(req, res, next) {
-  let query = req.params.query;
+router.get("/search/(:query)?", async function(req, res, next) {
+  let query = req.params.query ? req.params.query : "*";
 
   let photos = new Promise(resolve => {
-    Photo.find({ tags: { $regex: query } }, function(err, photos) {
-      if(err) return next(err);
-      if(photos) resolve(photos);
-    });
-  })
+    if (query === "*") {
+      Photo.find({})
+        .populate({ path: "like", select: "users" })
+        .populate("user")
+        .exec(function(err, photos) {
+          if (err) return next(err);
+          if (photos) resolve(photos);
+        });
+    } else {
+      Photo.find({ tags: { $regex: query } })
+        .populate({ path: "like", select: "users" })
+        .populate("user")
+        .exec(function(err, photos) {
+          if (err) return next(err);
+          if (photos) resolve(photos);
+        });
+    }
+  });
 
   let users = new Promise(resolve => {
-    User.find({ username: { $regex: query } }, function(err, users) {
-      if(err) return next(err);
-      if(users) resolve(users);
-    });
-  })
+    if (query === "*") {
+      User.find({}, function(err, users) {
+        if (err) return next(err);
+        if (users) resolve(users);
+      });
+    } else {
+      User.find({ username: { $regex: query } }, function(err, users) {
+        if (err) return next(err);
+        if (users) resolve(users);
+      });
+    }
+  });
 
   let albums = new Promise(resolve => {
-    Album.find({ name: { $regex: query } }, function(err, albums) {
-      if(err) return next(err);
-      if(albums) resolve(albums);
-    });
-  })
+    if (query === "*") {
+      Album.find({}, function(err, albums) {
+        if (err) return next(err);
+        if (albums) resolve(albums);
+      });
+    } else {
+      Album.find({ name: { $regex: query } }, function(err, albums) {
+        if (err) return next(err);
+        if (albums) resolve(albums);
+      });
+    }
+  });
 
   return Promise.all([photos, users, albums]).then(array => {
     return res.status(200).json({
@@ -102,7 +129,7 @@ router.get("/search/:query", async function(req, res, next) {
       users: array[1],
       albums: array[2]
     });
-  })
+  });
 });
 
 module.exports = router;

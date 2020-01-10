@@ -55,8 +55,13 @@ const routes = [
     component: ImagePage
   },
   {
-    path: "/photos/explore/:query",
-    name: "find",
+    path: "/photos/explore",
+    name: "explore",
+    component: ExplorePhotos
+  },
+  {
+    path: "/photos/s/:query",
+    name: "search",
     component: ExplorePhotos,
     props: true
   },

@@ -20,7 +20,7 @@
         :links="links"
         :menuTitle="'Категории фотографий'"
       ></DropdownMenu>
-      <router-link class="menu__item" to="/photos/explore/ "
+      <router-link class="menu__item" to="/photos/explore"
         >Исследовать</router-link
       >
       <router-link v-if="!isLoggedIn" class="menu__item" to="/contacts"
