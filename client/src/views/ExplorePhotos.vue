@@ -2,7 +2,13 @@
   <section class="explore">
     <aside>Left Menu</aside>
     <div class="explore__search">
-      <input type="text" name="search-input" id="explore__search" />
+      <input
+        type="text"
+        name="search-input"
+        id="explore__search"
+        v-model="exploreInputSearch"
+        @keydown.enter.prevent="searchQuery()"
+      />
     </div>
     <section>
       <Tabs>
@@ -43,16 +49,27 @@ export default {
     return {
       photos: [],
       albums: [],
-      users: []
+      users: [],
+      exploreInputSearch: this.query
     };
   },
-  async mounted() {
-    let res = await SearchService.searchAllByQuery(this.query);
-    if (res.data.success) {
-      this.photos = res.data.photos;
-      this.albums = res.data.albums;
-      this.users = res.data.users;
+  methods: {
+    formatString() {
+      return this.exploreInputSearch.trim().toLowerCase();
+    },
+    async searchQuery() {
+      let res = await SearchService.searchAllByQuery(
+        this.formatString(this.exploreInputSearch)
+      );
+      if (res.data.success) {
+        this.photos = res.data.photos;
+        this.albums = res.data.albums;
+        this.users = res.data.users;
+      }
     }
+  },
+  mounted() {
+    this.searchQuery();
   }
 };
 </script>

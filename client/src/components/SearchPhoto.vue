@@ -23,8 +23,11 @@ export default {
     };
   },
   methods: {
+    formatString() {
+      return this.inputQuery.trim().toLowerCase();
+    },
     async searchQuery() {
-      this.$router.push(`/photos/s/${this.inputQuery}`);
+      this.$router.push(`/photos/s/${this.formatString(this.inputQuery)}`);
       this.inputQuery = "";
     }
   }
