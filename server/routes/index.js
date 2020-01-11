@@ -70,8 +70,10 @@ router.post(
 );
 
 //Search all photos, albums, users by query
-router.get("/search/(:query)?", async function(req, res, next) {
+router.get("/search/(:query)?", async function(req, res, next) {  
   let query = req.params.query ? req.params.query : "*";
+  let sorting = req.query.sort;
+  let filter = req.query.filter;
 
   let photos = new Promise(resolve => {
     if (query === "*") {
@@ -80,7 +82,9 @@ router.get("/search/(:query)?", async function(req, res, next) {
         .populate("user")
         .exec(function(err, photos) {
           if (err) return next(err);
-          if (photos) resolve(photos);
+          if (photos) {
+            resolve(sortPhotos(photos, sorting))
+          }
         });
     } else {
       Photo.find({ tags: { $regex: query } })
@@ -88,7 +92,7 @@ router.get("/search/(:query)?", async function(req, res, next) {
         .populate("user")
         .exec(function(err, photos) {
           if (err) return next(err);
-          if (photos) resolve(photos);
+          if (photos) resolve(sortPhotos(photos, sorting));
         });
     }
   });
@@ -131,5 +135,13 @@ router.get("/search/(:query)?", async function(req, res, next) {
     });
   });
 });
+
+async function sortPhotos(photos, sorting) {
+  if(sorting === "newest") {
+    return await photos.sort({date: 1});
+  } else if(sorting === "oldest") {
+    return await photos.sort({date: -1});
+  } else return photos;
+}
 
 module.exports = router;
