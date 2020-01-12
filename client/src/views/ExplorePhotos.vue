@@ -7,6 +7,7 @@
       <div class="explore__search">
         <input
           type="text"
+          class="input-flat"
           name="search-input"
           id="explore__search"
           v-model="exploreInputSearch"

@@ -1,11 +1,10 @@
 // -------------INPUTS-------------------
 
+//Input
 %input-basic {
   border: none;
-  border-bottom: 1px solid $gray;
   font-weight: $light;
   font-family: $ff-tertiary;
-  padding: 0.2em 0;
   color: $text-color--dark;
   background-color: transparent;
   width: 100%;
@@ -21,12 +20,14 @@
   }
 }
 
+//label
 %label-basic {
   font-size: 0.9em;
   color: $tertiary-color;
   font-weight: $bold;
 }
 
+//textarea
 %textarea-basic {
   border: none;
   border-bottom: 1px solid $gray;
@@ -46,14 +47,11 @@
   }
 }
 
+//select
 %select-basic {
   padding: 0.3em 1em;
   outline: none;
   font-size: 0.8em;
-}
-
-input[type="text"] {
-  @extend %input-basic;
 }
 
 label {
@@ -74,6 +72,20 @@ select {
   color: $danger-color;
   font-family: $ff-tertiary;
   font-weight: $light;
+}
+
+.input-flat {
+  @extend %input-basic;
+  border-bottom: 1px solid $gray;
+  padding: 0.2em 0;
+}
+
+.input-search-menu {
+  @extend %input-basic;
+  padding: 0.5em 1.5em;
+  background-color: $secondary-color--lighter;
+  border-radius: 1em;
+  border-bottom: none;
 }
 
 // ----------FORMS-------------

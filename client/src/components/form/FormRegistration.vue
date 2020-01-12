@@ -1,5 +1,5 @@
 <template>
-  <form class="form" @submit="sendFormData">
+  <form class="form" @submit="sendFormData" autocomplete="off">
     <div class="form__field">
       <FullName
         :inputData.sync="formData.fullName"

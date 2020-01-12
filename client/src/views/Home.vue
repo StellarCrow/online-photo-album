@@ -21,6 +21,7 @@
 import Carousel from "../components/CarouselBase";
 import FormRegistration from "../components/form/FormRegistration";
 import FormLogin from "../components/form/FormLogin";
+import CarouselCardRegistration from "../components/CarouselCardRegister";
 
 export default {
   name: "home",
@@ -32,25 +33,26 @@ export default {
     return {
       cards: [
         {
-          imgName: "bg-footer.jpg",
+          imgName: "cards.png",
           heading: "Online Photo Album",
-          subheading: "Тот, кто хранит твои воспоминания...",
+          subheading: "Тот, кто хранит твои воспоминания..."
+        },
+        {
+          imgName: "woman-with-frame.jpg",
+          heading: "Регистрируйся",
+          subheading: "Заполни одну небольшую форму",
+          content: CarouselCardRegistration
+        },
+        {
+          imgName: "woman-with-frame.jpg",
+          heading: "Загружай свои фото",
+          subheading: "Поделись творчеством с остальными",
           content: FormLogin
         },
         {
-          imgName: "bg-footer.jpg",
-          heading: "Регистрируйся",
-          subheading: "Заполни одну небольшую форму"
-        },
-        {
-          imgName: "bg-footer.jpg",
-          heading: "Загружай свои фото",
-          subheading: "Заполни одну небольшую форму"
-        },
-        {
-          imgName: "bg-footer.jpg",
-          heading: "Мобильно",
-          subheading: "Заполни одну небольшую форму"
+          imgName: "likes.png",
+          heading: "Оценивай чужие фотографии",
+          subheading: "И получай лайки в ответ"
         }
       ]
     };

@@ -4,7 +4,7 @@
     <input
       v-model="text"
       type="text"
-      class="input-text"
+      class="input-flat"
       :id="inputId"
       :required="required"
       :placeholder="placeholder"

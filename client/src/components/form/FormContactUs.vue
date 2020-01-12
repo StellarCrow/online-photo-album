@@ -2,7 +2,13 @@
   <form action="#" method="post" class="form form-contacts">
     <div class="form__field">
       <label for="contacts__name">Имя</label>
-      <input type="text" id="contacts__name" placeholder="Ваше имя" required />
+      <input
+        type="text"
+        id="contacts__name"
+        class="input-flat"
+        placeholder="Ваше имя"
+        required
+      />
     </div>
     <div class="form__field">
       <label for="contacts__email">Email</label>
@@ -10,6 +16,7 @@
         type="text"
         id="contacts__email"
         placeholder="email@example.com"
+        class="input-flat"
         required
       />
     </div>
@@ -18,6 +25,7 @@
       <input
         type="tel"
         id="contacts__phone"
+        class="input-flat"
         placeholder="+38(xxx)xxx-xx-xx"
         maxlength="17"
         required
@@ -26,7 +34,7 @@
     <div class="form__field">
       <label for="contacts__textarea">Сообщение</label>
       <textarea
-        class="input-phone"
+        class="input-flat"
         id="contacts__textarea"
         placeholder="Вопросы/Пожелания..."
         maxlength="500"

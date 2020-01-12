@@ -1,17 +1,17 @@
 <template>
   <div class="card">
-    <div
-      class="card__header"
-      :style="{
-        background: `url(require('../assets/images/${object.imgName}'))`
-      }"
-    >
+    <div class="card__header">
       <div class="card__heading">
         <h2>{{ object.heading }}</h2>
       </div>
       <div class="card__subheading">{{ object.subheading }}</div>
     </div>
-    <div class="card__content">
+    <div
+      class="card__content"
+      :style="{
+        background: `url(${publicPath}images/carousel/${object.imgName}) no-repeat center top / cover`
+      }"
+    >
       <div :is="object.content"></div>
     </div>
   </div>
@@ -23,6 +23,11 @@ export default {
   props: {
     object: Object,
     index: Number
+  },
+  data() {
+    return {
+      publicPath: process.env.BASE_URL
+    };
   }
 };
 </script>
