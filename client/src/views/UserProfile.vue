@@ -2,10 +2,26 @@
   <div class="userpage">
     <section class="profile">
       <div class="container profile-container">
-        <div class="profile__avatar"></div>
+        <div class="profile__avatar avatar">
+          <img
+            src="../assets/images/userpage-avatar.svg"
+            alt="user-avatar"
+            class="avatar__img"
+          />
+        </div>
         <div class="profile__about">
-          <div class="profile__username">Username: {{ username }}</div>
-          <div class="profile__name">Fullname: {{ name }}</div>
+          <div class="profile__name">{{ name || "Без имени" }}</div>
+          <div class="profile__username">@{{ username }}</div>
+          <ul class="profile__info statistic">
+            <li class="statistic__item">Фотографий<span>500</span></li>
+            <li class="statistic__item">Альбомов<span>200</span></li>
+            <li class="statistic__item">
+              <i
+                ><font-awesome-icon :icon="['fa', 'heart']"></font-awesome-icon
+              ></i>
+              получено<span>10</span>
+            </li>
+          </ul>
           <button v-if="isMyPage" @click="uploadImage" class="button-submit">
             Добавить фото
           </button>

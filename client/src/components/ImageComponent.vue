@@ -6,9 +6,9 @@
 
     <div class="photo__details details">
       <div class="details__header">
-        <span class="details__icon"
+        <i class="details__icon"
           ><font-awesome-icon :icon="['fa', 'user']"></font-awesome-icon
-        ></span>
+        ></i>
         <router-link class="details__link" :to="`/users/${user._id}`">{{
           user.username
         }}</router-link>
