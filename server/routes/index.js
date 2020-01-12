@@ -70,29 +70,31 @@ router.post(
 );
 
 //Search all photos, albums, users by query
-router.get("/search/(:query)?", async function(req, res, next) {  
+router.get("/search/(:query)?", function(req, res, next) {
   let query = req.params.query ? req.params.query : "*";
   let sorting = req.query.sort;
   let filter = req.query.filter;
+  console.log(query, sorting, filter);
+
+  let sort = sortingQuery(sorting);
 
   let photos = new Promise(resolve => {
     if (query === "*") {
       Photo.find({})
-        .populate({ path: "like", select: "users" })
-        .populate("user")
+        .populate({path: "like", select: "count"})
+        .populate("user").sort(sort)
         .exec(function(err, photos) {
           if (err) return next(err);
-          if (photos) {
-            resolve(sortPhotos(photos, sorting))
-          }
+          if (photos) return resolve(photos);
         });
     } else {
       Photo.find({ tags: { $regex: query } })
-        .populate({ path: "like", select: "users" })
+        .populate({path: "like", select: "count"})
         .populate("user")
+        .sort(sort)
         .exec(function(err, photos) {
           if (err) return next(err);
-          if (photos) resolve(sortPhotos(photos, sorting));
+          if (photos) resolve(photos);
         });
     }
   });
@@ -136,12 +138,12 @@ router.get("/search/(:query)?", async function(req, res, next) {
   });
 });
 
-async function sortPhotos(photos, sorting) {
-  if(sorting === "newest") {
-    return await photos.sort({date: 1});
-  } else if(sorting === "oldest") {
-    return await photos.sort({date: -1});
-  } else return photos;
+function sortingQuery(sorting) {
+  if (sorting === "oldest") {
+    return { date: 1 };
+  } if (sorting === "likes") {
+    return {likesCount: -1};
+  } else return { date: -1 };
 }
 
 module.exports = router;

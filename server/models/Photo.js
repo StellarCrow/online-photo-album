@@ -7,13 +7,14 @@ let PhotoSchema = new Schema({
     type: String,
     required: false
   },
-  like: { type: Schema.Types.ObjectId, ref: "Like"},
+  likesCount: {type: Number, default: 0},
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   album: { type: Schema.Types.ObjectId, ref: "Album", required: true },
   link: {
       type: String,
       required: true
   },
+  date: {type: Date, required: true, default: Date.now},
   tags: [{type: String}]
 });
 

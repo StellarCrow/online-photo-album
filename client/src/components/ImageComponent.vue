@@ -35,6 +35,9 @@
           ></LikeButton>
           {{ totalLikesCount }}
         </div>
+        <div class="details__date">
+          {{ photo.date }}
+        </div>
       </div>
     </div>
   </div>

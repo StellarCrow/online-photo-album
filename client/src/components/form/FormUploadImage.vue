@@ -160,11 +160,13 @@ export default {
       if (this.isAlbumsExist && this.newAlbum !== "") {
         this.formData.album = this.newAlbum;
       }
+      //create FormData for sendind photo info to the server
       let data = new FormData();
-
       for (let key in this.formData) {
         data.append(key, this.formData[key]);
       }
+
+      //sending data
       let res = await PhotosService.uploadImage(data);
       if (res.data.success) {
         await this.$router.push(`/users/${this.formData.userId}`);

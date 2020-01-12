@@ -30,6 +30,15 @@
             v-model="sorting"
           /><label for="sort_oldest">От старых к новым</label>
         </li>
+        <li>
+          <input
+            type="radio"
+            name="sorting"
+            value=""
+            id="sort_reset"
+            v-model="sorting"
+          /><label for="sort_reset">Без сортировки</label>
+        </li>
       </ul>
     </div>
     <div class="options__section">
@@ -79,6 +88,15 @@
             value="pink"
             v-model="filter"
           /><label for="filter_pink"></label>
+        </li>
+        <li>
+          <input
+            type="radio"
+            name="filter-color"
+            id="filter_reset"
+            value=""
+            v-model="filter"
+          /><label for="filter_reset">Очистить фильтр</label>
         </li>
       </ul>
     </div>

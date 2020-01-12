@@ -8,7 +8,7 @@
         @click="openImage(image)"
       >
         <div class="image__hover">
-          <span class="image__likes">{{ image.like.users.length }} </span>
+          <span class="image__likes">{{ image.likesCount }} </span>
           <i><font-awesome-icon :icon="['fa', 'heart']"></font-awesome-icon></i>
         </div>
         <img
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     openImage(image) {
-      this.$router.push(`/users/${image.user}/photos/${image._id}`);
+      this.$router.push(`/users/${image.user._id}/photos/${image._id}`);
     }
   }
 };

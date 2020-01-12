@@ -65,10 +65,8 @@ export default {
     formatString() {
       return this.exploreInputSearch.trim().toLowerCase();
     },
-    async searchQuery() {
-      let res = await SearchService.searchAllByQuery(
-        this.formatString(this.exploreInputSearch)
-      );
+    async searchQuery(query) {
+      let res = await SearchService.searchAllByQuery(this.formatString(query));
       if (res.data.success) {
         this.photos = res.data.photos;
         this.albums = res.data.albums;
@@ -78,7 +76,7 @@ export default {
     async updateAll(options) {
       let filter = options.filter;
       let sorting = options.sorting;
-      let res = SearchService.filterAndSortAll(
+      let res = await SearchService.filterAndSortAll(
         filter,
         sorting,
         this.exploreInputSearch
@@ -91,7 +89,18 @@ export default {
     }
   },
   mounted() {
-    this.searchQuery();
+    this.searchQuery(this.exploreInputSearch);
+  },
+  // beforeRouteUpdate(to, from, next) {
+  //   console.log(to.params.query);
+  //   this.searchQuery(to.params.query);
+  //   next();
+  // }
+  watch: {
+    $route() {
+      console.log(this.$route.params.query);
+      this.searchQuery(this.$route.params.query);
+    }
   }
 };
 </script>
