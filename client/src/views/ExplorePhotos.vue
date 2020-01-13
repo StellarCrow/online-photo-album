@@ -21,7 +21,7 @@
             <PhotoGallery :images="photos"></PhotoGallery>
           </Tab>
           <Tab :name="`Пользователи (${users.length})`">
-            Пользователи
+            <UsersList :users="users"></UsersList>
           </Tab>
           <Tab :name="`Альбомы (${albums.length})`">
             Альбомы
@@ -37,6 +37,7 @@ import Tabs from "../components/TabsBase";
 import Tab from "../components/TabsTab";
 import MenuOptions from "../components/MenuOptions";
 import PhotoGallery from "../components/ImageGallery";
+import UsersList from "../components/UsersList";
 import SearchService from "../services/SearchService";
 
 export default {
@@ -51,7 +52,8 @@ export default {
     Tabs,
     Tab,
     PhotoGallery,
-    MenuOptions
+    MenuOptions,
+    UsersList
   },
   data() {
     return {

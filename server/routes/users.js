@@ -129,14 +129,15 @@ router.get("/:id", passport.authenticate("jwt", { session: false }), async funct
     }
   });
 
-  await Photo.find({user: id}).populate({path: "like", select: "users"}).populate("user").sort({date: -1}).exec(function(err, photos) {
+  await Photo.find({user: id}).populate("user").sort({date: -1}).exec(function(err, photos) {
     if(err) return err;
     if(photos) {
       return res.status(200).json({
         success: true,
         msg: "User and his photos were found.",
         user: user,
-        photos: photos
+        photos: photos,
+        likes: user.likes.length || 0
       })
     }
   });

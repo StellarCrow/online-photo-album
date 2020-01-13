@@ -13,13 +13,15 @@
           <div class="profile__name">{{ name || "Без имени" }}</div>
           <div class="profile__username">@{{ username }}</div>
           <ul class="profile__info statistic">
-            <li class="statistic__item">Фотографий<span>500</span></li>
+            <li class="statistic__item">
+              Фотографий<span>{{ images.length }}</span>
+            </li>
             <li class="statistic__item">Альбомов<span>200</span></li>
             <li class="statistic__item">
               <i
                 ><font-awesome-icon :icon="['fa', 'heart']"></font-awesome-icon
               ></i>
-              получено<span>10</span>
+              поставлено<span>{{ likes }}</span>
             </li>
           </ul>
           <button v-if="isMyPage" @click="uploadImage" class="button-submit">
@@ -60,7 +62,8 @@ export default {
       username: "",
       isMyPage: false,
       userPageId: this.$route.params.id,
-      images: []
+      images: [],
+      likes: 0
     };
   },
   methods: {
@@ -77,6 +80,7 @@ export default {
       this.username = res.data.user.username;
       this.name = res.data.user.name;
       this.images = res.data.photos;
+      this.likes = res.data.likes;
     }
   }
 };

@@ -1,0 +1,49 @@
+.users {
+  &__list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+
+  &__item {
+    flex: 0 1 40%;
+  }
+}
+
+.user {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  &__avatar {
+    background: url("../assets/images/avatar-bg.jpg") no-repeat center top /
+      cover;
+    flex: 1 0 10%;
+    padding: 1% 2%;
+    text-align: center;
+
+    img {
+      width: 50%;
+    }
+  }
+
+  &__info {
+    flex: 1 0 20%;
+    background-color: #fff;
+    box-shadow: 0 0 5px $gray;
+    padding: 3% 4%;
+    font-size: 1.5em;
+  }
+
+  &__link {
+    color: $text-color--dark;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}

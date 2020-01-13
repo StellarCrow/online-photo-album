@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Photo = require("../models/Photo");
+const User = require("../models/User");
 const Like = require("../models/Like");
 
 //Get Photo
@@ -51,11 +52,13 @@ router.get("/:id/:uid/like/status", async function(req, res, next) {
 });
 
 //Set like
-router.post("/:id/like/set", function(req, res, next) {
+router.post("/:id/like/set", async function(req, res, next) {
   let id = req.params.id;
   let user = req.body.userId;
 
-  Like.findOneAndUpdate({ photo: id }, { $push: { users: user }}).exec(function(
+  await User.updateOne({_id: user}, {$push: {likes: id}})
+
+  await Like.findOneAndUpdate({ photo: id }, { $push: { users: user }}).exec(function(
     err,
     like
   ) {
@@ -77,11 +80,13 @@ router.post("/:id/like/set", function(req, res, next) {
 });
 
 //delete like
-router.post("/:id/like/delete", function(req, res, next) {
+router.post("/:id/like/delete", async function(req, res, next) {
     let id = req.params.id;
     let user = req.body.userId;
+
+    await User.updateOne({_id: user}, {$pull: {likes: id}})
   
-    Like.findOneAndUpdate({ photo: id }, { $pull: { users: user } }, function(
+    await Like.findOneAndUpdate({ photo: id }, { $pull: { users: user } }, function(
       err,
       like
     ) {
