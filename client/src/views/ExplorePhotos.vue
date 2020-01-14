@@ -17,13 +17,15 @@
       </div>
       <section>
         <Tabs>
-          <Tab :name="`Фотографии (${photos.length})`" :selected="true">
-            <Pagination
+          <Tab :name="`Фотографии (${totalPhotos})`" :selected="true">
+            <Pagination :pager="pager.photos"
               ><PhotoGallery :images="photos"></PhotoGallery
             ></Pagination>
           </Tab>
           <Tab :name="`Пользователи (${users.length})`">
-            <UsersList :users="users"></UsersList>
+            <Pagination :pager="pager.users">
+              <UsersList :users="users"></UsersList>
+            </Pagination>
           </Tab>
           <Tab :name="`Альбомы (${albums.length})`">
             Альбомы
@@ -65,20 +67,30 @@ export default {
       albums: [],
       users: [],
       exploreInputSearch: this.query,
-      options: {}
+      options: {
+        filter: "",
+        sorting: ""
+      },
+      pager: {},
+      totalPhotos: 0
     };
   },
   methods: {
     formatString() {
       return this.exploreInputSearch.trim().toLowerCase();
     },
-    async searchQuery(query) {
-      let res = await SearchService.searchAllByQuery(this.formatString(query));
+    async searchQuery() {
+      let res = await SearchService.searchAllByQuery(
+        this.formatString(this.exploreInputSearch)
+      );
       if (res.data.success) {
         this.photos = res.data.photos;
         this.albums = res.data.albums;
         this.users = res.data.users;
-        console.log(res.data);
+        this.pager.users = res.data.pagerUsers;
+        this.pager.albums = res.data.pagerAlbums;
+        this.pager.photos = res.data.pagerPhotos;
+        this.totalPhotos = res.data.pagerPhotos.totalItems;
       }
     },
     async updateAll(options) {
@@ -98,18 +110,17 @@ export default {
   },
   mounted() {
     this.searchQuery(this.exploreInputSearch);
-  },
-  // beforeRouteUpdate(to, from, next) {
-  //   console.log(to.params.query);
-  //   this.searchQuery(to.params.query);
-  //   next();
-  // }
-  watch: {
-    $route() {
-      console.log(this.$route.params.query);
-      this.searchQuery(this.$route.params.query);
-    }
   }
+  // watch: {
+  //   "$route.query.page": {
+  //     immediate: true,
+  //     handler(page) {
+  //       page = parseInt(page) || 1;
+  //       console.log(page);
+
+  //     }
+  //   }
+  // }
 };
 </script>
 

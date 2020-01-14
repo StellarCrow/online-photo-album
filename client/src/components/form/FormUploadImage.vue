@@ -11,7 +11,7 @@
         <input
           type="file"
           id="file"
-          accept=".jpg, .jpeg, .png"
+          accept=".jpg, .jpeg"
           required
           @change="onFileChange($event.target.files)"
         />

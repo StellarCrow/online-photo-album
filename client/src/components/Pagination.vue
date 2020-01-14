@@ -1,28 +1,64 @@
 <template>
-  <div class="pagination">
-    <div class="pagination__body">
+  <div>
+    <div>
       <slot></slot>
     </div>
-    <div class="pagination__footer">
-      <ul>
+    <div class="pagination-wrapper">
+      <ul v-if="pager && pager.pages && pager.pages.length" class="pagination">
         <li
-          :class="{ disabled: currentPage === 1 }"
-          class="page-item previous-item"
+          :class="{ disabled: pager.currentPage === 1 }"
+          class="pagination__item pagination__item--first"
         >
-          <router-link
-            :to="{ query: { page: currentPage - 1 } }"
-            class="page-link"
-            >Previous</router-link
+          <router-link :to="{ query: { page: 1 } }" class="pagination__link"
+            >First</router-link
           >
         </li>
         <li
-          :class="{ disabled: currentPage === 3 }"
-          class="page-item next-item"
+          :class="{ disabled: pager.currentPage === 1 }"
+          class="pagination__item pagination__item--previous"
         >
           <router-link
-            :to="{ query: { page: currentPage + 1 } }"
-            class="page-link"
-            >Next</router-link
+            :to="{ query: { page: pager.currentPage - 1 } }"
+            class="pagination__link"
+            ><i
+              ><font-awesome-icon
+                :icon="['fa', `chevron-left`]"
+              ></font-awesome-icon></i
+          ></router-link>
+        </li>
+        <li
+          v-for="page in pager.pages"
+          :key="page"
+          :class="{ active: pager.currentPage === page }"
+          class="pagination__item pagination__item--number"
+        >
+          <router-link
+            :to="{ query: { page: page } }"
+            class="pagination__link"
+            >{{ page }}</router-link
+          >
+        </li>
+        <li
+          :class="{ disabled: pager.currentPage === pager.totalPages }"
+          class="pagination__item pagination__item--next"
+        >
+          <router-link
+            :to="{ query: { page: pager.currentPage + 1 } }"
+            class="pagination__link"
+            ><i
+              ><font-awesome-icon
+                :icon="['fa', `chevron-right`]"
+              ></font-awesome-icon></i
+          ></router-link>
+        </li>
+        <li
+          :class="{ disabled: pager.currentPage === pager.totalPages }"
+          class="pagination__item pagination__item--last"
+        >
+          <router-link
+            :to="{ query: { page: pager.totalPages } }"
+            class="pagination__link"
+            >Last</router-link
           >
         </li>
       </ul>
@@ -33,10 +69,14 @@
 <script>
 export default {
   name: "Pagination",
+  props: {
+    pager: {
+      type: Object,
+      require: true
+    }
+  },
   data() {
-    return {
-      currentPage: 1
-    };
+    return {};
   },
   watch: {
     "$route.query.page": {
@@ -50,4 +90,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "../styles/components/_pagination.scss";
+</style>

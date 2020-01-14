@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import Auth from "../warehouse/Auth";
 import Like from "../warehouse/Like";
-import Search from "../warehouse/Search";
 
 Vue.use(Vuex);
 
@@ -14,7 +13,6 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     Auth,
-    Like,
-    Search
+    Like
   }
 });

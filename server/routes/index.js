@@ -75,6 +75,8 @@ router.get("/search/(:query)?", async function(req, res) {
   let query = req.params.query || "";
   let sorting = req.query.sort;
   let page = req.query.page || 1;
+  console.log(page);
+  
   const pageSize = 10;
 
   let sort = sortingQuery(sorting);
@@ -92,6 +94,7 @@ router.get("/search/(:query)?", async function(req, res) {
   let pagerAlbums = paginate(albumsCount, page, pageSize);
   let pagerUsers = paginate(usersCount, page, pageSize);
   let pagerPhotos = paginate(photosCount, page, pageSize);
+  
 
   let users = await findDocumentsPaginated(
     User,
@@ -133,10 +136,11 @@ function getDocumentsCount(model, query) {
 
 function findDocumentsPaginated(model, query, pager) {
   return new Promise(resolve => {
+    let skip = pager.currentPage === 1 ? pager.pageSize * (pager.currentPage - 1) : 0;
     resolve(
       model
         .find(query)
-        .skip(pager.pageSize * (pager.currentPage - 1))
+        .skip(skip)
         .limit(pager.pageSize)
     );
   });
@@ -144,10 +148,11 @@ function findDocumentsPaginated(model, query, pager) {
 
 function findPhotos(query, pager, sort) {
   return new Promise((resolve, reject) => {
+    let skip = pager.currentPage === 1 ? pager.pageSize * (pager.currentPage - 1) : 0;
     Photo.find(query)
       .populate({ path: "like", select: "count" })
       .populate("user")
-      .skip(pager.pageSize * (pager.currentPage - 1))
+      .skip(skip)
       .limit(pager.pageSize)
       .sort(sort)
       .exec(function(err, photos) {
