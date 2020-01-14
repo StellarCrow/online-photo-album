@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const multer = require("multer");
 const path = require("../config/keys").storagePath;
+const paginate = require("jw-paginate");
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -70,79 +71,98 @@ router.post(
 );
 
 //Search all photos, albums, users by query
-router.get("/search/(:query)?", function(req, res, next) {
-  let query = req.params.query ? req.params.query : "*";
+router.get("/search/(:query)?", async function(req, res) {
+  let query = req.params.query || "";
   let sorting = req.query.sort;
-  let filter = req.query.filter;
-  console.log(query, sorting, filter);
+  let page = req.query.page || 1;
+  const pageSize = 10;
 
   let sort = sortingQuery(sorting);
 
-  let photos = new Promise(resolve => {
-    if (query === "*") {
-      Photo.find({})
-        .populate({path: "like", select: "count"})
-        .populate("user").sort(sort)
-        .exec(function(err, photos) {
-          if (err) return next(err);
-          if (photos) return resolve(photos);
-        });
-    } else {
-      Photo.find({ tags: { $regex: query } })
-        .populate({path: "like", select: "count"})
-        .populate("user")
-        .sort(sort)
-        .exec(function(err, photos) {
-          if (err) return next(err);
-          if (photos) resolve(photos);
-        });
-    }
+  let albumsCount = await getDocumentsCount(Album, {
+    name: { $exists: true, $regex: query }
+  });
+  let usersCount = await getDocumentsCount(User, {
+    username: { $exists: true, $regex: query }
+  });
+  let photosCount = await getDocumentsCount(Photo, {
+    tags: { $exists: true, $regex: query }
   });
 
-  let users = new Promise(resolve => {
-    if (query === "*") {
-      User.find({}, function(err, users) {
-        if (err) return next(err);
-        if (users) resolve(users);
-      });
-    } else {
-      User.find({ username: { $regex: query } }, function(err, users) {
-        if (err) return next(err);
-        if (users) resolve(users);
-      });
-    }
-  });
+  let pagerAlbums = paginate(albumsCount, page, pageSize);
+  let pagerUsers = paginate(usersCount, page, pageSize);
+  let pagerPhotos = paginate(photosCount, page, pageSize);
 
-  let albums = new Promise(resolve => {
-    if (query === "*") {
-      Album.find({}, function(err, albums) {
-        if (err) return next(err);
-        if (albums) resolve(albums);
-      });
-    } else {
-      Album.find({ name: { $regex: query } }, function(err, albums) {
-        if (err) return next(err);
-        if (albums) resolve(albums);
-      });
-    }
-  });
+  let users = await findDocumentsPaginated(
+    User,
+    {
+      username: { $exists: true, $regex: query }
+    },
+    pagerUsers
+  );
+  let albums = await findDocumentsPaginated(
+    Album,
+    {
+      name: { $exists: true, $regex: query }
+    },
+    pagerAlbums
+  );
+  let photos = await findPhotos(
+    { tags: { $exists: true, $regex: query } },
+    pagerPhotos,
+    sort
+  );
 
-  return Promise.all([photos, users, albums]).then(array => {
-    return res.status(200).json({
-      success: true,
-      msg: "returned searched results",
-      photos: array[0],
-      users: array[1],
-      albums: array[2]
-    });
+  return res.status(200).json({
+    success: true,
+    msg: "searched results",
+    photos: photos,
+    albums: albums,
+    users: users,
+    pagerAlbums: pagerAlbums,
+    pagerPhotos: pagerPhotos,
+    pagerUsers: pagerUsers
   });
 });
+
+function getDocumentsCount(model, query) {
+  return new Promise(resolve => {
+    resolve(model.countDocuments(query));
+  });
+}
+
+function findDocumentsPaginated(model, query, pager) {
+  return new Promise(resolve => {
+    resolve(
+      model
+        .find(query)
+        .skip(pager.pageSize * (pager.currentPage - 1))
+        .limit(pager.pageSize)
+    );
+  });
+}
+
+function findPhotos(query, pager, sort) {
+  return new Promise((resolve, reject) => {
+    Photo.find(query)
+      .populate({ path: "like", select: "count" })
+      .populate("user")
+      .skip(pager.pageSize * (pager.currentPage - 1))
+      .limit(pager.pageSize)
+      .sort(sort)
+      .exec(function(err, photos) {
+        if (err) return reject(err);
+        if (photos) return resolve(photos);
+      });
+  });
+}
 
 function sortingQuery(sorting) {
   if (sorting === "oldest") {
     return { date: 1 };
-  } if (sorting === "likes") {
-    return {likesCount: -1};
+  }
+  if (sorting === "likes") {
+    return { likesCount: -1 };
   } else return { date: -1 };
 }
 

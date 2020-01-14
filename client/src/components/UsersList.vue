@@ -1,14 +1,16 @@
 <template>
   <div class="users">
     <ul class="users__list">
-      <li class="users__item user" v-for="(user, index) in users" :key="index">
-        <div class="user__avatar">
-          <img src="../assets/images/userpage-avatar.svg" alt="user-avatar" />
-        </div>
-        <div class="user__info">
-          <router-link class="user__link" :to="`/users/${user._id}`">{{
-            user.username
-          }}</router-link>
+      <li class="users__item" v-for="(user, index) in users" :key="index">
+        <div class="user">
+          <div class="user__avatar">
+            <img src="../assets/images/userpage-avatar.svg" alt="user-avatar" />
+          </div>
+          <div class="user__info">
+            <router-link class="user__link" :to="`/users/${user._id}`">{{
+              user.username
+            }}</router-link>
+          </div>
         </div>
       </li>
     </ul>

@@ -4,11 +4,14 @@
     margin: 0;
     padding: 0;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   &__item {
+    margin-bottom: 4%;
+    margin-right: 4%;
     flex: 0 1 40%;
   }
 }

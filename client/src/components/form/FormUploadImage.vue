@@ -29,6 +29,7 @@
         <input
           type="text"
           id="desc"
+          class="input-flat"
           placeholder="Описание фото"
           v-model="formData.description"
         />
@@ -49,6 +50,7 @@
           type="checkbox"
           name="add-album"
           id="add_album"
+          class="input-flat"
           v-model="isAddAlbumChecked"
         />
         <label for="add_album">Добавить альбом...</label>
@@ -59,6 +61,7 @@
             maxlength="30"
             v-model="formData.newAlbum"
             id="new_album"
+            class="input-flat"
             placeholder="Название нового альбома..."
           />
         </div>
@@ -69,6 +72,7 @@
           type="text"
           name="tags"
           id="tags"
+          class="input-flat"
           v-model="tagInput"
           minlength="1"
           @keydown.enter.prevent="updateList()"

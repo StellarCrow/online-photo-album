@@ -18,7 +18,9 @@
       <section>
         <Tabs>
           <Tab :name="`Фотографии (${photos.length})`" :selected="true">
-            <PhotoGallery :images="photos"></PhotoGallery>
+            <Pagination
+              ><PhotoGallery :images="photos"></PhotoGallery
+            ></Pagination>
           </Tab>
           <Tab :name="`Пользователи (${users.length})`">
             <UsersList :users="users"></UsersList>
@@ -38,6 +40,7 @@ import Tab from "../components/TabsTab";
 import MenuOptions from "../components/MenuOptions";
 import PhotoGallery from "../components/ImageGallery";
 import UsersList from "../components/UsersList";
+import Pagination from "../components/Pagination";
 import SearchService from "../services/SearchService";
 
 export default {
@@ -53,7 +56,8 @@ export default {
     Tab,
     PhotoGallery,
     MenuOptions,
-    UsersList
+    UsersList,
+    Pagination
   },
   data() {
     return {
@@ -74,6 +78,7 @@ export default {
         this.photos = res.data.photos;
         this.albums = res.data.albums;
         this.users = res.data.users;
+        console.log(res.data);
       }
     },
     async updateAll(options) {
