@@ -4,6 +4,7 @@ const passport = require("passport");
 const multer = require("multer");
 const path = require("../config/keys").storagePath;
 const paginate = require("jw-paginate");
+const Vibrant = require("node-vibrant");
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -29,6 +30,7 @@ router.post(
     let albumId;
     let user = req.body.userId;
     let tags = req.body.tags === "" ? [] : req.body.tags.split(",");
+    let colors = await getImageColors(req.file.path);
 
     if (req.body.newAlbum !== "") {
       let newAlbum = await Album.create({
@@ -47,7 +49,8 @@ router.post(
       user: user,
       tags: tags,
       link: req.file.filename,
-      album: albumId
+      album: albumId,
+      colors: colors
     });
 
     let like = await Like.create({
@@ -70,12 +73,25 @@ router.post(
   }
 );
 
+function getImageColors(imagePath) {
+  let colors = [];
+  return new Promise(resolve => {
+    Vibrant.from(imagePath).getPalette(function(err, palette) {
+      for (let swatch in palette) {
+        colors.push(palette[swatch].getHex());
+      }
+      return resolve(colors);
+    });
+  });
+}
+
 //Search all photos, albums, users by query
 router.get("/search/(:query)?", async function(req, res) {
   let query = req.params.query || "";
   let sorting = req.query.sort;
+  let filter = req.query.filter || "";
   let page = parseInt(req.query.page) || 1;
-  
+
   const pageSize = 10;
 
   let sort = sortingQuery(sorting);
@@ -93,7 +109,6 @@ router.get("/search/(:query)?", async function(req, res) {
   let pagerAlbums = paginate(albumsCount, page, pageSize);
   let pagerUsers = paginate(usersCount, page, pageSize);
   let pagerPhotos = paginate(photosCount, page, pageSize);
-  
 
   let users = await findDocumentsPaginated(
     User,
@@ -113,6 +128,11 @@ router.get("/search/(:query)?", async function(req, res) {
     { tags: { $exists: true, $regex: query } },
     pagerPhotos,
     sort
+  );
+
+  let filteredPhotos = await filterPhotos(
+    { tags: { $exists: true, $regex: query } },
+    filter
   );
 
   return res.status(200).json({
@@ -135,7 +155,8 @@ function getDocumentsCount(model, query) {
 
 function findDocumentsPaginated(model, query, pager) {
   return new Promise(resolve => {
-    let skip = pager.currentPage === 0 ? 0 : pager.pageSize * (pager.currentPage - 1);
+    let skip =
+      pager.currentPage === 0 ? 0 : pager.pageSize * (pager.currentPage - 1);
     resolve(
       model
         .find(query)
@@ -147,7 +168,8 @@ function findDocumentsPaginated(model, query, pager) {
 
 function findPhotos(query, pager, sort) {
   return new Promise((resolve, reject) => {
-    let skip = pager.currentPage === 0 ? 0 : pager.pageSize * (pager.currentPage - 1);
+    let skip =
+      pager.currentPage === 0 ? 0 : pager.pageSize * (pager.currentPage - 1);
     Photo.find(query)
       .populate({ path: "like", select: "count" })
       .populate("user")
@@ -158,6 +180,28 @@ function findPhotos(query, pager, sort) {
         if (err) return reject(err);
         if (photos) return resolve(photos);
       });
+  });
+}
+
+function filterPhotos(query, colorFilter) {
+  let diff;
+  let diffResult;
+  return new Promise((resolve, reject) => {
+    Photo.find(query, function(err, photos) {
+      if (err) return reject(err);
+      if (photos) {
+        if(!colorFilter) return resolve(photos);
+        let filteredPhotos = [];
+        photos.forEach(photo => {
+            diff = Vibrant.Util.hexDiff(photo.colors[0], colorFilter);
+            diffResult = Vibrant.Util.getColorDiffStatus(diff);
+            if(diffResult !== "Wrong") {
+              filteredPhotos.push(photo);
+            }
+        });
+        resolve(filteredPhotos);
+      }
+    });
   });
 }
 

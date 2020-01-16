@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Vibrant = require("node-vibrant");
 
 let Schema = mongoose.Schema;
 
@@ -15,7 +16,8 @@ let PhotoSchema = new Schema({
       required: true
   },
   date: {type: Date, required: true, default: Date.now},
-  tags: [{type: String}]
+  tags: [{type: String}],
+  colors: [{type: String, default: "#fff"}]
 });
 
 module.exports = mongoose.model('Photo', PhotoSchema);
