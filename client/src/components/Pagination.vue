@@ -77,16 +77,16 @@ export default {
   },
   data() {
     return {};
-  },
-  watch: {
-    "$route.query.page": {
-      immediate: true,
-      handler(page) {
-        page = parseInt(page) || 1;
-        console.log(page);
-      }
-    }
   }
+  //   watch: {
+  //     "$route.query.page": {
+  //       immediate: true,
+  //       handler(page) {
+  //         page = parseInt(page) || 1;
+  //         console.log(page);
+  //       }
+  //     }
+  //   }
 };
 </script>
 

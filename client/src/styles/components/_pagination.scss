@@ -18,6 +18,10 @@
         visibility: hidden;
     }
 
+    &.active {
+      color: $primary-color--lighter
+    }
+
     &:last-child {
       margin-right: 0;
     }

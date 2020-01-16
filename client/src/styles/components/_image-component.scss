@@ -1,62 +1,69 @@
 .photo {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    background-color: #fff;
-    box-shadow: 0 0 10px $gray--dark;
-    max-width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0 0 10px $gray--dark;
+  max-width: 100%;
+  max-height: 80vh;
 
-    &__image {
-        flex: 1 0 65%;
+  &__image {
+    flex: 1 0 65%;
 
-        img {
-            display: block;
-            margin: 0 auto;
-        }
+    img {
+      display: block;
+      margin: 0 auto;
+      //fit image in div
+      max-width: 100%;
+      max-height: 100%;
     }
+  }
 
-    &__details {
-        flex: 1 0 35%;
-        border-left: 1px solid $gray;
-    }
+  &__details {
+    flex: 1 0 35%;
+    border-left: 1px solid $gray;
+  }
 }
-
 
 .details {
+  &__content,
+  &__header {
+    padding: 1em 0.5em;
+  }
 
-    &__content, &__header {
-        padding: 1em 0.5em;
+  &__header {
+    font-size: 1.3em;
+    border-bottom: 1px solid $gray;
+  }
+
+  &__icon {
+    margin-right: 0.5em;
+    color: $primary-color;
+  }
+
+  &__link {
+    text-decoration: none;
+    font-weight: $bold;
+    color: $text-color--dark;
+
+    &:hover {
+      color: $primary-color--lighter;
     }
-
-    &__header {
-        font-size: 1.3em;
-        border-bottom: 1px solid $gray;
-    }
-
-    &__icon {
-        margin-right: 0.5em;
-        color: $primary-color;
-    }
-
-    &__link {
-        text-decoration: none;
-        font-weight: $bold;
-        color: $text-color--dark;
-
-        &:hover {
-            color: $primary-color--lighter
-        }
-    }
-    
+  }
 }
-
-
 
 //---------MOBILE--------------
 
 @media (max-width: $bp-small) {
-    .photo {
-        flex-flow: column nowrap;
+  .photo {
+    flex-flow: column nowrap;
+    max-height: 100%;
+    &__image {
+      img {
+        display: block;
+        margin: 0 auto;
+        max-height: 70vh;
+      }
     }
-
+  }
 }

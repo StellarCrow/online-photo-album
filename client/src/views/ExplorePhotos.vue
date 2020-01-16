@@ -1,7 +1,7 @@
 <template>
   <section class="explore">
     <div class="explore__menu">
-      <MenuOptions @options="updateAll" />
+      <MenuOptions @options="updateFilters" />
     </div>
     <div class="explore__content">
       <div class="explore__search">
@@ -12,7 +12,7 @@
           id="explore__search"
           v-model="exploreInputSearch"
           placeholder="Найти..."
-          @keydown.enter.prevent="searchQuery()"
+          @keydown.enter.prevent="sendRequest()"
         />
       </div>
       <section>
@@ -22,12 +22,12 @@
               ><PhotoGallery :images="photos"></PhotoGallery
             ></Pagination>
           </Tab>
-          <Tab :name="`Пользователи (${users.length})`">
+          <Tab :name="`Пользователи (${totalUsers})`">
             <Pagination :pager="pager.users">
               <UsersList :users="users"></UsersList>
             </Pagination>
           </Tab>
-          <Tab :name="`Альбомы (${albums.length})`">
+          <Tab :name="`Альбомы (${totalAlbums})`">
             Альбомы
           </Tab>
         </Tabs>
@@ -69,19 +69,25 @@ export default {
       exploreInputSearch: this.query,
       options: {
         filter: "",
-        sorting: ""
+        sorting: "",
+        page: ""
       },
       pager: {},
-      totalPhotos: 0
+      totalPhotos: 0,
+      totalUsers: 0,
+      totalAlbums: 0
     };
   },
   methods: {
     formatString() {
       return this.exploreInputSearch.trim().toLowerCase();
     },
-    async searchQuery() {
-      let res = await SearchService.searchAllByQuery(
-        this.formatString(this.exploreInputSearch)
+    async sendRequest() {
+      let res = await SearchService.explorePhotos(
+        this.formatString(this.exploreInputSearch),
+        this.options.filter,
+        this.options.sorting,
+        this.options.page
       );
       if (res.data.success) {
         this.photos = res.data.photos;
@@ -91,36 +97,30 @@ export default {
         this.pager.albums = res.data.pagerAlbums;
         this.pager.photos = res.data.pagerPhotos;
         this.totalPhotos = res.data.pagerPhotos.totalItems;
+        this.totalAlbums = res.data.pagerAlbums.totalItems;
+        this.totalUsers = res.data.pagerUsers.totalItems;
       }
     },
-    async updateAll(options) {
-      let filter = options.filter;
-      let sorting = options.sorting;
-      let res = await SearchService.filterAndSortAll(
-        filter,
-        sorting,
-        this.exploreInputSearch
-      );
-      if (res.data.success) {
-        this.photos = res.data.photos;
-        this.albums = res.data.albums;
-        this.users = res.data.users;
-      }
+    async updateFilters(options) {
+      this.options.filter = options.filter;
+      this.options.sorting = options.sorting;
+      this.options.page = 1;
+      this.sendRequest();
     }
   },
   mounted() {
-    this.searchQuery(this.exploreInputSearch);
+    this.sendRequest();
+  },
+  watch: {
+    "$route.query.page": {
+      immediate: true,
+      async handler(page) {
+        page = parseInt(page) || 1;
+        this.options.page = page;
+        this.sendRequest();
+      }
+    }
   }
-  // watch: {
-  //   "$route.query.page": {
-  //     immediate: true,
-  //     handler(page) {
-  //       page = parseInt(page) || 1;
-  //       console.log(page);
-
-  //     }
-  //   }
-  // }
 };
 </script>
 
