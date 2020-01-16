@@ -8,16 +8,16 @@ let PhotoSchema = new Schema({
     type: String,
     required: false
   },
-  likesCount: {type: Number, default: 0},
+  likesCount: { type: Number, default: 0 },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   album: { type: Schema.Types.ObjectId, ref: "Album", required: true },
   link: {
-      type: String,
-      required: true
+    type: String,
+    required: true
   },
-  date: {type: Date, required: true, default: Date.now},
-  tags: [{type: String}],
-  colors: [{type: String, default: "#fff"}]
+  date: { type: Date, required: true, default: Date.now },
+  tags: [{ type: String }],
+  colors: [{ type: String, default: "#fff" }]
 });
 
-module.exports = mongoose.model('Photo', PhotoSchema);
+module.exports = mongoose.model("Photo", PhotoSchema);

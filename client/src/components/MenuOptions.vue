@@ -44,59 +44,27 @@
     <div class="options__section">
       <div class="option__heading">Фильтрация:</div>
       <ul class="options__list" @change="update">
-        <li>
+        <li v-for="(color, index) in colors" :key="index">
           <input
             type="radio"
-            name="filter-color"
-            id="filter_green"
-            value="green"
+            name="filter"
+            :id="`filter-${color.name}`"
+            :value="color.name"
             v-model="filter"
-          /><label for="filter_green"></label>
+          /><label
+            :for="`filter-${color.name}`"
+            :style="{ backgroundColor: color.hex }"
+            >lala</label
+          >
         </li>
         <li>
           <input
             type="radio"
-            name="filter-color"
-            id="filter_red"
-            value="red"
-            v-model="filter"
-          /><label for="filter_red"></label>
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="filter-color"
-            id="filter_yellow"
-            value="yellow"
-            v-model="filter"
-          /><label for="filter_yellow"></label>
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="filter-color"
-            id="filter_blue"
-            value="blue"
-            v-model="filter"
-          /><label for="filter_blue"></label>
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="filter-color"
-            id="filter_pink"
-            value="pink"
-            v-model="filter"
-          /><label for="filter_pink"></label>
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="filter-color"
-            id="filter_reset"
+            name="filter"
             value=""
+            id="filter_reset"
             v-model="filter"
-          /><label for="filter_reset">Очистить фильтр</label>
+          /><label for="filter_reset">Убрать фильтры</label>
         </li>
       </ul>
     </div>
@@ -109,7 +77,29 @@ export default {
   data() {
     return {
       sorting: "",
-      filter: ""
+      filter: "",
+      colors: [
+        {
+          name: "red",
+          hex: "#FF0000"
+        },
+        {
+          name: "yellow",
+          hex: "#f0ff00"
+        },
+        {
+          name: "green",
+          hex: "#1abf00"
+        },
+        {
+          name: "blue",
+          hex: "#00c3df"
+        },
+        {
+          name: "pink",
+          hex: "#FFC0CB"
+        }
+      ]
     };
   },
   methods: {
