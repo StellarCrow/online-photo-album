@@ -80,8 +80,17 @@ body {
     height: 100%;
 }
 
+.header {
+  //fixed menu/header
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  box-shadow: 0 3px 3px $gray;
+}
+
 .content {
     flex: 1 0 auto;
+    padding-top: 5em;
 }
 
 .footer {
