@@ -17,17 +17,6 @@
         <p class="details__description" v-if="photo.description">
           {{ photo.description }}
         </p>
-        <div class="details__tags" v-if="photo.tags && photo.tags.length > 0">
-          <ul class="taglist">
-            <li
-              class="taglist__item"
-              v-for="(tag, index) in photo.tags"
-              :key="index"
-            >
-              {{ tag }}
-            </li>
-          </ul>
-        </div>
         <div class="details__likes">
           <LikeButton
             :photoId="imageId"
@@ -35,9 +24,29 @@
           ></LikeButton>
           {{ totalLikesCount }}
         </div>
-        <div class="details__date">
-          {{ photo.date }}
+
+        <div class="details__tags" v-if="photo.tags && photo.tags.length > 0">
+          <ul class="taglist">
+            <li
+              class="taglist__item"
+              v-for="(tag, index) in photo.tags"
+              :key="index"
+            >
+              <router-link :to="`/photos/s/${tag}`" class="taglist__link">{{
+                tag
+              }}</router-link>
+            </li>
+          </ul>
         </div>
+        <span class="details__date">
+          {{
+            photo.date &&
+              photo.date
+                .replace("-", ".")
+                .split("T")[0]
+                .replace("-", ".")
+          }}
+        </span>
       </div>
     </div>
   </div>

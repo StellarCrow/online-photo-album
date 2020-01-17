@@ -2,10 +2,10 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  background-color: #fff;
   box-shadow: 0 0 10px $gray--dark;
   max-width: 100%;
   max-height: 80vh;
+  background-color: #fff;
 
   &__image {
     flex: 1 0 65%;
@@ -28,12 +28,26 @@
 .details {
   &__content,
   &__header {
-    padding: 1em 0.5em;
+    padding: 5% 4%;
   }
 
   &__header {
     font-size: 1.3em;
     border-bottom: 1px solid $gray;
+  }
+
+  &__content > div{
+    margin-bottom: 3%;
+  }
+
+  &__tags {
+    font-size: 1.3em;
+  }
+
+  &__date {
+    font-size: 0.8em;
+    font-family: $ff-primary;
+    float: right;
   }
 
   &__icon {
@@ -64,6 +78,10 @@
         margin: 0 auto;
         max-height: 70vh;
       }
+    }
+
+    &__details {
+      border-left: none;
     }
   }
 }

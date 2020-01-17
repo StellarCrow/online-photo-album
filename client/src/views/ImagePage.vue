@@ -25,6 +25,6 @@ export default {
 <style lang="scss" scoped>
 .image-wrapper {
   padding: 5% 4%;
-  background: rgba($primary-color, 0.7);
+  // background: url("../assets/images/bg-photo.jpg") no-repeat center top / cover;
 }
 </style>
