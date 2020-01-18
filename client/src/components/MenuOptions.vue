@@ -42,9 +42,13 @@
             id="filter_reset"
             class="filter__input"
             v-model="filter"
-          /><label for="filter_reset" class="filter__label filter__label--reset">Все цвета</label>
+          /><label for="filter_reset" class="filter__label filter__label--reset"
+            >Все цвета</label
+          >
         </li>
       </ul>
+      <label :for="idForCloseLabel" class="options__close">Закрыть</label>
+      <!-- <button class="button-submit options__button-close">Закрыть</button> -->
     </div>
   </div>
 </template>
@@ -52,6 +56,12 @@
 <script>
 export default {
   name: "MenuOptions",
+  props: {
+    idForCloseLabel: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       sorting: "",

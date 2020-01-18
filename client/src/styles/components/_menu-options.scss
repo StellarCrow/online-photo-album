@@ -1,12 +1,16 @@
 .options {
+  //IE
   position: fixed;
+
+  //others
+  position: sticky;
+  top: $content-padding-top;
   padding: 1% 2%;
   box-shadow: 4px 0 3px $gray;
   box-sizing: border-box;
   border-right: 2px solid $primary-color;
   background-color: #fff;
-  width: 20%;
-  height: calc(100% - 5em);
+  height: calc(100vh - 4.3em);
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -23,6 +27,10 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+  }
+
+  &__close {
+    display: none;
   }
 }
 
@@ -72,7 +80,6 @@
 
     &:checked + .filter__label::before {
       content: "\2713";
-    //   text-align: center;
       padding: 0 0.4em;
     }
   }
@@ -94,6 +101,27 @@
     &:hover {
       cursor: pointer;
       opacity: 0.5;
+    }
+  }
+}
+
+@media (max-width: $bp-small) {
+  .options {
+    position: static;
+    height: auto;
+    padding: 5% 3%;
+
+    &__close {
+      display: block;
+      text-align: center;
+      font-weight: $light;
+      font-size: 1.3em;
+      padding: 0.5em 1em;
+      margin: 0 auto;
+      border-radius: 1.3em;
+      background-color: $primary-color;
+      color: $text-color--light;
+      width: 30%;
     }
   }
 }

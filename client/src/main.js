@@ -19,7 +19,8 @@ import {
   faTimes,
   faHeart,
   faUser,
-  faSearch
+  faSearch,
+  faSlidersH
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faTwitter,
@@ -43,7 +44,8 @@ library.add(
   faHeart,
   faUser,
   farHeart,
-  faSearch
+  faSearch,
+  faSlidersH
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

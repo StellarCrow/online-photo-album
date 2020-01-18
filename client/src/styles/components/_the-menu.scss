@@ -93,6 +93,8 @@ $padding-dropdown: 0.5em;
     left: 0;
     background-color: inherit;
     width: auto;
+    max-height: 100vh;
+    overflow-y: auto;
 
     &__item {
       border-left: none;

@@ -1,19 +1,30 @@
 <template>
   <section class="explore">
+    <input type="checkbox" id="options_button" hidden />
     <div class="explore__menu">
-      <MenuOptions @options="updateFilters" />
+      <MenuOptions
+        @options="updateFilters"
+        :idForCloseLabel="'options_button'"
+      />
     </div>
     <div class="explore__content">
-      <div class="explore__search">
+      <div class="explore__settings">
+        <!-- <div class="explore__search"> -->
         <input
           type="text"
-          class="input-flat"
+          class="input-flat explore__search"
           name="search-input"
           id="explore__search"
           v-model="exploreInputSearch"
           placeholder="Найти..."
           @keydown.enter.prevent="sendRequest()"
         />
+        <!-- </div> -->
+        <label for="options_button" class="explore__filters">
+          <i
+            ><font-awesome-icon :icon="['fa', 'sliders-h']"></font-awesome-icon
+          ></i>
+        </label>
       </div>
       <section>
         <Tabs>
@@ -75,7 +86,8 @@ export default {
       pager: {},
       totalPhotos: 0,
       totalUsers: 0,
-      totalAlbums: 0
+      totalAlbums: 0,
+      isMenuOpened: true
     };
   },
   methods: {
