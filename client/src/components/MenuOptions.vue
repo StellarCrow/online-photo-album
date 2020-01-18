@@ -2,69 +2,47 @@
   <div class="options">
     <div class="options__section">
       <div class="options__heading">Сортировать:</div>
-      <ul class="options__list" @change="update">
-        <li>
+      <ul class="options__list sort" @change="update">
+        <li v-for="(sort, index) in sortTypes" :key="index" class="sort__item">
           <input
             type="radio"
             name="sorting"
-            value="likes"
-            id="sort_likes"
+            :value="sort.type"
+            :id="`sort_${sort.type}`"
+            class="sort__input"
             v-model="sorting"
-          /><label for="sort_likes">По популярности</label>
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="sorting"
-            value="newest"
-            id="sort_newest"
-            v-model="sorting"
-          /><label for="sort_newest">От новых к старым</label>
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="sorting"
-            value="oldest"
-            id="sort_oldest"
-            v-model="sorting"
-          /><label for="sort_oldest">От старых к новым</label>
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="sorting"
-            value=""
-            id="sort_reset"
-            v-model="sorting"
-          /><label for="sort_reset">Без сортировки</label>
+          /><label :for="`sort_${sort.type}`" class="sort__label">{{
+            sort.name
+          }}</label>
         </li>
       </ul>
     </div>
     <div class="options__section">
-      <div class="option__heading">Фильтрация:</div>
-      <ul class="options__list" @change="update">
-        <li v-for="(color, index) in colors" :key="index">
+      <div class="options__heading">Выбрать тон:</div>
+      <ul class="options__list filter filter--color" @change="update">
+        <li v-for="(color, index) in colors" :key="index" class="filter__item">
           <input
             type="radio"
             name="filter"
             :id="`filter-${color.name}`"
             :value="color.name"
             v-model="filter"
+            class="filter__input"
           /><label
             :for="`filter-${color.name}`"
             :style="{ backgroundColor: color.hex }"
-            >lala</label
-          >
+            class="filter__label"
+          ></label>
         </li>
-        <li>
+        <li class="filter__item">
           <input
             type="radio"
             name="filter"
             value=""
             id="filter_reset"
+            class="filter__input"
             v-model="filter"
-          /><label for="filter_reset">Убрать фильтры</label>
+          /><label for="filter_reset" class="filter__label filter__label--reset">Все цвета</label>
         </li>
       </ul>
     </div>
@@ -80,24 +58,62 @@ export default {
       filter: "",
       colors: [
         {
-          name: "red",
-          hex: "#FF0000"
+          name: "white",
+          hex: "#ffffff"
+        },
+        {
+          name: "black",
+          hex: "#000000"
         },
         {
           name: "yellow",
-          hex: "#f0ff00"
+          hex: "#ffe76e"
+        },
+        {
+          name: "orange",
+          hex: "#ff976e"
+        },
+        {
+          name: "red",
+          hex: "#ff6e6e"
+        },
+        {
+          name: "darkViolet",
+          hex: "#c36eff"
+        },
+        {
+          name: "hotPink",
+          hex: "#ff6ed1"
         },
         {
           name: "green",
-          hex: "#1abf00"
+          hex: "#6eff99"
         },
         {
-          name: "blue",
-          hex: "#00c3df"
+          name: "skyBlue",
+          hex: "#6ef1ff"
         },
         {
-          name: "pink",
-          hex: "#FFC0CB"
+          name: "darkBlue",
+          hex: "#756eff"
+        }
+      ],
+      sortTypes: [
+        {
+          type: "likes",
+          name: "По популярности"
+        },
+        {
+          type: "newest",
+          name: "От новых к старым"
+        },
+        {
+          type: "oldest",
+          name: "От старых к новым"
+        },
+        {
+          type: "",
+          name: "Без сортировки"
         }
       ]
     };
@@ -114,4 +130,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "../styles/components/_menu-options.scss";
+</style>

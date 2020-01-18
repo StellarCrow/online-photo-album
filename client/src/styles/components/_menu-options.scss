@@ -1,0 +1,101 @@
+.options {
+  position: fixed;
+  padding: 1% 2%;
+  box-shadow: 4px 0 3px $gray;
+  box-sizing: border-box;
+  border-right: 2px solid $primary-color;
+  background-color: #fff;
+  width: 20%;
+  height: calc(100% - 5em);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &__section {
+    margin-bottom: 20%;
+  }
+
+  &__heading {
+    font-weight: $light;
+    margin-bottom: 5%;
+  }
+
+  &__list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.sort {
+
+  &__item {
+    margin-bottom: 1em;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__label:hover, 
+  &__input:checked + &__label {
+    background-color: $primary-color;
+    color: $text-color--light;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+
+  &__label {
+    font-weight: $light;
+    padding: 0.3em 0;
+    text-align: center;
+    border: 1px solid $primary-color;
+    border-radius: 0.8em;
+    display: inline-block;
+    width: 100%;
+    color: $text-color--dark;
+  }
+}
+
+.filter {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 3%;
+
+  &__item {
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  &__input {
+    display: none;
+
+    &:checked + .filter__label::before {
+      content: "\2713";
+    //   text-align: center;
+      padding: 0 0.4em;
+    }
+  }
+
+  &__label {
+    display: block;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    border: 1px solid rgba($gray, 0.5);
+
+    &--reset {
+      width: auto;
+      height: auto;
+      border: none;
+      color: $text-color--dark;
+    }
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.5;
+    }
+  }
+}
+
+
