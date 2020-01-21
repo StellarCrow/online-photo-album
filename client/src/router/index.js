@@ -60,8 +60,8 @@ const routes = [
     component: ExplorePhotos
   },
   {
-    path: "/photos/s/:query",
-    name: "search",
+    path: "/photos/explore/:query",
+    name: "explore",
     component: ExplorePhotos,
     props: true
   },

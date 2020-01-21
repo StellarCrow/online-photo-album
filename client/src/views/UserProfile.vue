@@ -61,26 +61,41 @@ export default {
       name: "",
       username: "",
       isMyPage: false,
-      userPageId: this.$route.params.id,
       images: [],
       likes: 0
     };
   },
+  computed: {
+    userPageId() {
+      return this.$route.params.id;
+    }
+  },
   methods: {
     uploadImage() {
       this.$router.push(`/uploadImage`);
+    },
+    async getUser() {
+      if (this.userPageId === this.$store.getters.userId) {
+        this.isMyPage = true;
+      }
+      let res = await UsersService.getUser(this.userPageId);
+      if (res.data.success) {
+        this.username = res.data.user.username;
+        this.name = res.data.user.name;
+        this.images = res.data.photos;
+        this.likes = res.data.likes;
+      }
     }
   },
   async mounted() {
-    if (this.userPageId === this.$store.getters.userId) {
-      this.isMyPage = true;
-    }
-    let res = await UsersService.getUser(this.userPageId);
-    if (res.data.success) {
-      this.username = res.data.user.username;
-      this.name = res.data.user.name;
-      this.images = res.data.photos;
-      this.likes = res.data.likes;
+    this.getUser();
+  },
+  watch: {
+    "$route.params.id": {
+      immediate: true,
+      async handler() {
+        this.getUser();
+      }
     }
   }
 };

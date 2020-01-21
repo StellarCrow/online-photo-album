@@ -130,10 +130,13 @@ export default {
   methods: {
     changeRoute() {
       this.$router.push({
-        path: "explore",
         query: { filter: this.filter, sort: this.sorting }
       });
     }
+  },
+  mounted() {
+    this.filter = this.$route.query.filter || "";
+    this.sorting = this.$route.query.sort || "";
   }
 };
 </script>

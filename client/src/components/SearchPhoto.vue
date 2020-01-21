@@ -27,7 +27,11 @@ export default {
       return this.inputQuery.trim().toLowerCase();
     },
     async searchQuery() {
-      this.$router.push(`/photos/s/${this.formatString(this.inputQuery)}`);
+      /* eslint-disable no-unused-vars */
+      this.$router
+        .push(`/photos/explore/${this.formatString(this.inputQuery)}`)
+        .catch(err => {});
+      /* eslint-enable no-unused-vars */
       this.inputQuery = "";
     }
   }

@@ -13,7 +13,7 @@
           id="explore__search"
           v-model="exploreInputSearch"
           placeholder="Найти..."
-          @keydown.enter.prevent="sendRequest()"
+          @keydown.enter.prevent="changeRouter()"
         />
         <label for="options_button" class="explore__filters">
           <i
@@ -68,7 +68,7 @@ export default {
     return {
       photos: [],
       users: [],
-      exploreInputSearch: this.query,
+      exploreInputSearch: "",
       options: {
         filter: "",
         sorting: "",
@@ -83,7 +83,16 @@ export default {
   },
   methods: {
     formatString() {
-      return this.exploreInputSearch.trim().toLowerCase();
+      if (this.exploreInputSearch) {
+        return this.exploreInputSearch.trim().toLowerCase();
+      } else return "";
+    },
+    changeRouter() {
+      /* eslint-disable no-unused-vars */
+      this.$router
+        .push(`/photos/explore/${this.formatString(this.exploreInputSearch)}`)
+        .catch(err => {});
+      /* eslint-enable no-unused-vars */
     },
     async sendRequest() {
       let res = await SearchService.explorePhotos(
@@ -103,6 +112,9 @@ export default {
     }
   },
   mounted() {
+    this.options.page = parseInt(this.$route.query.page) || 1;
+    this.options.filter = this.$route.query.filter || "";
+    this.options.sorting = this.$route.query.sort || "";
     this.sendRequest();
   },
   watch: {
@@ -125,6 +137,13 @@ export default {
       immediate: true,
       async handler(sort) {
         this.options.sorting = sort;
+        this.sendRequest();
+      }
+    },
+    "$route.params.query": {
+      immediate: true,
+      async handler(query) {
+        this.exploreInputSearch = query;
         this.sendRequest();
       }
     }
