@@ -2,14 +2,10 @@
   <section class="explore">
     <input type="checkbox" id="options_button" hidden />
     <div class="explore__menu">
-      <MenuOptions
-        @options="updateFilters"
-        :idForCloseLabel="'options_button'"
-      />
+      <MenuOptions :idForCloseLabel="'options_button'" />
     </div>
     <div class="explore__content">
       <div class="explore__settings">
-        <!-- <div class="explore__search"> -->
         <input
           type="text"
           class="input-flat explore__search"
@@ -19,7 +15,6 @@
           placeholder="Найти..."
           @keydown.enter.prevent="sendRequest()"
         />
-        <!-- </div> -->
         <label for="options_button" class="explore__filters">
           <i
             ><font-awesome-icon :icon="['fa', 'sliders-h']"></font-awesome-icon
@@ -37,9 +32,6 @@
             <Pagination :pager="pager.users">
               <UsersList :users="users"></UsersList>
             </Pagination>
-          </Tab>
-          <Tab :name="`Альбомы (${totalAlbums})`">
-            Альбомы
           </Tab>
         </Tabs>
       </section>
@@ -75,7 +67,6 @@ export default {
   data() {
     return {
       photos: [],
-      albums: [],
       users: [],
       exploreInputSearch: this.query,
       options: {
@@ -103,21 +94,12 @@ export default {
       );
       if (res.data.success) {
         this.photos = res.data.photos;
-        this.albums = res.data.albums;
         this.users = res.data.users;
         this.pager.users = res.data.pagerUsers;
-        this.pager.albums = res.data.pagerAlbums;
         this.pager.photos = res.data.pagerPhotos;
         this.totalPhotos = res.data.pagerPhotos.totalItems;
-        this.totalAlbums = res.data.pagerAlbums.totalItems;
         this.totalUsers = res.data.pagerUsers.totalItems;
       }
-    },
-    async updateFilters(options) {
-      this.options.filter = options.filter;
-      this.options.sorting = options.sorting;
-      this.options.page = 1;
-      this.sendRequest();
     }
   },
   mounted() {
@@ -129,6 +111,20 @@ export default {
       async handler(page) {
         page = parseInt(page) || 1;
         this.options.page = page;
+        this.sendRequest();
+      }
+    },
+    "$route.query.filter": {
+      immediate: true,
+      async handler(filter) {
+        this.options.filter = filter;
+        this.sendRequest();
+      }
+    },
+    "$route.query.sort": {
+      immediate: true,
+      async handler(sort) {
+        this.options.sorting = sort;
         this.sendRequest();
       }
     }

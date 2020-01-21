@@ -95,9 +95,9 @@ router.get("/search/(:query)?", async function(req, res) {
   let sort = sortingQuery(sorting);
 
   //get all documents count
-  let albumsCount = await getDocumentsCount(Album, {
-    name: { $exists: true, $regex: query }
-  });
+  // let albumsCount = await getDocumentsCount(Album, {
+  //   name: { $exists: true, $regex: query }
+  // });
   let usersCount = await getDocumentsCount(User, {
     username: { $exists: true, $regex: query }
   });
@@ -106,7 +106,7 @@ router.get("/search/(:query)?", async function(req, res) {
   });
 
   //pagination
-  let pagerAlbums = paginate(albumsCount, page, pageSize);
+  // let pagerAlbums = paginate(albumsCount, page, pageSize);
   let pagerUsers = paginate(usersCount, page, pageSize);
   let pagerPhotos = paginate(photosCount, page, pageSize);
 
@@ -119,13 +119,13 @@ router.get("/search/(:query)?", async function(req, res) {
     pagerUsers
   );
   //find users & paginate
-  let albums = await findDocumentsPaginated(
-    Album,
-    {
-      name: { $ne: "Default", $exists: true, $regex: query }
-    },
-    pagerAlbums
-  );
+  // let albums = await findDocumentsPaginated(
+  //   Album,
+  //   {
+  //     name: { $ne: "Default", $exists: true, $regex: query }
+  //   },
+  //   pagerAlbums
+  // );
 
   //find sorted, filtered & paginated photos
   let photos = await findPhotosWithAllOptions(
@@ -139,9 +139,9 @@ router.get("/search/(:query)?", async function(req, res) {
     success: true,
     msg: "searched results",
     photos: photos,
-    albums: albums,
+    // albums: albums,
     users: users,
-    pagerAlbums: pagerAlbums,
+    // pagerAlbums: pagerAlbums,
     pagerPhotos: pagerPhotos,
     pagerUsers: pagerUsers
   });

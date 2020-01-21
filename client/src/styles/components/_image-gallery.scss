@@ -1,10 +1,33 @@
 .images {
-  // max-width: 1200px;
-  // margin: 0 auto;
   &__container {
+    //centering
+    width: 1210px;
+    margin: auto;
+
+    max-width: 1510px;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+
+    @media #{$mq-xsmall} {
+      width: 310px;
+    }
+
+    @media #{$mq-small} {
+      width: 610px;
+    }
+
+    @media #{$mq-medium} {
+      width: 910px;
+    }
+
+    @media #{$mq-large} {
+      width: 1210px;
+    }
+
+    @media #{$mq-xlarge} {
+      width: 1510px;
+    }
   }
 }
 
@@ -14,6 +37,8 @@
   border: 1px solid #fff;
   position: relative;
   // margin: auto;
+
+  display: inline-block;
 
   &:hover {
     cursor: pointer;

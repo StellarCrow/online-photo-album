@@ -2,7 +2,7 @@
   <div class="options">
     <div class="options__section">
       <div class="options__heading">Сортировать:</div>
-      <ul class="options__list sort" @change="update">
+      <ul class="options__list sort" @change="changeRoute()">
         <li v-for="(sort, index) in sortTypes" :key="index" class="sort__item">
           <input
             type="radio"
@@ -19,7 +19,7 @@
     </div>
     <div class="options__section">
       <div class="options__heading">Выбрать тон:</div>
-      <ul class="options__list filter filter--color" @change="update">
+      <ul class="options__list filter filter--color" @change="changeRoute()">
         <li v-for="(color, index) in colors" :key="index" class="filter__item">
           <input
             type="radio"
@@ -48,7 +48,6 @@
         </li>
       </ul>
       <label :for="idForCloseLabel" class="options__close">Закрыть</label>
-      <!-- <button class="button-submit options__button-close">Закрыть</button> -->
     </div>
   </div>
 </template>
@@ -129,12 +128,11 @@ export default {
     };
   },
   methods: {
-    update() {
-      let options = {
-        sorting: this.sorting,
-        filter: this.filter
-      };
-      this.$emit("options", options);
+    changeRoute() {
+      this.$router.push({
+        path: "explore",
+        query: { filter: this.filter, sort: this.sorting }
+      });
     }
   }
 };
