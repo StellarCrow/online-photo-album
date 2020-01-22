@@ -16,7 +16,9 @@
             <li class="statistic__item">
               Фотографий<span>{{ images.length }}</span>
             </li>
-            <li class="statistic__item">Альбомов<span>200</span></li>
+            <li class="statistic__item">
+              Альбомов<span>{{ albumsCount }}</span>
+            </li>
             <li class="statistic__item">
               <i
                 ><font-awesome-icon :icon="['fa', 'heart']"></font-awesome-icon
@@ -36,7 +38,7 @@
           <PhotoGallery :images="images"></PhotoGallery>
         </tab>
         <tab name="Альбомы">
-          Альбомы
+          <AlbumsGallery :albums="albums"></AlbumsGallery>
         </tab>
       </tabs>
     </section>
@@ -48,13 +50,15 @@ import UsersService from "../services/UsersService";
 import Tabs from "../components/TabsBase";
 import Tab from "../components/TabsTab";
 import PhotoGallery from "../components/ImageGallery";
+import AlbumsGallery from "../components/AlbumsGallery";
 
 export default {
   name: "UserProfile",
   components: {
     Tabs,
     Tab,
-    PhotoGallery
+    PhotoGallery,
+    AlbumsGallery
   },
   data() {
     return {
@@ -62,7 +66,9 @@ export default {
       username: "",
       isMyPage: false,
       images: [],
-      likes: 0
+      likes: 0,
+      albums: [],
+      albumsCount: 0
     };
   },
   computed: {
@@ -84,10 +90,18 @@ export default {
         this.name = res.data.user.name;
         this.images = res.data.photos;
         this.likes = res.data.likes;
+        this.albumsCount = res.data.albumsCount;
+        this.albums = res.data.albums;
+      }
+    },
+    async getAlbums() {
+      let res = await UsersService.getAlbums(this.userPageId);
+      if (res.success) {
+        this.albums = res.data.albums;
       }
     }
   },
-  async mounted() {
+  mounted() {
     this.getUser();
   },
   watch: {

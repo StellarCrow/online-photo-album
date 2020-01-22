@@ -154,7 +154,7 @@ export default {
         .split(" ")
         .join("")
         .toLowerCase();
-      this.formData.tags.push(str);
+      if (str) this.formData.tags.push(str);
       this.tagInput = "";
     },
     deleteTag(index) {

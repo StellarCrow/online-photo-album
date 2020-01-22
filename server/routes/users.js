@@ -112,50 +112,72 @@ router.post("/login", function(req, res) {
 });
 
 //get profile
-router.get("/:id", passport.authenticate("jwt", { session: false }), async function(
-  req,
-  res,
-  next
-) {
-  let id = req.params.id;
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async function(req, res, next) {
+    let id = req.params.id;
 
-  let user = await User.findOne({ _id: id }, function(err, user) {
-    if (err) return next(err);
-    if (!user) {
-      return res.status(204).json({
-        success: false,
-        msg: "User was not found."
+    let user = await User.findOne({ _id: id }, function(err, user) {
+      if (err) return next(err);
+      if (!user) {
+        return res.status(204).json({
+          success: false,
+          msg: "User was not found."
+        });
+      }
+    });
+
+    //get user's albums
+    let albumsCount = await Album.countDocuments({ user: id });
+    let albums = await Album.find(
+      { user: id },
+      { photos: { $slice: -3 } }
+    )
+    .populate("photos", function(err) {
+      if (err) return next(err);
+    });
+
+    await Photo.find({ user: id })
+      .populate("user")
+      .sort({ date: -1 })
+      .exec(function(err, photos) {
+        if (err) return err;
+        if (photos) {
+          return res.status(200).json({
+            success: true,
+            msg: "User and his photos were found.",
+            user: user,
+            photos: photos,
+            likes: user.likes.length || 0,
+            albumsCount: albumsCount,
+            albums: albums
+          });
+        }
       });
-    }
-  });
-
-  await Photo.find({user: id}).populate("user").sort({date: -1}).exec(function(err, photos) {
-    if(err) return err;
-    if(photos) {
-      return res.status(200).json({
-        success: true,
-        msg: "User and his photos were found.",
-        user: user,
-        photos: photos,
-        likes: user.likes.length || 0
-      })
-    }
-  });
-});
+  }
+);
 
 //Get user's albums
 router.get("/:id/albums", function(req, res, next) {
   let id = req.params.id;
-  Album.find({ user: id }, function(err, albums) {
-    if (err) return next(err);
-    if (albums) {
-      return res.status(200).json({
-        success: true,
-        msg: "Successfully got user's albums",
-        albums: albums
-      });
-    }
-  });
+  Album.find({ user: id }, { photos: { $slice: 3 } })
+    .populate("photos")
+    .exec(function(err, albums) {
+      if (err) return next(err);
+      if (albums) {
+        return res.status(200).json({
+          success: true,
+          msg: "Successfully got user's albums",
+          albums: albums
+        });
+      } else {
+        return res.json({
+          success: false,
+          msg: "No albums were found"
+        });
+      }
+    });
 });
 
 //Get user's photos
