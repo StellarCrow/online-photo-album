@@ -133,8 +133,7 @@ router.get(
     let albums = await Album.find(
       { user: id },
       { photos: { $slice: -3 } }
-    )
-    .populate("photos", function(err) {
+    ).populate("photos", function(err) {
       if (err) return next(err);
     });
 
@@ -191,6 +190,22 @@ router.get("/:id/photos", function(req, res, next) {
         success: true,
         msg: "Successfully got user's photos",
         photos: photos
+      });
+    }
+  });
+});
+
+//Get user's album
+router.get("/:id/albums/:aid", async function(req, res, next) {
+  let aid = req.params.aid;
+  
+  await Album.findById(aid).populate("photos").exec(function(err, album) {
+    if (err) return next(err);
+    if (album) {
+      return res.status(200).json({
+        success: true,
+        msg: "Got album info and photos",
+        album: album
       });
     }
   });

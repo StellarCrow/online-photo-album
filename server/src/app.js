@@ -11,7 +11,6 @@ const app = express();
 let usersRouter = require('../routes/users');
 let indexRouter = require('../routes/index');
 let photosRouter = require('../routes/photos');
-let albumsRouter = require('../routes/albums');
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true });
 console.log(mongoose.connection.readyState);
@@ -30,6 +29,5 @@ require('../config/passport')(passport);
 app.use('/', indexRouter);
 app.use('/users/', usersRouter);
 app.use('/photos/', photosRouter);
-app.use('/albums/', albumsRouter);
 
 app.listen(process.env.PORT || 8081);

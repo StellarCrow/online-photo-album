@@ -6,6 +6,7 @@ import UserProfile from "../views/UserProfile.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 import UploadImage from "../views/UploadImage.vue";
 import ImagePage from "../views/ImagePage.vue";
+import AlbumPage from "../views/AlbumPage.vue";
 import ExplorePhotos from "../views/ExplorePhotos.vue";
 import store from "../store/index";
 
@@ -53,6 +54,11 @@ const routes = [
     path: "/users/:id/photos/:pid",
     name: "image",
     component: ImagePage
+  },
+  {
+    path: "/users/:id/albums/:aid",
+    name: "album",
+    component: AlbumPage
   },
   {
     path: "/photos/explore",

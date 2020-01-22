@@ -7,6 +7,9 @@ export default {
   getUserAlbums(id) {
     return Api().get(`/users/${id}/albums`);
   },
+  getUserAlbum(id, aid) {
+    return Api().get(`/users/${id}/albums/${aid}`);
+  },
   getUserPhotos(id) {
     return Api().get(`/users/${id}/photos`);
   },
