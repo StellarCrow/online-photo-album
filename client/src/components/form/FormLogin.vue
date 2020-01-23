@@ -20,6 +20,7 @@
         required
       />
     </div>
+    <div class="form__error" v-if="error">{{ error }}</div>
     <button class="button-submit" type="submit">
       Войти
     </button>
@@ -39,7 +40,8 @@ export default {
       formData: {
         username: "",
         password: ""
-      }
+      },
+      error: ""
     };
   },
   computed: {
@@ -49,7 +51,7 @@ export default {
     ...mapActions(["login"]),
     loginUser() {
       let formUser = {
-        username: this.formData.username,
+        username: this.formData.username.toLowerCase(),
         password: this.formData.password
       };
       this.login(formUser)
@@ -59,7 +61,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          this.error = err.response.data.msg;
         });
     }
   }

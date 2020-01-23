@@ -1,5 +1,5 @@
 function Validator() {
-  this.validateInputText = function(str) {
+  this.validateFullname = function(str) {
     if (str === "") return false;
   };
 

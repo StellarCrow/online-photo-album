@@ -76,7 +76,7 @@ router.post("/registration", async function(req, res, next) {
 router.post("/login", function(req, res) {
   User.findOne({ username: req.body.username }).then(user => {
     if (!user) {
-      return res.status(404).json({
+      return res.status(400).json({
         msg: "Username is not found.",
         success: false
       });
@@ -102,12 +102,31 @@ router.post("/login", function(req, res) {
           }
         );
       } else {
-        return res.status(404).json({
+        return res.status(400).json({
           msg: "Incorrect password.",
           success: false
         });
       }
     });
+  });
+});
+
+//Check if username exists;
+router.get("/exist/:username", function(req, res, next) {
+  let username = req.params.username;
+  User.findOne({ username: username }, function(err, user) {
+    if (err) return next(err);
+    if (user) {
+      return res.status(400).json({
+        success: false,
+        msg: "This username is already taken."
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        msg: "This username is free."
+      });
+    }
   });
 });
 
@@ -198,17 +217,19 @@ router.get("/:id/photos", function(req, res, next) {
 //Get user's album
 router.get("/:id/albums/:aid", async function(req, res, next) {
   let aid = req.params.aid;
-  
-  await Album.findById(aid).populate("photos").exec(function(err, album) {
-    if (err) return next(err);
-    if (album) {
-      return res.status(200).json({
-        success: true,
-        msg: "Got album info and photos",
-        album: album
-      });
-    }
-  });
+
+  await Album.findById(aid)
+    .populate("photos")
+    .exec(function(err, album) {
+      if (err) return next(err);
+      if (album) {
+        return res.status(200).json({
+          success: true,
+          msg: "Got album info and photos",
+          album: album
+        });
+      }
+    });
 });
 
 module.exports = router;

@@ -1,41 +1,71 @@
 <template>
-  <form class="form" @submit="sendFormData" autocomplete="off">
+  <form class="form" @submit.prevent="sendFormData" autocomplete="off">
     <div class="form__field">
-      <FullName
-        :inputData.sync="formData.fullName"
-        :required="false"
-        :placeholder="'Ваше полное имя'"
-        :fieldName="'Имя'"
-        :inputId="'register_fullname'"
+      <label for="register_fullname">Имя</label>
+      <input
+        type="text"
+        name="name"
+        id="register_fullname"
+        class="input-flat"
+        placeholder="Полное имя"
+        minlength="1"
+        maxlength="25"
+        v-model="formData.fullname.data"
+        @keyup="validation('fullname')"
+        pattern="(([A-Za-z]+\s?)|([\u0400-\u04FF]+'?\s?))+"
+        :required="formData.fullname.required"
       />
+      <span class="input-warning" v-if="formData.fullname.warning">{{
+        formData.fullname.warning
+      }}</span>
     </div>
     <div class="form__field">
-      <Username
-        :inputData.sync="formData.username"
-        :required="true"
-        :placeholder="'Уникальное имя-идентификатор'"
-        :fieldName="'Username'"
-        :inputId="'register_username'"
+      <label for="register_username">Username</label>
+      <input
+        type="text"
+        id="register_username"
+        class="input-flat"
+        placeholder="myuniqueusername"
+        minlength="2"
+        maxlength="20"
+        v-model="formData.username.data"
+        @keyup="validation('username')"
+        @blur="checkUsername"
+        :required="formData.username.required"
       />
+      <span class="input-warning" v-if="formData.username.warning">{{
+        formData.username.warning
+      }}</span>
     </div>
     <div class="form__field">
-      <Password
-        :inputData.sync="formData.password"
-        :required="true"
-        :placeholder="'******'"
-        :fieldName="'Пароль'"
-        :inputId="'register_password'"
+      <label for="register_password">Пароль</label>
+      <input
+        type="password"
+        placeholder="*****"
+        id="register_password"
+        class="input-flat"
+        v-model="formData.password.data"
+        @keyup="validation('password')"
+        :required="formData.password.required"
       />
+      <span class="input-warning" v-if="formData.password.warning">{{
+        formData.password.warning
+      }}</span>
     </div>
     <div class="form__field">
-      <Password
-        :inputData.sync="formData.passwordRepeat"
-        :required="true"
-        :placeholder="'******'"
-        :fieldName="'Повторите пароль'"
-        :inputId="'register_reppassword'"
-        :passwordCompare="formData.password"
+      <label for="register_repeat">Повторите пароль</label>
+      <input
+        type="password"
+        placeholder="*****"
+        id="register_repeat"
+        class="input-flat"
+        v-model="formData.passwordRepeat.data"
+        @keyup="validation('passwordRepeat')"
+        :required="formData.passwordRepeat.required"
       />
+      <span class="input-warning" v-if="formData.passwordRepeat.warning">{{
+        formData.passwordRepeat.warning
+      }}</span>
     </div>
     <button class="button-submit form__submit" type="submit">
       Регистрация
@@ -45,52 +75,119 @@
 </template>
 
 <script>
-import FullName from "../form/InputText";
-import Username from "../form/InputLogin";
-import Password from "../form/InputPassword";
+import UsersService from "../../services/UsersService";
 import { mapActions } from "vuex";
+import validator from "../../utils/validation";
 
 export default {
   name: "FormRegistration",
-  components: {
-    FullName,
-    Username,
-    Password
-  },
   data() {
     return {
       formData: {
-        fullName: "",
-        username: "",
-        password: "",
-        passwordRepeat: ""
+        username: {
+          data: "",
+          warning: "",
+          isValid: false,
+          required: true
+        },
+        fullname: {
+          data: "",
+          warning: "",
+          isValid: false,
+          required: false
+        },
+        password: {
+          data: "",
+          warning: "",
+          isValid: false,
+          required: true
+        },
+        passwordRepeat: {
+          data: "",
+          warning: "",
+          isValid: false,
+          required: true
+        }
       },
+      validator: null,
       error: null
     };
+  },
+  mounted() {
+    this.validator = new validator();
+  },
+  computed: {
+    usernameLowerCase() {
+      return this.formData.username.data.toLowerCase();
+    }
   },
   methods: {
     ...mapActions(["register"]),
     async sendFormData() {
-      if (this.checkFormData()) {
-        try {
-          this.register(this.formData).then(res => {
-            if (res.data.success) {
-              debugger;
-              this.$router.push(`/users/${this.$store.getters.user._id}`);
-            }
-          });
-        } catch (error) {
-          this.error = error.response.data.error;
-        }
-      }
+      console.log(this.checkFormData());
+      // if (this.checkFormData()) {
+      //   this.register(this.formData)
+      //     .then(res => {
+      //       if (res.data.success) {
+      //         this.$router.push(`/users/${this.$store.getters.user._id}`);
+      //       }
+      //     })
+      //     .catch(err => {
+      //       this.error = err.response.data.msg;
+      //     });
+      // }
     },
     checkFormData() {
       for (let prop in this.formData) {
-        if (this.formData[prop] === "") return false;
+        if (this.formData[prop].required && !this.formData[prop].isValid)
+          return false;
       }
       return true;
     },
-    validation() {}
+    async checkUsername() {
+      if (this.usernameLowerCase === "") return;
+      UsersService.checkUsername(this.usernameLowerCase)
+        .then(res => {
+          if (res.status) {
+            this.formData.username.warning = "";
+          }
+        })
+        .catch(err => {
+          this.formData.username.warning = err.response.data.msg;
+        });
+    },
+    validation(field) {
+      let res;
+      switch (field) {
+        case "fullname":
+          res = this.validator.validateFullname(this.formData.fullname.data);
+          this.formData.fullname.warning = res === true ? "" : res;
+          this.formData.fullname.isValid = res === true ? true : false;
+          break;
+        case "username":
+          res = this.validator.validateUsername(
+            this.formData.usernameLowerCase
+          );
+          this.formData.username.warning = res === true ? "" : res;
+          this.formData.username.isValid = res === true ? true : false;
+          break;
+        case "password":
+          res = this.validator.validatePassword(this.formData.password.data);
+          this.formData.password.warning = res === true ? "" : res;
+          this.formData.password.isValid = res === true ? true : false;
+          break;
+        case "passwordRepeat":
+          res = this.validator.comparePasswords(
+            this.formData.password.data,
+            this.formData.passwordRepeat.data
+          );
+          this.formData.passwordRepeat.warning = res === true ? "" : res;
+          this.formData.passwordRepeat.isValid = res === true ? true : false;
+          break;
+        default:
+          break;
+      }
+    }
   }
 };
 </script>

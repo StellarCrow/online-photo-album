@@ -6,5 +6,8 @@ export default {
   },
   getAlbums(id) {
     return Api().get(`/users/${id}/albums`);
+  },
+  checkUsername(username) {
+    return Api().get(`/users/exist/${username}`);
   }
 };
