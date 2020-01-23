@@ -29,6 +29,7 @@
         minlength="2"
         maxlength="20"
         v-model="formData.username.data"
+        pattern="^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
         @keyup="validation('username')"
         @blur="checkUsername"
         :required="formData.username.required"
@@ -165,9 +166,7 @@ export default {
           this.formData.fullname.isValid = res === true ? true : false;
           break;
         case "username":
-          res = this.validator.validateUsername(
-            this.formData.usernameLowerCase
-          );
+          res = this.validator.validateUsername(this.usernameLowerCase);
           this.formData.username.warning = res === true ? "" : res;
           this.formData.username.isValid = res === true ? true : false;
           break;
