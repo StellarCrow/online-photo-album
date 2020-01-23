@@ -11,17 +11,19 @@
           <span class="image__likes">{{ image.likesCount }} </span>
           <i><font-awesome-icon :icon="['fa', 'heart']"></font-awesome-icon></i>
         </div>
-        <img
-          :src="`${publicPath}uploads/${image.link}`"
-          alt="Photo"
-          class="image__img"
-        />
+        <ImageLazy
+          :lazy-src="`${publicPath}uploads/${image.link}`"
+          :class="'image__img'"
+          :backgroundColor="image.colors[0]"
+        ></ImageLazy>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import ImageLazy from "./ImageLazy";
+
 export default {
   name: "ImageGallery",
   props: {
@@ -29,6 +31,9 @@ export default {
       type: Array,
       required: true
     }
+  },
+  components: {
+    ImageLazy
   },
   data() {
     return {

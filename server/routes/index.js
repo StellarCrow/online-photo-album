@@ -197,6 +197,8 @@ function findPhotosWithAllOptions(query, pager, sort, colorFilter) {
       .limit(pager.pageSize)
       .sort(sort)
       .exec(function(err, photos) {
+        console.log(photos);
+        
         if (err) return reject(err);
         if (photos) return resolve(photos);
       });

@@ -115,8 +115,7 @@ select {
 
   &__image-preview {
     max-width: 100%;
-    height: auto;
-    object-fit: cover;
+    max-height: 70vh;
   }
 
   &__file-label {

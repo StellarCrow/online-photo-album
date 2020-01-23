@@ -8,7 +8,6 @@
 .album {
   width: 30%;
   height: 300px;
-  max-width: 30%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -68,5 +67,17 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: $bp-small) {
+  .albums {
+    flex-direction: column;
+  }
+
+  .album {
+    width: 100%;
+    align-self: normal;
+    margin-bottom: 5%;
   }
 }

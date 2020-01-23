@@ -58,7 +58,10 @@ const routes = [
   {
     path: "/users/:id/albums/:aid",
     name: "album",
-    component: AlbumPage
+    component: AlbumPage,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/photos/explore",
