@@ -163,4 +163,5 @@ export default {
 
 <style lang="scss" scoped>
 @import "../styles/pages/_explore-photos.scss";
+@import "../styles/components/_forms.scss";
 </style>

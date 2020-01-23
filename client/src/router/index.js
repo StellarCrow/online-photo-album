@@ -1,13 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Contacts from "../views/Contacts.vue";
-import UserProfile from "../views/UserProfile.vue";
-import PageNotFound from "../views/PageNotFound.vue";
-import UploadImage from "../views/UploadImage.vue";
-import ImagePage from "../views/ImagePage.vue";
-import AlbumPage from "../views/AlbumPage.vue";
-import ExplorePhotos from "../views/ExplorePhotos.vue";
 import store from "../store/index";
 
 Vue.use(VueRouter);
@@ -16,7 +8,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home,
+    component: () => import("../views/Home.vue"),
     meta: {
       requiresGuest: true
     }
@@ -32,12 +24,12 @@ const routes = [
   {
     path: "/contacts",
     name: "contacts",
-    component: Contacts
+    component: () => import("../views/Contacts.vue")
   },
   {
     path: "/uploadImage",
     name: "uploadImage",
-    component: UploadImage,
+    component: () => import("../views/UploadImage.vue"),
     meta: {
       requiresAuth: true
     }
@@ -45,7 +37,7 @@ const routes = [
   {
     path: "/users/:id",
     name: "profile",
-    component: UserProfile,
+    component: () => import("../views/UserProfile.vue"),
     meta: {
       requiresAuth: true
     }
@@ -53,12 +45,12 @@ const routes = [
   {
     path: "/users/:id/photos/:pid",
     name: "image",
-    component: ImagePage
+    component: () => import("../views/ImagePage.vue")
   },
   {
     path: "/users/:id/albums/:aid",
     name: "album",
-    component: AlbumPage,
+    component: () => import("../views/AlbumPage.vue"),
     meta: {
       requiresAuth: true
     }
@@ -66,18 +58,18 @@ const routes = [
   {
     path: "/photos/explore",
     name: "explore",
-    component: ExplorePhotos
+    component: () => import("../views/ExplorePhotos.vue")
   },
   {
     path: "/photos/explore/:query",
     name: "explore",
-    component: ExplorePhotos,
+    component: () => import("../views/ExplorePhotos.vue"),
     props: true
   },
   {
     path: "*",
     name: "pageNotFound",
-    component: PageNotFound
+    component: () => import("../views/PageNotFound.vue")
   }
 ];
 

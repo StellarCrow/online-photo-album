@@ -1,5 +1,10 @@
 <template>
-  <img :data-src="lazySrc" :class="imgClass" :style="style" alt="lazy-image" />
+  <img
+    :data-src="lazySrc"
+    :class="imgClass"
+    :style="{ backgroundColor: backgroundColor }"
+    alt="lazy-image"
+  />
 </template>
 
 <script>
@@ -25,12 +30,6 @@ export default {
     return {
       loading: true
     };
-  },
-  methods: {
-    style() {
-      const style = { backgroundColor: this.backgroundColor };
-      return style;
-    }
   },
   mounted() {
     const setLoadingState = () => {

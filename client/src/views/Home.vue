@@ -33,7 +33,7 @@ export default {
     return {
       cards: [
         {
-          imgName: "cards.png",
+          imgName: "cards.jpg",
           heading: "Online Photo Album",
           subheading: "Тот, кто хранит твои воспоминания..."
         },
@@ -50,7 +50,7 @@ export default {
           content: FormLogin
         },
         {
-          imgName: "likes.png",
+          imgName: "likes.jpg",
           heading: "Оценивай чужие фотографии",
           subheading: "И получай лайки в ответ"
         }
