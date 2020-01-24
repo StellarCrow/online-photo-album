@@ -73,7 +73,7 @@ export default {
       users: [],
       exploreInputSearch: "",
       options: {
-        filter: "",
+        color: "",
         sorting: "",
         page: ""
       },
@@ -93,14 +93,16 @@ export default {
     changeRouter() {
       /* eslint-disable no-unused-vars */
       this.$router
-        .push(`/photos/explore/${this.formatString(this.exploreInputSearch)}`)
+        .push({
+          path: `/photos/explore/${this.formatString(this.exploreInputSearch)}`
+        })
         .catch(err => {});
       /* eslint-enable no-unused-vars */
     },
     async sendRequest() {
       let res = await SearchService.explorePhotos(
         this.formatString(this.exploreInputSearch),
-        this.options.filter,
+        this.options.color,
         this.options.sorting,
         this.options.page
       );
@@ -116,43 +118,51 @@ export default {
   },
   mounted() {
     this.options.page = parseInt(this.$route.query.page) || 1;
-    this.options.filter = this.$route.query.filter || "";
+    this.options.color = this.$route.query.color || "";
     this.options.sorting = this.$route.query.sort || "";
     this.sendRequest();
   },
   watch: {
-    // "$route.query": {
+    "$route.query": {
+      immediate: true,
+      async handler(query) {
+        //router page
+        this.options.page = query.page || 1;
+        //router sorting
+        if (query.sort) {
+          this.options.sorting = query.sort || this.options.sorting;
+        } else this.options.sorting = "";
+        //router color filter
+        if (query.color) {
+          this.options.color = query.color || this.options.color;
+        } else this.options.color = "";
+
+        this.sendRequest();
+      }
+    },
+
+    // "$route.query.page": {
     //   immediate: true,
-    //   async handler(query) {
-    //     this.options.page = query.page || 1;
-    //     this.options.sorting = query.sort || this.options.sorting;
-    //     this.options.filter = query.filter || this.options.filter;
+    //   async handler(page) {
+    //     page = parseInt(page) || 1;
+    //     this.options.page = page;
     //     this.sendRequest();
     //   }
     // },
-
-    "$route.query.page": {
-      immediate: true,
-      async handler(page) {
-        page = parseInt(page) || 1;
-        this.options.page = page;
-        this.sendRequest();
-      }
-    },
-    "$route.query.filter": {
-      immediate: true,
-      async handler(filter) {
-        this.options.filter = filter;
-        this.sendRequest();
-      }
-    },
-    "$route.query.sort": {
-      immediate: true,
-      async handler(sort) {
-        this.options.sorting = sort;
-        this.sendRequest();
-      }
-    },
+    // "$route.query.color": {
+    //   immediate: true,
+    //   async handler(color) {
+    //     this.options.color = color;
+    //     this.sendRequest();
+    //   }
+    // },
+    // "$route.query.sort": {
+    //   immediate: true,
+    //   async handler(sort) {
+    //     this.options.sorting = sort;
+    //     this.sendRequest();
+    //   }
+    // },
     "$route.params.query": {
       immediate: true,
       async handler(query) {

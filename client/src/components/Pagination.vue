@@ -43,7 +43,9 @@
           class="pagination__item pagination__item--next"
         >
           <router-link
-            :to="{ query: { page: pager.currentPage + 1 } }"
+            :to="{
+              query: { page: pager.currentPage + 1 }
+            }"
             class="pagination__link"
             ><i
               ><font-awesome-icon

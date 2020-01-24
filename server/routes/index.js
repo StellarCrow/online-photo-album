@@ -116,9 +116,14 @@ router.get("/search/(:query)?", async function(req, res) {
   let usersCount = await getDocumentsCount(User, {
     username: { $exists: true, $regex: query }
   });
-  let photosCount = await getDocumentsCount(Photo, {
-    tags: { $exists: true, $regex: query }
-  });
+  // let photosCount = await getDocumentsCount(Photo, {
+  //   tags: { $exists: true, $regex: query }
+  // });
+
+  let photosCount = await getPhotosCount(
+    { tags: { $exists: true, $regex: query } },
+    filter
+  );
 
   //pagination
   let pagerUsers = paginate(usersCount, page, pageSize);
@@ -162,7 +167,24 @@ function getDocumentsCount(model, query) {
     resolve(model.countDocuments(query));
   });
 }
-
+/* 
+    Counts all Photo's model documents in db
+    @param {string} query - query for selecting documents
+    @param {string} colorFilter - color Hex
+    @returns {Promise} Promise object represents number of documents 
+*/
+function getPhotosCount(query, colorFilter) {
+  return new Promise((resolve, reject) => {
+    Photo.find(query, function(err, items) {
+      if (err) return reject(err);
+      if (items) {
+        if (!colorFilter) return resolve(items.length);
+        let filteredPhotos = filterPhotosByColor(items, colorFilter);
+        resolve(filteredPhotos.length);
+      }
+    });
+  });
+}
 /* 
     Find documents in db considering limits by amount
     @param {string} model - MongoDB model
@@ -191,8 +213,6 @@ function findDocumentsPaginated(model, query, pager) {
     @returns {Promise} Promise object represents an array of selected documents 
 */
 function findPhotosWithAllOptions(query, pager, sort, colorFilter) {
-  let diff;
-  let diffResult;
   let skip =
     pager.currentPage === 0 ? 0 : pager.pageSize * (pager.currentPage - 1);
   return new Promise((resolve, reject) => {
@@ -200,18 +220,7 @@ function findPhotosWithAllOptions(query, pager, sort, colorFilter) {
       if (err) return reject(err);
       if (photos) {
         if (!colorFilter) return resolve(photos);
-        let filteredPhotos = [];
-        photos.forEach(photo => {
-          for (let i in photo.colors) {
-            diff = Vibrant.Util.hexDiff(photo.colors[i], colorFilter);
-            diffResult = Vibrant.Util.getColorDiffStatus(diff);
-            console.log(photo.colors[i], colorFilter, diff, diffResult);
-            if (diff <= 15) {
-              filteredPhotos.push(photo);
-              break;
-            }
-          }
-        });
+        let filteredPhotos = filterPhotosByColor(photos, colorFilter);
         resolve(filteredPhotos);
       }
     })
@@ -222,11 +231,38 @@ function findPhotosWithAllOptions(query, pager, sort, colorFilter) {
       .sort(sort)
       .exec(function(err, photos) {
         if (err) return reject(err);
-        if (photos) return resolve(photos);
+        if (photos) {
+          console.log("Im after all functions " + photos.length);
+          return resolve(photos);
+        }
       });
   });
 }
+/* 
+    Filter array of photos by color
+    @param {array} photos 
+    @param {string} color - color Hex
+    @returns {array} Array of filtered photos
+*/
+function filterPhotosByColor(photos, color) {
+  let diff;
+  let diffResult;
+  let filteredPhotos = [];
+  console.log("Before " + photos.length);
 
+  photos.forEach((photo, index) => {
+    for (let i in photo.colors) {
+      diff = Vibrant.Util.hexDiff(photo.colors[i], color);
+      diffResult = Vibrant.Util.getColorDiffStatus(diff);
+      if (diff <= 15) {
+        filteredPhotos.push(photo);
+        break;
+      }
+    }
+  });
+  console.log("After " + filteredPhotos.length);
+  return filteredPhotos;
+}
 
 /* 
     Creates sorting query by sorting name
@@ -241,7 +277,6 @@ function sortingQuery(sorting) {
     return { likesCount: -1 };
   } else return { date: -1 };
 }
-
 
 /* 
     Converts color name into hex

@@ -130,12 +130,12 @@ export default {
   methods: {
     changeRoute() {
       this.$router.push({
-        query: { filter: this.filter, sort: this.sorting }
+        query: { color: this.filter, sort: this.sorting }
       });
     }
   },
   mounted() {
-    this.filter = this.$route.query.filter || "";
+    this.filter = this.$route.query.color || "";
     this.sorting = this.$route.query.sort || "";
   }
 };

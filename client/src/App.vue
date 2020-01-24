@@ -18,6 +18,22 @@ export default {
   components: {
     TheFooter,
     TheMenu
+  },
+  watch: {
+    /* eslint-disable no-unused-vars */
+    $route(to, from) {
+      if (from.name == to.name) {
+        this.$router
+          .replace({
+            query: {
+              ...from.query,
+              ...to.query
+            }
+          })
+          .catch(err => {});
+      }
+    }
+    /* eslint-enable no-unused-vars */
   }
 };
 </script>
