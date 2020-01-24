@@ -129,7 +129,7 @@ export default {
       if (this.isFormDataValid()) {
         let data = {
           username: this.formData.username.data,
-          fullname: this.formData.fullname.data,
+          fullName: this.formData.fullname.data,
           password: this.formData.password.data,
           passwordRepeat: this.formData.passwordRepeat.data
         };

@@ -18,7 +18,9 @@
         />
         <img
           v-else
-          :src="`${publicPath}uploads/${album.photos[0].link}`"
+          :src="
+            `${publicPath}uploads/${album.photos[album.photos.length - 1].link}`
+          "
           alt="album-cover"
           class="album__image"
         />
@@ -28,12 +30,16 @@
         v-if="album.photos && album.photos.length >= 3"
       >
         <img
-          :src="`${publicPath}uploads/${album.photos[1].link}`"
+          :src="
+            `${publicPath}uploads/${album.photos[album.photos.length - 2].link}`
+          "
           alt="album-cover"
           class="album__image"
         />
         <img
-          :src="`${publicPath}uploads/${album.photos[2].link}`"
+          :src="
+            `${publicPath}uploads/${album.photos[album.photos.length - 3].link}`
+          "
           alt="album-cover"
           class="album__image"
         />
