@@ -109,3 +109,53 @@ body {
 }
 
 // ---------------------------------
+
+.taglist {
+  list-style-type: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+
+  &__item {
+    margin-right: 1em;
+    margin-bottom: 1em;
+    padding: 0.3em 0.8em;
+    border-radius: 1em;
+    font-size: 0.8em;
+    color: $text-color--dark;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:nth-child(odd) {
+        background-color: $primary-color--lighter;
+    }
+
+    &:nth-child(even) {
+        background-color: $secondary-color--lighter;
+    }
+
+    &:nth-child(3n + 1) {
+        background-color: $tertiary-color--lighter;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      color: $text-color--light;
+    }
+  }
+
+  &__icon {
+    margin-left: 0.3em;
+    cursor: pointer;
+    color: inherit
+  }
+}

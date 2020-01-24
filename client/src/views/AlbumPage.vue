@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <h3 class="section__header">"{{ name }}"</h3>
-    <ImageGallery :images="photos" />
+    <ImageGallery :lazyLoading="true" :images="photos" />
   </div>
 </template>
 

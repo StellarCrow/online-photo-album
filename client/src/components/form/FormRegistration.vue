@@ -68,10 +68,10 @@
         formData.passwordRepeat.warning
       }}</span>
     </div>
+    <div class="form__error" v-if="error">{{ error }}</div>
     <button class="button-submit form__submit" type="submit">
       Регистрация
     </button>
-    {{ error }}
   </form>
 </template>
 
@@ -89,7 +89,8 @@ export default {
           data: "",
           warning: "",
           isValid: false,
-          required: true
+          required: true,
+          isExist: true
         },
         fullname: {
           data: "",
@@ -125,20 +126,25 @@ export default {
   methods: {
     ...mapActions(["register"]),
     async sendFormData() {
-      console.log(this.checkFormData());
-      // if (this.checkFormData()) {
-      //   this.register(this.formData)
-      //     .then(res => {
-      //       if (res.data.success) {
-      //         this.$router.push(`/users/${this.$store.getters.user._id}`);
-      //       }
-      //     })
-      //     .catch(err => {
-      //       this.error = err.response.data.msg;
-      //     });
-      // }
+      if (this.isFormDataValid()) {
+        let data = {
+          username: this.formData.username.data,
+          fullname: this.formData.fullname.data,
+          password: this.formData.password.data,
+          passwordRepeat: this.formData.passwordRepeat.data
+        };
+        this.register(data)
+          .then(res => {
+            if (res.data.success) {
+              this.$router.push(`/users/${this.$store.getters.user._id}`);
+            }
+          })
+          .catch(err => {
+            this.error = err.response.data.msg;
+          });
+      }
     },
-    checkFormData() {
+    isFormDataValid() {
       for (let prop in this.formData) {
         if (this.formData[prop].required && !this.formData[prop].isValid)
           return false;
@@ -151,10 +157,12 @@ export default {
         .then(res => {
           if (res.status) {
             this.formData.username.warning = "";
+            this.formData.username.isExist = false;
           }
         })
         .catch(err => {
           this.formData.username.warning = err.response.data.msg;
+          this.formData.username.isExist = true;
         });
     },
     validation(field) {

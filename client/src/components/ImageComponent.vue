@@ -32,9 +32,11 @@
               v-for="(tag, index) in photo.tags"
               :key="index"
             >
-              <router-link :to="`/photos/s/${tag}`" class="taglist__link">{{
-                tag
-              }}</router-link>
+              <router-link
+                :to="`/photos/explore/${tag}`"
+                class="taglist__link"
+                >{{ tag }}</router-link
+              >
             </li>
           </ul>
         </div>

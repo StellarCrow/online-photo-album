@@ -35,7 +35,12 @@
     <section>
       <tabs>
         <tab name="Все фото" :selected="true">
-          <PhotoGallery :images="images"></PhotoGallery>
+          <PhotoGallery
+            :lazyLoading="true"
+            v-if="images.length > 0"
+            :images="images"
+          ></PhotoGallery>
+          <span v-else>Фотографий пока нет</span>
         </tab>
         <tab name="Альбомы">
           <AlbumsGallery :albums="albums"></AlbumsGallery>

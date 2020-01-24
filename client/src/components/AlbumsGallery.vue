@@ -11,6 +11,13 @@
       </div>
       <div class="album__cover album__cover--horizontal">
         <img
+          v-if="album.photos && album.photos.length === 0"
+          src="../assets/images/default-album-cover.jpg"
+          alt="default-cover"
+          class="album__image"
+        />
+        <img
+          v-else
           :src="`${publicPath}uploads/${album.photos[0].link}`"
           alt="album-cover"
           class="album__image"

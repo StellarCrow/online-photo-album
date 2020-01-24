@@ -12,10 +12,17 @@
           <i><font-awesome-icon :icon="['fa', 'heart']"></font-awesome-icon></i>
         </div>
         <ImageLazy
+          v-if="lazyLoading"
           :lazy-src="`${publicPath}uploads/${image.link}`"
           :class="'image__img'"
           :backgroundColor="image.colors[0]"
         ></ImageLazy>
+        <img
+          v-else
+          :src="`${publicPath}uploads/${image.link}`"
+          :alt="image.tags[0]"
+          class="image__img"
+        />
       </div>
     </div>
   </section>
@@ -29,6 +36,10 @@ export default {
   props: {
     images: {
       type: Array,
+      required: true
+    },
+    lazyLoading: {
+      type: Boolean,
       required: true
     }
   },

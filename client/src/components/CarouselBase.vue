@@ -45,7 +45,8 @@ export default {
   components: { CarouselCard, Indicators, ArrowButton },
   data() {
     return {
-      currentElementIndex: 0
+      currentElementIndex: 0,
+      interval: ""
     };
   },
   computed: {

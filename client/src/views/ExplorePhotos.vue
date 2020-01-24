@@ -25,7 +25,10 @@
         <Tabs>
           <Tab :name="`Фотографии (${totalPhotos})`" :selected="true">
             <Pagination :pager="pager.photos"
-              ><PhotoGallery :images="photos"></PhotoGallery
+              ><PhotoGallery
+                :lazyLoading="false"
+                :images="photos"
+              ></PhotoGallery
             ></Pagination>
           </Tab>
           <Tab :name="`Пользователи (${totalUsers})`">
