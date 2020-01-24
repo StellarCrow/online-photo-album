@@ -11,7 +11,11 @@ let User = require("../models/User");
 let Album = require("../models/Album");
 let Photo = require("../models/Photo");
 
-// User registration
+/* 
+    Register a new user. Creates new User instance and default album
+    @returns {JSON Object | Error} Object contains status, message, user, jwt-token |
+     400 error password don't match | 400 username is already taken
+*/
 router.post("/registration", async function(req, res, next) {
   let { fullName, username, password, passwordRepeat } = req.body;
 
@@ -23,7 +27,6 @@ router.post("/registration", async function(req, res, next) {
 
   //Check unique username
   let user = await User.findOne({ username: username });
-  console.log(user);
   if (user) {
     return res.status(400).json({
       msg: "Username is already taken."
@@ -72,7 +75,11 @@ router.post("/registration", async function(req, res, next) {
   });
 });
 
-// User login
+/* 
+    Log in user.
+    @returns {JSON Object | Error} Object contains status, message, user, jwt-token 
+    404 username is not found | 400 incorrect password
+*/
 router.post("/login", function(req, res) {
   User.findOne({ username: req.body.username }).then(user => {
     if (!user) {
@@ -111,7 +118,11 @@ router.post("/login", function(req, res) {
   });
 });
 
-//Check if username exists;
+/* 
+    Checks if user with username exists.
+    @params {string} username - unique username
+    @returns {JSON Object | Error} Object contains status, message | 400 username is already taken
+*/
 router.get("/exist/:username", function(req, res, next) {
   let username = req.params.username;
   User.findOne({ username: username }, function(err, user) {
@@ -130,7 +141,12 @@ router.get("/exist/:username", function(req, res, next) {
   });
 });
 
-//get profile
+/* 
+    Checks if user with username exists.
+    @params {ObjectId} id - user id
+    @returns {JSON Object | Error} Object contains status, message, user object, arrays of albums and photos,
+    albums count, total likes | 404 user was not found
+*/
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
@@ -140,7 +156,7 @@ router.get(
     let user = await User.findOne({ _id: id }, function(err, user) {
       if (err) return next(err);
       if (!user) {
-        return res.status(204).json({
+        return res.status(404).json({
           success: false,
           msg: "User was not found."
         });
@@ -176,7 +192,12 @@ router.get(
   }
 );
 
-//Get user's albums
+/* 
+    Finds all user's albums
+    @params {ObjectId} id - user id
+    @returns {JSON Object | Error} Object contains status, message, array of albums
+    | 404 no albums were found
+*/
 router.get("/:id/albums", function(req, res, next) {
   let id = req.params.id;
   Album.find({ user: id }, { photos: { $slice: 3 } })
@@ -190,7 +211,7 @@ router.get("/:id/albums", function(req, res, next) {
           albums: albums
         });
       } else {
-        return res.json({
+        return res.status(404).json({
           success: false,
           msg: "No albums were found"
         });
@@ -198,7 +219,12 @@ router.get("/:id/albums", function(req, res, next) {
     });
 });
 
-//Get user's photos
+/* 
+    Finds all user's photos
+    @params {ObjectId} id - user id
+    @returns {JSON Object | Error} Object contains status, message, array of photos
+    | 404 no photos were found
+*/
 router.get("/:id/photos", function(req, res, next) {
   let id = req.params.id;
   console.log("MY ID " + id);
@@ -210,11 +236,22 @@ router.get("/:id/photos", function(req, res, next) {
         msg: "Successfully got user's photos",
         photos: photos
       });
+    } else {
+      return res.status(404).json({
+        success: true,
+        msg: "No photos were found"
+      });
     }
   });
 });
 
-//Get user's album
+/* 
+    Finds info about user's album and all photos belonging to this album
+    @params {ObjectId} id - user id
+    @params {ObjectId} aid - album id
+    @returns {JSON Object | Error} Object contains status, message, album object
+    | 404 album was not found
+*/
 router.get("/:id/albums/:aid", async function(req, res, next) {
   let aid = req.params.aid;
 
@@ -227,6 +264,11 @@ router.get("/:id/albums/:aid", async function(req, res, next) {
           success: true,
           msg: "Got album info and photos",
           album: album
+        });
+      } else {
+        return res.status(404).json({
+          success: true,
+          msg: "Album was not found"
         });
       }
     });
