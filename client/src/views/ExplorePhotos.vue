@@ -140,29 +140,6 @@ export default {
         this.sendRequest();
       }
     },
-
-    // "$route.query.page": {
-    //   immediate: true,
-    //   async handler(page) {
-    //     page = parseInt(page) || 1;
-    //     this.options.page = page;
-    //     this.sendRequest();
-    //   }
-    // },
-    // "$route.query.color": {
-    //   immediate: true,
-    //   async handler(color) {
-    //     this.options.color = color;
-    //     this.sendRequest();
-    //   }
-    // },
-    // "$route.query.sort": {
-    //   immediate: true,
-    //   async handler(sort) {
-    //     this.options.sorting = sort;
-    //     this.sendRequest();
-    //   }
-    // },
     "$route.params.query": {
       immediate: true,
       async handler(query) {
