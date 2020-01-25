@@ -13,6 +13,8 @@
           <div class="features">
             <div class="feature">
               <img
+                data-aos="fade-down"
+                data-aos-duration="1000"
                 src="../assets/icons/smartphone.svg"
                 alt="feature-icon-smartphone"
                 class="feature__icon"
@@ -28,6 +30,9 @@
             </div>
             <div class="feature">
               <img
+                data-aos="fade-down"
+                data-aos-delay="100"
+                data-aos-duration="1000"
                 src="../assets/icons/idea.svg"
                 alt="feature-icon-idea"
                 class="feature__icon"
@@ -43,6 +48,9 @@
             </div>
             <div class="feature">
               <img
+                data-aos="fade-down"
+                data-aos-delay="200"
+                data-aos-duration="1000"
                 src="../assets/icons/heart.svg"
                 alt="feature-icon-heart"
                 class="feature__icon"
@@ -73,7 +81,11 @@
         </div>
         <div class="section__content">
           <article class="post">
-            <div class="post__image">
+            <div
+              class="post__image"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+            >
               <img
                 src="../assets/images/post-inspiration.jpg"
                 alt="post-inspiration"
@@ -90,12 +102,16 @@
                 magni ullam deserunt saepe est aperiam amet adipisci veritatis?
                 Aliquid fugit consequatur accusamus ipsam architecto repellat
                 ducimus minus deleniti. Corporis neque, praesentium quae itaque
-                officia consequuntur molestiae deleniti. 
+                officia consequuntur molestiae deleniti.
               </p>
             </div>
           </article>
           <article class="post post--reverse">
-            <div class="post__image post__image--reverse">
+            <div
+              class="post__image post__image--reverse"
+              data-aos="fade-left"
+              data-aos-duration="1000"
+            >
               <img
                 src="../assets/images/post-technology.jpg"
                 alt="post-technology"
@@ -122,7 +138,11 @@
             </div>
           </article>
           <article class="post">
-            <div class="post__image">
+            <div
+              class="post__image"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+            >
               <img
                 src="../assets/images/post-volunteer.jpg"
                 alt="post-volunteer"
@@ -155,7 +175,12 @@
           </p>
         </div>
         <div class="section__content">
-          <div class="section__form">
+          <div
+            class="section__form"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-once="true"
+          >
             <FormRegistration />
           </div>
         </div>
@@ -172,7 +197,12 @@
           </p>
         </div>
         <div class="section__content">
-          <div class="section__form">
+          <div
+            class="section__form"
+            data-aos="zoom-out"
+            data-aos-duration="1000"
+            data-aos-once="true"
+          >
             <FormLogin />
           </div>
         </div>
@@ -209,10 +239,9 @@ export default {
           content: CarouselCardRegistration
         },
         {
-          imgName: "woman-with-frame.jpg",
-          heading: "Загружай свои фото",
-          subheading: "Поделись творчеством с остальными",
-          content: FormLogin
+          imgName: "inspiration.jpg",
+          heading: "Вдохновляйся",
+          subheading: "Поделись творчеством с остальными"
         },
         {
           imgName: "likes.jpg",

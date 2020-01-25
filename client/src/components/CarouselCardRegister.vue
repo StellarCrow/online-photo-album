@@ -2,9 +2,9 @@
   <div class="card__register-link">
     <img src="../assets/logo/logo.svg" class="card__logo" alt="Logo" />
     <button class="button-registration">
-      <a href="#registration">Регистрация</a>
+      <router-link to="#registration">Регистрация</router-link>
     </button>
-    <span>Есть аккаунт? <a href="#login">Войти</a></span>
+    <span>Есть аккаунт? <router-link to="#login">Войти</router-link></span>
   </div>
 </template>
 

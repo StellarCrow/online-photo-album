@@ -3,6 +3,7 @@
     <div class="form__field">
       <label for="login_username">Username</label>
       <input
+        class="input-round"
         type="text"
         v-model="formData.username"
         placeholder="Username"
@@ -13,6 +14,7 @@
     <div class="form__field">
       <label for="login_password">Password</label>
       <input
+        class="input-round"
         type="password"
         v-model="formData.password"
         placeholder="*****"
@@ -20,12 +22,25 @@
         required
       />
     </div>
-    <div class="form__error" v-if="error">{{ error }}</div>
-    <button class="button-submit" type="submit">
-      Войти
-    </button>
-    <div class="form__field">
-      <span>Нет аккаунта? <a href="#registration">Зарегистрироваться</a></span>
+    <div
+      class="form__error"
+      data-aos="zoom-in"
+      data-aos-duration="500"
+      data-aos-once="true"
+      v-if="error"
+    >
+      {{ error }}
+    </div>
+    <div class="form__field form__field--center">
+      <button class="button-submit button-submit--green" type="submit">
+        Войти
+      </button>
+    </div>
+    <div class="form__field form__field--center">
+      <span class="form__text"
+        >Нет аккаунта?
+        <router-link to="#registration">Зарегистрироваться</router-link></span
+      >
     </div>
   </form>
 </template>
@@ -68,4 +83,6 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import "../../styles/components/_forms.scss";
+</style>

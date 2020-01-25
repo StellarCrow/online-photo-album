@@ -68,7 +68,15 @@
         formData.passwordRepeat.warning
       }}</span>
     </div>
-    <div class="form__error" v-if="error">{{ error }}</div>
+    <div
+      class="form__error"
+      data-aos="zoom-in"
+      data-aos-duration="500"
+      data-aos-once="true"
+      v-if="error"
+    >
+      {{ error }}
+    </div>
     <button class="button-submit form__submit" type="submit">
       Регистрация
     </button>

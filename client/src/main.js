@@ -9,6 +9,8 @@ import router from "./router";
 // import "es6-promise/auto";
 import store from "./store";
 import axios from "axios";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faCaretDown,
@@ -60,6 +62,9 @@ if (token) {
 }
 
 new Vue({
+  created() {
+    AOS.init();
+  },
   router: router,
   store: store,
   render: h => h(App)

@@ -80,6 +80,17 @@ select {
   padding: 0.2em 0;
 }
 
+.input-round {
+  @extend %input-basic;
+  padding: 0.5em 1.5em;
+  border: 1px solid $primary-color;
+  border-radius: 1em;
+
+  &:focus {
+    border: 1px solid $tertiary-color;
+  }
+}
+
 .input-search-menu {
   @extend %input-basic;
   padding: 0.5em 1.5em;
@@ -93,11 +104,20 @@ select {
 .form {
   &__field {
     margin-bottom: 5%;
+
+    &--center {
+      text-align: center;
+    }
   }
 
   &__submit {
     display: block;
     margin: 0 auto;
+  }
+
+  &__text {
+    font-weight: $light;
+    color: $text-color--dark;
   }
 
   &__group {
@@ -111,6 +131,14 @@ select {
         margin-bottom: 0;
       }
     }
+  }
+
+  &__error {
+    background-color: $tertiary-color--lighter;
+    color: $text-color--light;
+    text-align: center;
+    padding: 0.5em 0;
+    margin-bottom: 0.5em;
   }
 
   &__image-preview {

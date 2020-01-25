@@ -20,7 +20,7 @@
         <img
           v-else
           :src="`${publicPath}uploads/${image.link}`"
-          :alt="image.tags[0]"
+          :alt="image.tags[0] || 'photo'"
           class="image__img"
         />
       </div>

@@ -1,41 +1,54 @@
 %button-reset {
-    background: transparent;
-    border: none;
-    outline: none;
+  background: transparent;
+  border: none;
+  outline: none;
 
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .button-submit {
-    @extend %button-reset;
-    font-family: $ff-primary;
-    padding: 0.5em 1.3em;
-    border: 1px solid $primary-color;
-    border-radius: 1.3em;
-    color: $text-color--light;
-    background: linear-gradient(to right,$primary-color--lighter, $tertiary-color--lighter);
+  @extend %button-reset;
+  font-family: $ff-primary;
+  padding: 0.5em 1.3em;
+  border: 1px solid $primary-color;
+  border-radius: 1.3em;
+  color: $text-color--light;
+  transition: 0.3s ease;
+  background: linear-gradient(
+    to right,
+    $primary-color--lighter,
+    $tertiary-color--lighter
+  );
+
+  &:hover {
+    background: linear-gradient(to right, $primary-color, $tertiary-color);
+  }
+
+  &--green {
+    background: $primary-color;
+    
 
     &:hover {
-        background: linear-gradient(to right,$primary-color, $tertiary-color);
+      background: $tertiary-color;
     }
+  }
 }
 
 .button-registration {
-    @extend %button-reset;
-    background-color: $primary-color;
-    padding: 0.5em 1em;
-    border-radius: 1em;
-    transition: 0.3s ease;
+  @extend %button-reset;
+  background-color: $primary-color;
+  padding: 0.5em 1em;
+  border-radius: 1em;
+  transition: 0.3s ease;
 
-    &:hover {
-        background-color: $tertiary-color;
-    }
-    a {
-        text-decoration: none;
-        font-family: $ff-primary;
-        color: $text-color--light;
-    }
+  &:hover {
+    background-color: $tertiary-color;
+  }
+  a {
+    text-decoration: none;
+    font-family: $ff-primary;
+    color: $text-color--light;
+  }
 }
-
