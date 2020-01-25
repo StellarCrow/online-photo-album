@@ -1,7 +1,7 @@
 <template>
   <div>
     <Carousel :cards="cards" />
-    <section class="section section--gray-gradient">
+    <div class="section section--gray-gradient">
       <div class="container">
         <div class="section__header">
           <h1 class="section__heading">Online Photo Album</h1>
@@ -9,8 +9,172 @@
             Твой помощник в хранении и поиске фотографий
           </p>
         </div>
-        <div class="section__form" id="registration">
-          <FormRegistration />
+        <div class="section__content">
+          <div class="features">
+            <div class="feature">
+              <img
+                src="../assets/icons/smartphone.svg"
+                alt="feature-icon-smartphone"
+                class="feature__icon"
+              />
+              <div class="feature__desc">
+                <h3 class="feature__heading">Публикуй</h3>
+                <p class="feature__text">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Tempore repellendus illum debitis, culpa eius, voluptate
+                  soluta saepe beatae autem adipisci vitae facilis nulla
+                </p>
+              </div>
+            </div>
+            <div class="feature">
+              <img
+                src="../assets/icons/idea.svg"
+                alt="feature-icon-idea"
+                class="feature__icon"
+              />
+              <div class="feature__desc">
+                <h3 class="feature__heading">Вдохновляйся</h3>
+                <p class="feature__text">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Tempore repellendus illum debitis, culpa eius, voluptate
+                  soluta saepe beatae autem adipisci vitae facilis nulla
+                </p>
+              </div>
+            </div>
+            <div class="feature">
+              <img
+                src="../assets/icons/heart.svg"
+                alt="feature-icon-heart"
+                class="feature__icon"
+              />
+              <div class="feature__desc">
+                <h3 class="feature__heading">Оценивай</h3>
+                <p class="feature__text">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Tempore repellendus illum debitis, culpa eius, voluptate
+                  soluta saepe beatae autem adipisci vitae facilis nulla
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__heading">
+            Лучшие публикации
+          </h2>
+          <p class="section__subheading">
+            Far far away, behind the word mountains, far from the countries
+            Vokalia and Consonantia, there live the blind texts.
+          </p>
+        </div>
+        <div class="section__content">
+          <article class="post">
+            <div class="post__image">
+              <img
+                src="../assets/images/post-inspiration.jpg"
+                alt="post-inspiration"
+              />
+            </div>
+            <div class="post__desc">
+              <div class="post__tag">Inspiration</div>
+              <h3 class="post__heading">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </h3>
+              <p class="post__text">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
+                quam non nam alias, consequuntur voluptate perferendis quidem
+                magni ullam deserunt saepe est aperiam amet adipisci veritatis?
+                Aliquid fugit consequatur accusamus ipsam architecto repellat
+                ducimus minus deleniti. Corporis neque, praesentium quae itaque
+                officia consequuntur molestiae deleniti. 
+              </p>
+            </div>
+          </article>
+          <article class="post post--reverse">
+            <div class="post__image post__image--reverse">
+              <img
+                src="../assets/images/post-technology.jpg"
+                alt="post-technology"
+              />
+            </div>
+            <div class="post__desc">
+              <div class="post__tag">Technology</div>
+              <h3 class="post__heading">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </h3>
+              <p class="post__text">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
+                quam non nam alias, consequuntur voluptate perferendis quidem
+                magni ullam deserunt saepe est aperiam amet adipisci veritatis?
+                Aliquid fugit consequatur accusamus ipsam architecto repellat
+                ducimus minus deleniti. Corporis neque, praesentium quae itaque
+                officia consequuntur molestiae deleniti.Animi, laborum esse
+                doloremque pariatur modi nostrum culpa voluptatem aliquam
+                placeat quo repellendus ea illo eveniet saepe facere deserunt
+                maxime incidunt amet inventore. Deleniti laudantium suscipit
+                natus maxime, excepturi eius voluptatibus culpa eligendi.
+                Voluptate, eaque!
+              </p>
+            </div>
+          </article>
+          <article class="post">
+            <div class="post__image">
+              <img
+                src="../assets/images/post-volunteer.jpg"
+                alt="post-volunteer"
+              />
+            </div>
+            <div class="post__desc">
+              <div class="post__tag">Volunteer</div>
+              <h3 class="post__heading">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </h3>
+              <p class="post__text">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
+                quam non nam alias, consequuntur voluptate perferendis quidem
+                magni ullam deserunt saepe est aperiam amet adipisci veritatis?
+                Aliquid fugit consequatur accusamus ipsam architecto repellat
+                ducimus minus deleniti.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <section class="section section--primary-color">
+      <a id="registration"></a>
+      <div class="container">
+        <div class="section__header section__header--light">
+          <h2 class="section__heading">Регистрируйся</h2>
+          <p class="section__subheading">
+            Скорее заполняй форму
+          </p>
+        </div>
+        <div class="section__content">
+          <div class="section__form">
+            <FormRegistration />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <a id="login"></a>
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__heading">Уже есть аккаунт?</h2>
+          <p class="section__subheading">
+            Far far away, behind the word mountains, far from the countries
+            Vokalia and Consonantia, there live the blind texts.
+          </p>
+        </div>
+        <div class="section__content">
+          <div class="section__form">
+            <FormLogin />
+          </div>
         </div>
       </div>
     </section>
@@ -27,7 +191,8 @@ export default {
   name: "home",
   components: {
     Carousel,
-    FormRegistration
+    FormRegistration,
+    FormLogin
   },
   data() {
     return {

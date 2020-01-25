@@ -2,7 +2,7 @@
 
 .carousel {
   position: relative;
-  height: 80vh;
+  height: calc(100vh - 4.3em);
   overflow: hidden;
 
   &__slider {

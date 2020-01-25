@@ -67,17 +67,6 @@ img {
   @extend %container;
 }
 
-.section {
-  padding: 5% 0;
-
-  &__header {
-    font-size: 2em;
-    text-align: center;
-    color: $text-color--dark;
-    margin-bottom: 3%;
-  }
-}
-
 // ----------STICKY FOOTER-----------------
 html,
 body {

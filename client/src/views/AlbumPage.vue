@@ -32,4 +32,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.section {
+  padding: 5% 0;
+
+  &__header {
+    font-size: 2em;
+    text-align: center;
+    color: $text-color--dark;
+    margin-bottom: 3%;
+  }
+}
+</style>

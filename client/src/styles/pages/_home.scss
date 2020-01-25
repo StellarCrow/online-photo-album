@@ -1,15 +1,25 @@
 @import "../basics/base";
 
 .section {
-  padding: 5% 0;
+  padding: 8% 0;
 
   &--gray-gradient {
     background: linear-gradient(#fff, $gray--light);
   }
 
+  &--primary-color {
+    background-color: $primary-color;
+  }
+
   &__header {
     text-align: center;
     font-family: $ff-tertiary;
+    margin-bottom: 10%;
+    font-size: 1.2em;
+
+    &--light {
+      color: $text-color--light;
+    }
   }
 
   &__heading {
@@ -19,6 +29,141 @@
   }
 
   &__subheading {
-      font-weight: $light;
+    font-weight: $light;
+    font-family: $ff-primary;
+    font-size: 1.2em;
+  }
+
+  &__form {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 3% 12%;
+    border-radius: 1em;
+    box-sizing: border-box;
+    box-shadow: 0 0 8px $gray--dark, 15px 15px 0 $tertiary-color;
+  }
+}
+
+.features {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.feature {
+  flex: 33.3333%;
+  box-sizing: border-box;
+  padding: 2em 1.5em;
+  text-align: center;
+
+  &__icon {
+    width: 50%;
+    margin-bottom: 1em;
+  }
+
+  &__heading {
+    color: $text-color--dark;
+  }
+
+  &__text {
+    font-weight: $light;
+    color: $gray;
+    font-family: $ff-primary;
+  }
+}
+
+.post {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8%;
+
+  &--reverse {
+    flex-direction: row-reverse;
+  }
+
+  &__image {
+    flex: 1 0 40%;
+    box-shadow: 1em 1em 0 $primary-color--lighter;
+
+    &--reverse {
+      box-shadow: -1em 1em 0 $tertiary-color--lighter;
+    }
+
+    img {
+      display: block;
+    }
+  }
+
+  &__desc {
+    flex: 1 0 50%;
+    box-sizing: border-box;
+    padding: 0 10%;
+  }
+
+  &__tag {
+    text-transform: uppercase;
+    color: $gray;
+    font-size: 0.8em;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.8em;
+  }
+
+  &__heading {
+    font-size: 1.5em;
+    margin-bottom: 1.3em;
+    line-height: 1.5em;
+    color: $text-color--dark;
+  }
+
+  &__text {
+    font-family: $ff-primary;
+    font-weight: $light;
+    color: $gray--dark;
+  }
+}
+
+@media (max-width: $bp-small) {
+  .section {
+    padding: 10% 0;
+    &__header {
+      font-size: 1em;
+    }
+
+    &__heading {
+      letter-spacing: normal;
+      text-transform: none;
+    }
+
+    &__form {
+      width: 100%;
+    }
+  }
+
+  .features {
+    flex-flow: row wrap;
+  }
+
+  .feature {
+    width: 50%;
+  }
+
+  .post {
+    flex-direction: column;
+
+    &__image {
+      margin-bottom: 10%;
+    }
+  }
+}
+
+@media (max-width: $bp-xsmall) {
+  .features {
+    flex-direction: column;
+  }
+  .feature {
+    width: 100%;
   }
 }
