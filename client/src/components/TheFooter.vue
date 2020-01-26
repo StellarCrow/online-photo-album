@@ -19,11 +19,6 @@
           <div class="footer__list">
             <ul>
               <li class="footer__link">
-                <router-link class="menu__item" to="#"
-                  >Случайное фото</router-link
-                >
-              </li>
-              <li class="footer__link">
                 <router-link class="menu__item" to="/contacts"
                   >Контакты</router-link
                 >
