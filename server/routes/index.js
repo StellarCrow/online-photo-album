@@ -5,6 +5,8 @@ const multer = require("multer");
 const path = require("../config/keys").storagePath;
 const paginate = require("jw-paginate");
 const Vibrant = require("node-vibrant");
+const { promisify } = require("util");
+const sizeOf = promisify(require("image-size"));
 
 const User = require("../models/User");
 const Album = require("../models/Album");
@@ -36,6 +38,7 @@ router.post(
     let user = req.body.userId;
     let tags = req.body.tags === "" ? [] : req.body.tags.split(",");
     let colors = await setImageColors(req.file.path);
+    let orientation = await getPhotoOrientation(req.file.path);
 
     if (req.body.newAlbum !== "") {
       let newAlbum = await Album.create({
@@ -55,7 +58,8 @@ router.post(
       tags: tags,
       link: req.file.filename,
       album: albumId,
-      colors: colors
+      colors: colors,
+      orientation: orientation
     });
 
     let like = await Like.create({
@@ -79,9 +83,29 @@ router.post(
 );
 
 /* 
-    Extracts main colors from image with Vibrant.
+    Calculates image dimensions. Returns orientation type
     @param {String} imagePath - path to the image
-    @returns {Promise} Promise object represents array of colors
+    @returns {Promise} Promise object represents object orientation (string)
+*/
+async function getPhotoOrientation(imagePath) {
+  try {
+    const dimensions = await sizeOf(imagePath);
+    let width = dimensions.width;
+    let height = dimensions.height;
+    if (width === height) {
+      return "square";
+    }
+    return width > height ? "landscape" : "portrait";
+  }
+  catch (err) {
+    console.log(err); 
+  }
+}
+
+/* 
+    Extracts main colors (hex value) from image with Vibrant.
+    @param {String} imagePath - path to the image
+    @returns {Promise} Promise object represents array of colors (hex value)
 */
 function getImageColors(imagePath) {
   let colors = [];
@@ -98,7 +122,7 @@ function getImageColors(imagePath) {
 /* 
     Extracts main colors from image with Vibrant. 
     @param {String} imagePath - path to the image
-    @returns {Promise} Promise object represents array of colors
+    @returns {Promise} Promise object represents array of colors (names)
 */
 function setImageColors(imagePath) {
   let colors = [];
@@ -184,11 +208,7 @@ router.get("/search/(:query)?", async function(req, res) {
   );
 
   //find sorted, filtered & paginated photos
-  let photos = await findPhotosWithAllOptions(
-    photosQuery,
-    pagerPhotos,
-    sort
-  );
+  let photos = await findPhotosWithAllOptions(photosQuery, pagerPhotos, sort);
 
   return res.status(200).json({
     success: true,

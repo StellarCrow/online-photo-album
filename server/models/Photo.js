@@ -17,7 +17,11 @@ let PhotoSchema = new Schema({
   },
   date: { type: Date, required: true, default: Date.now },
   tags: [{ type: String }],
-  colors: [{ type: String, default: "#fff" }]
+  colors: [{ type: String, default: "#fff" }],
+  orientation: {
+    type: String,
+    required: true
+  }
 });
 
 module.exports = mongoose.model("Photo", PhotoSchema);
