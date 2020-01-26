@@ -96,9 +96,8 @@ async function getPhotoOrientation(imagePath) {
       return "square";
     }
     return width > height ? "landscape" : "portrait";
-  }
-  catch (err) {
-    console.log(err); 
+  } catch (err) {
+    console.log(err);
   }
 }
 
@@ -159,6 +158,7 @@ function setImageColors(imagePath) {
 router.get("/search/(:query)?", async function(req, res) {
   let query = req.params.query || "";
   let sorting = req.query.sort;
+  let orientation = req.query.orientation || "";
   let filter = req.query.filter.toLowerCase();
   let page = parseInt(req.query.page) || 1;
   const pageSize = 10;
@@ -166,25 +166,14 @@ router.get("/search/(:query)?", async function(req, res) {
   let photosQuery;
   if (query === "") {
     photosQuery = {
-      $and: [
-        {
-          $or: [
-            { tags: { $exists: true, $regex: query } },
-            { colors: { $exists: true, $regex: filter } }
-          ]
-        },
-        {
-          $or: [
-            { tags: { $exists: false } },
-            { colors: { $exists: true, $regex: filter } }
-          ]
-        }
-      ]
+      colors: { $exists: true, $regex: filter },
+      orientation: { $regex: orientation }
     };
   } else {
     photosQuery = {
       tags: { $exists: true, $regex: query },
-      colors: { $exists: true, $regex: filter }
+      colors: { $exists: true, $regex: filter },
+      orientation: { $regex: orientation }
     };
   }
 

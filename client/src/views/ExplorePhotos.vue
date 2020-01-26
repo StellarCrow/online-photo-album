@@ -75,7 +75,8 @@ export default {
       options: {
         color: "",
         sorting: "",
-        page: ""
+        page: "",
+        orientation: ""
       },
       pager: {},
       totalPhotos: 0,
@@ -104,7 +105,8 @@ export default {
         this.formatString(this.exploreInputSearch),
         this.options.color,
         this.options.sorting,
-        this.options.page
+        this.options.page,
+        this.options.orientation
       );
       if (res.data.success) {
         this.photos = res.data.photos;
@@ -120,6 +122,7 @@ export default {
     this.options.page = parseInt(this.$route.query.page) || 1;
     this.options.color = this.$route.query.color || "";
     this.options.sorting = this.$route.query.sort || "";
+    this.options.orientation = this.$route.query.orientation || "";
     this.sendRequest();
   },
   watch: {
@@ -136,6 +139,11 @@ export default {
         if (query.color) {
           this.options.color = query.color || this.options.color;
         } else this.options.color = "";
+        //router orientation filter
+        if (query.orientation) {
+          this.options.orientation =
+            query.orientation || this.options.orientation;
+        } else this.options.orientation = "";
 
         this.sendRequest();
       }

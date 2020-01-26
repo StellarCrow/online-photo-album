@@ -49,6 +49,32 @@
       </ul>
       <label :for="idForCloseLabel" class="options__close">Закрыть</label>
     </div>
+    <div class="options__section">
+      <div class="options__heading">Ориентация:</div>
+      <ul class="options__list orientation" @change="changeRoute()">
+        <li
+          v-for="(item, index) in orientations"
+          :key="index"
+          class="orientation__item"
+        >
+          <input
+            type="radio"
+            name="orientation"
+            :value="item.type"
+            :id="`orientation_${item.type}`"
+            class="orientation__input"
+            v-model="orientation"
+          /><label :for="`orientation_${item.type}`" class="orientation__label">
+            <i v-if="item.icon"
+              ><font-awesome-icon
+                :icon="['fa', `${item.icon}`]"
+              ></font-awesome-icon
+            ></i>
+            {{ item.name }}</label
+          >
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -65,6 +91,7 @@ export default {
     return {
       sorting: "",
       filter: "",
+      orientation: "",
       colors: [
         {
           name: "white",
@@ -107,6 +134,28 @@ export default {
           hex: "#756eff"
         }
       ],
+      orientations: [
+        {
+          type: "landscape",
+          name: "Landscape",
+          icon: "image"
+        },
+        {
+          type: "portrait",
+          name: "Portrait",
+          icon: "portrait"
+        },
+        {
+          type: "square",
+          name: "Square",
+          icon: "square"
+        },
+        {
+          type: "",
+          name: "All",
+          icon: ""
+        }
+      ],
       sortTypes: [
         {
           type: "likes",
@@ -130,13 +179,18 @@ export default {
   methods: {
     changeRoute() {
       this.$router.push({
-        query: { color: this.filter, sort: this.sorting }
+        query: {
+          color: this.filter,
+          sort: this.sorting,
+          orientation: this.orientation
+        }
       });
     }
   },
   mounted() {
     this.filter = this.$route.query.color || "";
     this.sorting = this.$route.query.sort || "";
+    this.orientation = this.$route.query.orientation || "";
   }
 };
 </script>

@@ -34,7 +34,6 @@
 }
 
 .sort {
-
   &__item {
     margin-bottom: 1em;
   }
@@ -43,14 +42,13 @@
     display: none;
   }
 
-  &__label:hover, 
+  &__label:hover,
   &__input:checked + &__label {
     background-color: $primary-color;
     color: $text-color--light;
     cursor: pointer;
     transition: 0.3s ease;
   }
-
 
   &__label {
     font-weight: $light;
@@ -104,6 +102,45 @@
   }
 }
 
+.orientation {
+  &__input {
+    display: none;
+
+    &:checked + .orientation__label::before {
+      content: "\2713";
+      margin-right: 0.5em;
+    }
+  }
+
+  &__item {
+    margin-bottom: 0.5em;
+    margin-left: 0.5em;
+  }
+
+  &__label {
+    font-weight: $light;
+    text-transform: lowercase;
+    color: $text-color--dark;
+    display: flex;
+    align-items: center;
+    align-content: center;
+
+    &:hover {
+      cursor: pointer;
+
+      i {
+        color: $primary-color;
+      }
+    }
+
+    i {
+      color: $tertiary-color;
+      margin-right: 0.5em;
+      font-size: 1.5em;
+    }
+  }
+}
+
 @media (max-width: $bp-small) {
   .options {
     position: static;
@@ -124,5 +161,3 @@
     }
   }
 }
-
-
