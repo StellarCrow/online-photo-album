@@ -2,9 +2,10 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
+  align-items: center;
   box-shadow: 0 0 10px $gray--dark;
   max-width: 100%;
-  max-height: 80vh;
+  min-height: 80vh;
   background-color: #fff;
 
   &__image {
@@ -15,13 +16,14 @@
       margin: 0 auto;
       //fit image in div
       max-width: 100%;
-      max-height: 100%;
+      max-height: 80vh;
     }
   }
 
   &__details {
     flex: 1 0 35%;
     border-left: 1px solid $gray;
+    align-self: stretch;
   }
 }
 

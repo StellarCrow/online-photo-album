@@ -11,24 +11,29 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "LikeButton",
-  props: ["userId", "photoId"],
+  props: ["userOwner", "photoId"],
   data() {
     return {
       payload: {
         imageId: this.photoId,
-        userId: this.userId
+        userId: this.userOwner
       }
     };
   },
   computed: {
-    ...mapGetters(["likeStatus", "totalLikesCount", "isLoggedIn"]),
+    ...mapGetters(["likeStatus", "totalLikesCount", "isLoggedIn", "userId"]),
     iconLike() {
+      if (!this.isLoggedIn) return "far";
       return this.likeStatus ? "fa" : "far";
     }
   },
   methods: {
     ...mapActions(["getPhotoLikeStatus", "setLike", "deleteLike"]),
     changeLike() {
+      if (!this.isLoggedIn) {
+        return this.$router.push("/#login");
+      }
+      this.payload.userId = this.userId;
       if (!this.isLoggedIn) return;
       if (this.likeStatus) {
         this.deleteLike(this.payload);

@@ -1,33 +1,31 @@
 .images {
-  &__container {
-    //centering
+  //centering
+  width: 1210px;
+  margin: auto;
+
+  max-width: 1510px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+
+  @media #{$mq-xxsmall} {
+    width: 310px;
+  }
+
+  @media #{$mq-small} {
+    width: 610px;
+  }
+
+  @media (min-width: 75em) { //1200px
+    width: 910px;
+  }
+
+  @media (min-width: 96.875em) { //1550px
     width: 1210px;
-    margin: auto;
+  }
 
-    max-width: 1510px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-
-    @media #{$mq-xxsmall} {
-      width: 310px;
-    }
-
-    @media #{$mq-small} {
-      width: 610px;
-    }
-
-    @media #{$mq-medium} {
-      width: 910px;
-    }
-
-    @media #{$mq-large} {
-      width: 1210px;
-    }
-
-    @media #{$mq-xlarge} {
-      width: 1510px;
-    }
+  @media #{$mq-xlarge} {
+    width: 1510px;
   }
 }
 

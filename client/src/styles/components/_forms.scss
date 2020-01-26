@@ -120,6 +120,12 @@ select {
     color: $text-color--dark;
   }
 
+  &__tags {
+    overflow: auto;
+    height: 4em;
+    margin-bottom: 5%;
+  }
+
   &__group {
     max-width: 45%;
 

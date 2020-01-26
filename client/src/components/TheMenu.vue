@@ -66,20 +66,16 @@ export default {
         {
           name: "Добавить фото",
           address: "/uploadImage"
-        },
-        {
-          name: "Мои альбомы",
-          address: "/#"
         }
       ],
       links: [
         {
           name: "Популярные фото",
-          address: `/photos/explore/${"popular"}`
+          address: `/photos/explore/?sort=likes`
         },
         {
           name: "Новые фото",
-          address: "/#"
+          address: "/photos/explore/?sort=newest"
         },
         {
           name: "Животные",
@@ -87,35 +83,25 @@ export default {
           links: [
             {
               name: "Коты",
-              address: "/#"
+              address: "/photos/explore/cat"
             },
             {
               name: "Собаки",
-              address: "/#",
-              links: [
-                {
-                  name: "Коты",
-                  address: "/#"
-                },
-                {
-                  name: "Коты",
-                  address: "/#"
-                }
-              ]
+              address: "/photos/explore/dog"
             },
             {
               name: "Кролики",
-              address: "/#"
+              address: "/photos/explore/rabbit"
             }
           ]
         },
         {
           name: "Природа",
-          address: "/#"
+          address: "/photos/explore/nature"
         },
         {
           name: "Еда",
-          address: "/#"
+          address: "/photos/explore/food"
         }
       ]
     };

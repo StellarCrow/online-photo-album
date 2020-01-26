@@ -28,6 +28,7 @@
               ><PhotoGallery
                 :lazyLoading="false"
                 :images="photos"
+                :class="'images--explore'"
               ></PhotoGallery
             ></Pagination>
           </Tab>

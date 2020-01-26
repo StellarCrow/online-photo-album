@@ -30,6 +30,7 @@
           type="text"
           id="desc"
           class="input-flat"
+          maxlength="500"
           placeholder="Описание фото"
           v-model="formData.description"
         />
@@ -73,8 +74,9 @@
           name="tags"
           id="tags"
           class="input-flat"
-          v-model="tagInput"
           minlength="1"
+          maxlength="20"
+          v-model="tagInput"
           @keydown.enter.prevent="updateList()"
         />
       </div>
@@ -134,7 +136,8 @@ export default {
 
       // check if user actually selected a file
       if (file.length > 0) {
-        let size = imageFile.size / maxSize / maxSize;
+        let size = imageFile.size / maxSize / 1024;
+
         if (size > 1) {
           // check whether the size is greater than the size limit
           this.errorDialog = true;
@@ -143,6 +146,7 @@ export default {
         } else {
           // turn file into image URL
           let imageURL = URL.createObjectURL(imageFile);
+          this.errorText = "";
           this.formData.imageFile = imageFile;
           this.image = imageURL;
         }

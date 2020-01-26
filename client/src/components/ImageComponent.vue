@@ -20,7 +20,7 @@
         <div class="details__likes">
           <LikeButton
             :photoId="imageId"
-            :userId="this.$store.getters.userId"
+            :userOwner="this.$route.params.id"
           ></LikeButton>
           {{ totalLikesCount }}
         </div>

@@ -4,6 +4,7 @@
       type="text"
       name="search-input"
       placeholder="Найти..."
+      maxlength="20"
       :class="inputClassName"
       v-model="inputQuery"
       @keydown.enter.prevent="searchQuery()"

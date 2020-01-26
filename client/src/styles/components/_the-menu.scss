@@ -51,11 +51,11 @@ $padding-dropdown: 0.5em;
   }
 
   &__item:nth-child(odd) {
-    color: $primary-color--lighter;
+    color: $primary-color;
   }
 
   &__item:nth-child(even) {
-    color: $tertiary-color--lighter;
+    color: $tertiary-color;
   }
 }
 
