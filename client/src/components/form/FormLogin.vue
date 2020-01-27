@@ -39,8 +39,8 @@
     <div class="form__field form__field--center">
       <span class="form__text"
         >Нет аккаунта?
-        <router-link to="#registration">Зарегистрироваться</router-link></span
-      >
+        <a href="#registration">Зарегистрироваться</a>
+      </span>
     </div>
   </form>
 </template>

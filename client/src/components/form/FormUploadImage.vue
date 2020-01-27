@@ -1,6 +1,7 @@
 <template>
   <form
     autocomplete="off"
+    enctype="multipart/form-data"
     @submit.prevent="sendForm()"
     class="form-upload form"
   >
@@ -184,15 +185,21 @@ export default {
       }
 
       //sending data
+      console.log("Before sending");
       try {
         let res = await PhotosService.uploadImage(data);
+        console.log(res);
         if (res.data.success) {
-          this.$router.push({
-            path: `/users/${this.$store.getters.userId}`
-          });
+          this.$router
+            .push({
+              path: `/users/${this.$store.getters.userId}`
+            })
+            .catch(err => {
+              console.log(err);
+            });
         }
       } catch (err) {
-        this.error = err.response.data.msg;
+        this.error = err;
       }
     }
   }

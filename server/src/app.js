@@ -18,7 +18,7 @@ console.log(mongoose.connection.readyState);
 
 // app.use('/uploads', express.static('uploads'));
 app.use(morgan('combined'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '6mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(passport.initialize());

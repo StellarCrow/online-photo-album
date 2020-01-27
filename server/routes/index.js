@@ -47,7 +47,7 @@ router.post(
       let colors = await setImageColors(req.file.path);
       let size = await getImageSize(req.file.path);
       let cropWidth = size.width > 1000 ? 1000 : null;
-      await resizeImage(req.file.path, req.file.filename, cropWidth);
+      resizeImage(req.file.path, req.file.filename, cropWidth);
       let orientation = getImageOrientation(size.width, size.height);
 
       if (req.body.newAlbum !== "") {
@@ -91,8 +91,8 @@ router.post(
       });
     } catch (err) {
       return res.status(500).json({
-        success: false,
-        msg: "Something went wrong :( Please try again."
+        success: true,
+        msg: "Oops! Something went wrong :( \n Please, try again."
       });
     }
   }
@@ -222,8 +222,8 @@ router.get("/search/(:query)?", async function(req, res) {
   let photosCount = await getDocumentsCount(Photo, photosQuery);
 
   //pagination
-  let pagerUsers = paginate(usersCount, page, pageSize);
-  let pagerPhotos = paginate(photosCount, page, pageSize);
+  let pagerUsers = paginate(usersCount, page, pageSize, 5);
+  let pagerPhotos = paginate(photosCount, page, pageSize, 5);
 
   //find users & paginate
   let users = await findDocumentsPaginated(
