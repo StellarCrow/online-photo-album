@@ -1,7 +1,7 @@
 <template>
   <div class="photo">
     <div class="photo__image">
-      <img :src="`${publicPath}uploads/${photo.link}`" alt="Photo" />
+      <img :src="`${publicPath}uploads/compressed/${photo.link}`" alt="Photo" />
     </div>
 
     <div class="photo__details details">

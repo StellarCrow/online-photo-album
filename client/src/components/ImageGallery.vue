@@ -12,13 +12,13 @@
       </div>
       <ImageLazy
         v-if="lazyLoading"
-        :lazy-src="`${publicPath}uploads/${image.link}`"
+        :lazy-src="`${publicPath}uploads/compressed/${image.link}`"
         :class="'image__img'"
         :backgroundColor="image.colors[0]"
       ></ImageLazy>
       <img
         v-else
-        :src="`${publicPath}uploads/${image.link}`"
+        :src="`${publicPath}uploads/compressed/${image.link}`"
         :alt="image.tags[0] || 'photo'"
         class="image__img"
       />

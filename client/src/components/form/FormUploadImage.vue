@@ -1,7 +1,6 @@
 <template>
   <form
     autocomplete="off"
-    enctype="multipart/form-data"
     @submit.prevent="sendForm()"
     class="form-upload form"
   >
@@ -94,6 +93,15 @@
           </li>
         </ul>
       </div>
+      <div
+        class="form__error"
+        data-aos="zoom-in"
+        data-aos-duration="500"
+        data-aos-once="true"
+        v-if="error"
+      >
+        {{ error }}
+      </div>
       <button type="submit" class="button-submit">Загрузить фото</button>
     </div>
   </form>
@@ -108,6 +116,7 @@ export default {
       albums: [],
       tagInput: "",
       isAddAlbumChecked: false,
+      error: "",
       errorText: "",
       errorDialog: null,
       image: null,
@@ -175,9 +184,15 @@ export default {
       }
 
       //sending data
-      let res = await PhotosService.uploadImage(data);
-      if (res.data.success) {
-        await this.$router.push(`/users/${this.formData.userId}`);
+      try {
+        let res = await PhotosService.uploadImage(data);
+        if (res.data.success) {
+          this.$router.push({
+            path: `/users/${this.$store.getters.userId}`
+          });
+        }
+      } catch (err) {
+        this.error = err.response.data.msg;
       }
     }
   }

@@ -7,6 +7,7 @@ const paginate = require("jw-paginate");
 const Vibrant = require("node-vibrant");
 const { promisify } = require("util");
 const sizeOf = promisify(require("image-size"));
+const sharp = require("sharp");
 
 const User = require("../models/User");
 const Album = require("../models/Album");
@@ -22,7 +23,12 @@ const storage = multer.diskStorage({
     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
   }
 });
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024
+  }
+});
 
 /* 
     Upload one image, creates new Photo and Like instances in DB,
@@ -34,68 +40,100 @@ router.post(
   upload.single("imageFile"),
   passport.authenticate("jwt", { session: false }),
   async function(req, res) {
-    let albumId;
-    let user = req.body.userId;
-    let tags = req.body.tags === "" ? [] : req.body.tags.split(",");
-    let colors = await setImageColors(req.file.path);
-    let orientation = await getPhotoOrientation(req.file.path);
+    try {
+      let albumId;
+      let user = req.body.userId;
+      let tags = req.body.tags === "" ? [] : req.body.tags.split(",");
+      let colors = await setImageColors(req.file.path);
+      let size = await getImageSize(req.file.path);
+      let cropWidth = size.width > 1000 ? 1000 : null;
+      await resizeImage(req.file.path, req.file.filename, cropWidth);
+      let orientation = getImageOrientation(size.width, size.height);
 
-    if (req.body.newAlbum !== "") {
-      let newAlbum = await Album.create({
-        name: req.body.newAlbum,
-        user: user
+      if (req.body.newAlbum !== "") {
+        let newAlbum = await Album.create({
+          name: req.body.newAlbum,
+          user: user
+        });
+        albumId = newAlbum._id;
+        await User.findOneAndUpdate(
+          { _id: user },
+          { $push: { albums: albumId } }
+        );
+      } else albumId = req.body.album;
+
+      let newPhoto = await Photo.create({
+        description: req.body.description,
+        user: user,
+        tags: tags,
+        link: req.file.filename,
+        album: albumId,
+        colors: colors,
+        orientation: orientation
       });
-      albumId = newAlbum._id;
-      await User.findOneAndUpdate(
-        { _id: user },
-        { $push: { albums: albumId } }
+
+      let like = await Like.create({
+        photo: newPhoto._id,
+        users: []
+      });
+
+      newPhoto.like = like._id;
+      newPhoto.save();
+
+      await Album.findOneAndUpdate(
+        { _id: albumId },
+        { $push: { photos: newPhoto._id } }
       );
-    } else albumId = req.body.album;
 
-    let newPhoto = await Photo.create({
-      description: req.body.description,
-      user: user,
-      tags: tags,
-      link: req.file.filename,
-      album: albumId,
-      colors: colors,
-      orientation: orientation
-    });
-
-    let like = await Like.create({
-      photo: newPhoto._id,
-      users: []
-    });
-
-    newPhoto.like = like._id;
-    newPhoto.save();
-
-    await Album.findOneAndUpdate(
-      { _id: albumId },
-      { $push: { photos: newPhoto._id } }
-    );
-
-    return res.status(201).json({
-      success: true,
-      msg: "A new photo was successfully uploaded"
-    });
+      return res.status(201).json({
+        success: true,
+        msg: "A new photo was successfully uploaded"
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        msg: "Something went wrong :( Please try again."
+      });
+    }
   }
 );
+
+/* 
+    Compresses uploaded image. Resizes and set quality.
+    @param {String} imagePath - path to the image
+    @param {String} imageName - name of the image
+    @param {Number} cropWidth - number of pixels for output image's width
+*/
+async function resizeImage(imagePath, imageName, cropWidth) {
+  let outputPath = path + "\\compressed\\" + imageName;
+  await sharp(imagePath)
+    .resize(cropWidth, null)
+    .jpeg({ quality: 80 })
+    .toFile(outputPath);
+}
+
+/* 
+    Returns image orientation type
+    @param {String} width - image's width
+    @param {String} height - image's height
+    @returns {String} image orientation
+*/
+function getImageOrientation(width, height) {
+  if (width === height) {
+    return "square";
+  }
+  return width > height ? "landscape" : "portrait";
+}
 
 /* 
     Calculates image dimensions. Returns orientation type
     @param {String} imagePath - path to the image
     @returns {Promise} Promise object represents object orientation (string)
 */
-async function getPhotoOrientation(imagePath) {
+async function getImageSize(imagePath) {
   try {
     const dimensions = await sizeOf(imagePath);
-    let width = dimensions.width;
-    let height = dimensions.height;
-    if (width === height) {
-      return "square";
-    }
-    return width > height ? "landscape" : "portrait";
+    return { width: dimensions.width, height: dimensions.height };
   } catch (err) {
     console.log(err);
   }

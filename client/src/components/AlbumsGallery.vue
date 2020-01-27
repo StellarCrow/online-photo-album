@@ -19,7 +19,9 @@
         <img
           v-else
           :src="
-            `${publicPath}uploads/${album.photos[album.photos.length - 1].link}`
+            `${publicPath}uploads/compressed/${
+              album.photos[album.photos.length - 1].link
+            }`
           "
           alt="album-cover"
           class="album__image"
@@ -31,14 +33,18 @@
       >
         <img
           :src="
-            `${publicPath}uploads/${album.photos[album.photos.length - 2].link}`
+            `${publicPath}uploads/compressed/${
+              album.photos[album.photos.length - 2].link
+            }`
           "
           alt="album-cover"
           class="album__image"
         />
         <img
           :src="
-            `${publicPath}uploads/${album.photos[album.photos.length - 3].link}`
+            `${publicPath}uploads/compressed/${
+              album.photos[album.photos.length - 3].link
+            }`
           "
           alt="album-cover"
           class="album__image"
