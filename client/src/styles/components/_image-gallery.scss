@@ -77,3 +77,25 @@
     height: 300px;
   }
 }
+
+
+/* IE10+ CSS styles go here */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .image {
+    position: relative;
+    overflow: hidden;
+
+    &__hover {
+      z-index: 1;
+    }
+
+    &__img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: auto;
+    }
+  }
+}
