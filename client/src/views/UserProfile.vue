@@ -23,7 +23,7 @@
               <i
                 ><font-awesome-icon :icon="['fa', 'heart']"></font-awesome-icon
               ></i>
-              поставлено<span>{{ likes }}</span>
+              поставил(-а)<span>{{ likes }}</span>
             </li>
           </ul>
           <button v-if="isMyPage" @click="uploadImage" class="button-submit">

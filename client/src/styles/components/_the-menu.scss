@@ -100,8 +100,9 @@ $padding-dropdown: 0.5em;
     &__item {
       border-left: none;
       border-bottom: 1px solid $secondary-color;
-      padding: 1.5em;
+      padding: 1.2em;
       text-align: left;
+      font-size: 1.2em;
     }
   }
 }

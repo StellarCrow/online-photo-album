@@ -40,3 +40,12 @@
       color: inherit;
   }
 }
+
+@media (max-width: $bp-small) {
+  .pagination {
+    &__link {
+      font-size: 1.7em;
+      padding: 0 0.1em;
+    }
+  }
+}

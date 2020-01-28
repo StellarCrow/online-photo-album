@@ -67,6 +67,7 @@
 
 @media (max-width: $bp-small) {
   .footer {
+    font-size: 1.3em;
     &__top {
       flex-flow: column nowrap;
       align-items: stretch;

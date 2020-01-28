@@ -45,25 +45,36 @@ router.get("/:id/:uid/like/status", async function(req, res, next) {
   let user = req.params.uid;
 
   let photo = await Photo.findOne({ _id: image });
-
-  await Like.findOne({ photo: image, users: user }).exec(function(err, like) {
-    if (err) return next(err);
-    if (like) {
-      return res.status(200).json({
-        success: true,
-        msg: "User was found in image's likes",
-        isLiked: true,
-        totalCount: photo.likesCount
-      });
-    } else {
-      return res.status(200).json({
-        success: true,
-        msg: "User was not found in image's likes",
-        isLiked: false,
-        totalCount: photo.likesCount
-      });
-    }
-  });
+  try {
+    await Like.findOne({ photo: image, users: user }).exec(function(err, like) {
+      if (err) {
+        return next(err);
+      }
+      if (like) {
+        return res.status(200).json({
+          success: true,
+          msg: "User was found in image's likes",
+          isLiked: true,
+          totalCount: photo.likesCount
+        });
+      } else {
+        return res.status(200).json({
+          success: true,
+          msg: "User was not found in image's likes",
+          isLiked: false,
+          totalCount: photo.likesCount
+        });
+      }
+    });
+  }
+  catch(err) {
+    return res.status(200).json({
+      success: true,
+      msg: "User was not found in image's likes",
+      isLiked: false,
+      totalCount: photo.likesCount
+    });
+  }
 });
 
 /* 
@@ -94,8 +105,7 @@ router.post("/:id/like/set", async function(req, res, next) {
                 isLiked: true,
                 totalCount: photo.likesCount + 1
               });
-            }
-            else {
+            } else {
               return res.status(404).json({
                 success: false,
                 msg: "Photo was not found",
@@ -108,7 +118,6 @@ router.post("/:id/like/set", async function(req, res, next) {
     }
   );
 });
-
 
 /* 
     Deletes like. Only for registered users
@@ -140,8 +149,7 @@ router.post("/:id/like/delete", async function(req, res, next) {
                 isLiked: true,
                 totalCount: photo.likesCount - 1
               });
-            }
-            else {
+            } else {
               return res.status(404).json({
                 success: true,
                 msg: "Photo was not found.",

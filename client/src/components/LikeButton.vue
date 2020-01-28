@@ -11,17 +11,17 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "LikeButton",
-  props: ["userOwner", "photoId"],
+  props: ["userId", "photoId"],
   data() {
     return {
       payload: {
         imageId: this.photoId,
-        userId: this.userOwner
+        userId: this.userId
       }
     };
   },
   computed: {
-    ...mapGetters(["likeStatus", "totalLikesCount", "isLoggedIn", "userId"]),
+    ...mapGetters(["likeStatus", "totalLikesCount", "isLoggedIn"]),
     iconLike() {
       if (!this.isLoggedIn) return "far";
       return this.likeStatus ? "fa" : "far";
@@ -33,7 +33,6 @@ export default {
       if (!this.isLoggedIn) {
         return this.$router.push("/#login");
       }
-      this.payload.userId = this.userId;
       if (!this.isLoggedIn) return;
       if (this.likeStatus) {
         this.deleteLike(this.payload);
@@ -42,6 +41,7 @@ export default {
       }
     },
     getStatus() {
+      if (!this.isLoggedIn) this.payload.userId = this.$route.params.id;
       this.getPhotoLikeStatus(this.payload);
     }
   },

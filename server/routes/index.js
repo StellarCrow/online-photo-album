@@ -104,9 +104,9 @@ router.post(
     @param {String} imageName - name of the image
     @param {Number} cropWidth - number of pixels for output image's width
 */
-async function resizeImage(imagePath, imageName, cropWidth) {
+function resizeImage(imagePath, imageName, cropWidth) {
   let outputPath = path + "\\compressed\\" + imageName;
-  await sharp(imagePath)
+  sharp(imagePath)
     .resize(cropWidth, null)
     .jpeg({ quality: 80 })
     .toFile(outputPath);

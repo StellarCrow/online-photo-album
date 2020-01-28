@@ -110,6 +110,7 @@
 
 <script>
 import PhotosService from "../../services/PhotosService";
+
 export default {
   name: "FormUploadImage",
   data() {
@@ -129,7 +130,8 @@ export default {
         newAlbum: "",
         tags: [],
         userId: this.$store.getters.userId
-      }
+      },
+      isLoading: false
     };
   },
   async mounted() {
@@ -185,10 +187,8 @@ export default {
       }
 
       //sending data
-      console.log("Before sending");
       try {
         let res = await PhotosService.uploadImage(data);
-        console.log(res);
         if (res.data.success) {
           this.$router
             .push({
